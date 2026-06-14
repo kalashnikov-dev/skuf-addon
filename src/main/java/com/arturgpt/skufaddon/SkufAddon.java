@@ -91,7 +91,7 @@ public class SkufAddon {
      * @param event
      */
     private void addMaterials(MaterialEvent event) {
-        // CustomMaterials.init();
+        SkufMaterials.init();
     }
 
     /**
