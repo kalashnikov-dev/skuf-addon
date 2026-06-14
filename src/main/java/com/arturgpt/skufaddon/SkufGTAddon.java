@@ -32,7 +32,7 @@ public class SkufGTAddon implements IGTAddon {
 
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
-        // CustomRecipes.init(provider);
+        SkufRecipes.init(provider);
     }
 
     @Override

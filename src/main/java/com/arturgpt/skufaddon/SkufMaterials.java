@@ -11,13 +11,16 @@ import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag
 
 public class SkufMaterials {
 
-    public static Material SKUFIT;
-    public static Material POKHUIT;
-    public static Material SWEAT;
-    public static Material PUFF_SMOKE;
+    public static Material skufit;
+    public static Material pokhuit;
+
+    public static Material sweat;
+    public static Material puffSmoke;
+
+    public static Material jizhnyak;
 
     public static void init() {
-        SKUFIT = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "skufit"))
+        skufit = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "skufit"))
                 .ingot()
                 .liquid(new FluidBuilder().temperature(1200))
                 .color(0x7A5C3A)
@@ -30,7 +33,7 @@ public class SkufMaterials {
                         GENERATE_FOIL)
                 .buildAndRegister();
 
-        POKHUIT = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "pokhuit"))
+        pokhuit = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "pokhuit"))
                 .ingot()
                 .liquid(new FluidBuilder().temperature(2400))
                 .color(0x3A7A5C)
@@ -43,20 +46,24 @@ public class SkufMaterials {
                         GENERATE_FOIL)
                 .buildAndRegister();
 
-        SWEAT = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "sweat"))
+        sweat = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "sweat"))
                 .liquid(new FluidBuilder()
                         .temperature(310)
-                        .attribute(FluidAttributes.ACID)
-                        .color(0xD4C84A))
+                        .attribute(FluidAttributes.ACID))
                 .color(0xD4C84A)
                 .buildAndRegister();
 
-        PUFF_SMOKE = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "puff_smoke"))
+        puffSmoke = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "puff_smoke"))
                 .gas(new FluidBuilder()
-                        .temperature(600)
-                        .attribute(FluidAttributes.ACID)
-                        .color(0x2A2A2A))
+                        .temperature(600))
                 .color(0x2A2A2A)
+                .buildAndRegister();
+
+        jizhnyak = new Material.Builder(ResourceLocation.fromNamespaceAndPath(SkufAddon.MOD_ID, "jizhnyak"))
+                .liquid(new FluidBuilder()
+                        .temperature(340)
+                        .attribute(FluidAttributes.ACID))
+                .color(0x5F5E41)
                 .buildAndRegister();
     }
 }

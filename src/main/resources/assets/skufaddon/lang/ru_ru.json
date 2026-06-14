@@ -3,10 +3,13 @@
   "material.skufaddon.pokhuit": "Похуит",
   "material.skufaddon.sweat": "Пот",
   "material.skufaddon.puff_smoke": "Дым от Пыхчения",
+  "material.skufaddon.jizhnyak": "Жижняк",
 
   "fluid.skufaddon.sweat": "Пот",
   "fluid.skufaddon.puff_smoke": "Дым от Пыхчения",
+  "fluid.skufaddon.jizhnyak": "Жижняк",
 
   "item.skufaddon.sweat_bucket": "Ведро Пота",
-  "item.skufaddon.puff_smoke_bucket": "Баллон Дыма от Пыхчения"
+  "item.skufaddon.puff_smoke_bucket": "Баллон Дыма от Пыхчения",
+  "item.skufaddon.jizhnyak_bucket": "Ведро Жижняка"
 }

@@ -3,10 +3,13 @@
   "material.skufaddon.pokhuit": "Pokhuit",
   "material.skufaddon.sweat": "Sweat",
   "material.skufaddon.puff_smoke": "Puff Smoke",
+  "material.skufaddon.jizhnyak": "Jizhnyak",
 
   "fluid.skufaddon.sweat": "Sweat",
   "fluid.skufaddon.puff_smoke": "Puff Smoke",
+  "fluid.skufaddon.jizhnyak": "Jizhnyak",
 
-  "item.skufaddon.sweat_bucket": "Bucket of Sweat",
-  "item.skufaddon.puff_smoke_bucket": "Canister of Puff Smoke"
+  "item.skufaddon.sweat_bucket": "Sweat Bucket",
+  "item.skufaddon.puff_smoke_bucket": "Puff Smoke Cylinder",
+  "item.skufaddon.jizhnyak_bucket": "Jizhnyak Bucket"
 }
