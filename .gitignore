@@ -31,3 +31,7 @@ bin/
 run/
 run-data/
 /src/generated/resources/.cache/*
+
+# local reference / notes
+.tmp-gtceu-src/
+mds/

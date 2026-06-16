@@ -11,5 +11,42 @@
 
   "item.skufaddon.sweat_bucket": "Sweat Bucket",
   "item.skufaddon.puff_smoke_bucket": "Puff Smoke Cylinder",
-  "item.skufaddon.jizhnyak_bucket": "Jizhnyak Bucket"
+  "item.skufaddon.jizhnyak_bucket": "Jizhnyak Bucket",
+
+  "gtceu.recipe.normis_filtration": "Normis Filtration",
+
+  "block.skufaddon.lv_normis_filtration_machine": "Normis Filtration Machine (LV)",
+  "block.skufaddon.mv_normis_filtration_machine": "Normis Filtration Machine (MV)",
+  "block.skufaddon.hv_normis_filtration_machine": "Normis Filtration Machine (HV)",
+  "block.skufaddon.ev_normis_filtration_machine": "Normis Filtration Machine (EV)",
+  "block.skufaddon.iv_normis_filtration_machine": "Normis Filtration Machine (IV)",
+  "block.skufaddon.luv_normis_filtration_machine": "Normis Filtration Machine (LuV)",
+  "block.skufaddon.zpm_normis_filtration_machine": "Normis Filtration Machine (ZPM)",
+  "block.skufaddon.uv_normis_filtration_machine": "Normis Filtration Machine (UV)",
+  "block.skufaddon.uhv_normis_filtration_machine": "Normis Filtration Machine (UHV)",
+
+  "item.skufaddon.lv_normis_filtration_machine": "Normis Filtration Machine (LV)",
+  "item.skufaddon.mv_normis_filtration_machine": "Normis Filtration Machine (MV)",
+  "item.skufaddon.hv_normis_filtration_machine": "Normis Filtration Machine (HV)",
+  "item.skufaddon.ev_normis_filtration_machine": "Normis Filtration Machine (EV)",
+  "item.skufaddon.iv_normis_filtration_machine": "Normis Filtration Machine (IV)",
+  "item.skufaddon.luv_normis_filtration_machine": "Normis Filtration Machine (LuV)",
+  "item.skufaddon.zpm_normis_filtration_machine": "Normis Filtration Machine (ZPM)",
+  "item.skufaddon.uv_normis_filtration_machine": "Normis Filtration Machine (UV)",
+  "item.skufaddon.uhv_normis_filtration_machine": "Normis Filtration Machine (UHV)",
+
+
+  "gtceu.recipe.normis_filtration.description": "Allows separating skufs from normies.",
+
+  "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Tilt Level",
+
+  "skufaddon.tilt.mode.hidden": "Mode: Whatever (Tilt: ???)",
+  "skufaddon.tilt.mode.peak": "Mode: Whatever (Tilt: %s)",
+  "skufaddon.tilt.mode.ugor": "Mode: Hype (Tilt: %s)",
+  "skufaddon.tilt.mode.pot": "Mode: Sweat (Tilt: %s)",
+  "skufaddon.tilt.mode.no_sweat": "Mode: No Sweat (Tilt: %s)",
+
+  "skufaddon.tooltip.eut_with_tilt": "EU/t (with Tilt): %sA %s EU/t (x%s)",
+  "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",
+  "skufaddon.tooltip.voltage": "Voltage: %s EU/t (%s)"
 }

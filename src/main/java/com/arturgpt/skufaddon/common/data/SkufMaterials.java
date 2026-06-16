@@ -1,4 +1,6 @@
-package com.arturgpt.skufaddon;
+package com.arturgpt.skufaddon.common.data;
+
+import com.arturgpt.skufaddon.SkufAddon;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
@@ -13,10 +15,8 @@ public class SkufMaterials {
 
     public static Material skufit;
     public static Material pokhuit;
-
     public static Material sweat;
     public static Material puffSmoke;
-
     public static Material jizhnyak;
 
     public static void init() {

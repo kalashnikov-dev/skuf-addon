@@ -11,5 +11,41 @@
 
   "item.skufaddon.sweat_bucket": "Ведро Пота",
   "item.skufaddon.puff_smoke_bucket": "Баллон Дыма от Пыхчения",
-  "item.skufaddon.jizhnyak_bucket": "Ведро Жижняка"
+  "item.skufaddon.jizhnyak_bucket": "Ведро Жижняка",
+
+  "gtceu.recipe.normis_filtration": "Нормис-фильтрация",
+
+  "block.skufaddon.lv_normis_filtration_machine": "Нормис Фильтратор (LV)",
+  "block.skufaddon.mv_normis_filtration_machine": "Нормис Фильтратор (MV)",
+  "block.skufaddon.hv_normis_filtration_machine": "Нормис Фильтратор (HV)",
+  "block.skufaddon.ev_normis_filtration_machine": "Нормис Фильтратор (EV)",
+  "block.skufaddon.iv_normis_filtration_machine": "Нормис Фильтратор (IV)",
+  "block.skufaddon.luv_normis_filtration_machine": "Нормис Фильтратор (LuV)",
+  "block.skufaddon.zpm_normis_filtration_machine": "Нормис Фильтратор (ZPM)",
+  "block.skufaddon.uv_normis_filtration_machine": "Нормис Фильтратор (UV)",
+  "block.skufaddon.uhv_normis_filtration_machine": "Нормис Фильтратор (UHV)",
+
+  "item.skufaddon.lv_normis_filtration_machine": "Нормис Фильтратор (LV)",
+  "item.skufaddon.mv_normis_filtration_machine": "Нормис Фильтратор (MV)",
+  "item.skufaddon.hv_normis_filtration_machine": "Нормис Фильтратор (HV)",
+  "item.skufaddon.ev_normis_filtration_machine": "Нормис Фильтратор (EV)",
+  "item.skufaddon.iv_normis_filtration_machine": "Нормис Фильтратор (IV)",
+  "item.skufaddon.luv_normis_filtration_machine": "Нормис Фильтратор (LuV)",
+  "item.skufaddon.zpm_normis_filtration_machine": "Нормис Фильтратор (ZPM)",
+  "item.skufaddon.uv_normis_filtration_machine": "Нормис Фильтратор (UV)",
+  "item.skufaddon.uhv_normis_filtration_machine": "Нормис Фильтратор (UHV)",
+
+  "gtceu.recipe.normis_filtration.description": "Позволяет отделить скуфов от нормисов.",
+
+  "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Уровень УТ",
+
+  "skufaddon.tilt.mode.hidden": "Режим: Ваще похуй (УТ: ???)",
+  "skufaddon.tilt.mode.peak": "Режим: Ваще похуй (УТ: %s)",
+  "skufaddon.tilt.mode.ugor": "Режим: Угар (УТ: %s)",
+  "skufaddon.tilt.mode.pot": "Режим: Пот (УТ: %s)",
+  "skufaddon.tilt.mode.no_sweat": "Режим: Не потеем (УТ: %s)",
+
+  "skufaddon.tooltip.eut_with_tilt": "EU/t (с УТ): %sA %s EU/t (x%s)",
+  "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",
+  "skufaddon.tooltip.voltage": "Напряжение: %s EU/t (%s)"
 }
