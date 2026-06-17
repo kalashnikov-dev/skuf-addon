@@ -3,14 +3,14 @@
   "loader": "gtceu:machine",
   "machine": "skufaddon:skufizator",
   "texture_overrides": {
-    "all": "gtceu:block/material_sets/dull/frame_gt"
+    "all": "gtceu:block/casings/solid/machine_casing_inert_ptfe"
   },
   "variants": {
     "recipe_logic_status=idle": {
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gtceu:block/material_sets/dull/frame_gt",
+          "all": "gtceu:block/casings/solid/machine_casing_inert_ptfe",
           "overlay_front": "skufaddon:block/multiblock/skufizator/overlay_front",
           "overlay_front_emissive": "skufaddon:block/multiblock/skufizator/overlay_front_emissive"
         }
@@ -20,7 +20,7 @@
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gtceu:block/material_sets/dull/frame_gt",
+          "all": "gtceu:block/casings/solid/machine_casing_inert_ptfe",
           "overlay_front": "skufaddon:block/multiblock/skufizator/overlay_front_paused",
           "overlay_front_emissive": "skufaddon:block/multiblock/skufizator/overlay_front_paused_emissive"
         }
@@ -30,7 +30,7 @@
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gtceu:block/material_sets/dull/frame_gt",
+          "all": "gtceu:block/casings/solid/machine_casing_inert_ptfe",
           "overlay_front": "skufaddon:block/multiblock/skufizator/overlay_front_active",
           "overlay_front_emissive": "skufaddon:block/multiblock/skufizator/overlay_front_active_emissive"
         }
@@ -40,7 +40,7 @@
       "model": {
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gtceu:block/material_sets/dull/frame_gt",
+          "all": "gtceu:block/casings/solid/machine_casing_inert_ptfe",
           "overlay_front": "skufaddon:block/multiblock/skufizator/overlay_front_active",
           "overlay_front_emissive": "skufaddon:block/multiblock/skufizator/overlay_front_active_emissive"
         }

@@ -180,7 +180,7 @@ BLOCKSTATE = RES / "blockstates" / "skufizator.json"
 BLOCK_MODEL = RES / "models" / "block" / "machine" / "skufizator.json"
 ITEM_MODEL = RES / "models" / "item" / "skufizator.json"
 OVERLAY_BASE = f"{MOD}:block/multiblock/skufizator"
-CASING = "gtceu:block/material_sets/dull/frame_gt"
+CASING = "gtceu:block/casings/solid/machine_casing_inert_ptfe"
 
 
 def write_block_model() -> None:

@@ -22,7 +22,7 @@ public final class SkufBlocks {
         PUKAN_CORE_CASING = SkufAddon.REGISTRATE
                 .block("pukan_core_casing", props -> new Block(props))
                 .properties(p -> p.strength(5.0f, 10.0f).requiresCorrectToolForDrops())
-                .lang("Pukan Core Casing")
+                .lang("Pukan Casing")
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get()))
                 .item()
                 .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), SkufAddon.id("block/pukan_core_casing")))

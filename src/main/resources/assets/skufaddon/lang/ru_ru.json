@@ -42,7 +42,7 @@
   "item.skufaddon.stabilized_vibe_bucket": "Ведро Стабилизированного Вайба",
 
   "item.skufaddon.pukan_core": "Ядро Пукана",
-  "block.skufaddon.pukan_core_casing": "Оболочка Ядра Пукана",
+  "block.skufaddon.pukan_core_casing": "Оболочка Пукана",
   "block.skufaddon.skufit_frame": "Скуфит (Каркас)",
   "item.skufaddon.skufit_frame": "Скуфит (Каркас)",
   "block.skufaddon.pokhuit_frame": "Похуит (Каркас)",
@@ -65,7 +65,7 @@
 
   "block.skufaddon.skufizator": "Скуфизатор",
   "item.skufaddon.skufizator": "Скуфизатор",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "3×3×3: каркасы Скуфита, колонка Оболочки Пукана, люки на верхнем слое (E/I/O/M)",
+  "skufaddon.multiblock.skufizator.tooltip.structure": "3×3×3: каркасы Скуфита, колонка Оболочки Пукана; люки в любой ячейке оболочки",
 
   "gtceu.recipe.normis_filtration": "Нормис-фильтрация",
   "gtceu.recipe.skufization": "Скуфизация",

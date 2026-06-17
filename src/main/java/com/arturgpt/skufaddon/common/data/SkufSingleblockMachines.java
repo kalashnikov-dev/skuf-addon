@@ -8,8 +8,6 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 
-import static com.gregtechceu.gtceu.common.data.machines.GTMachineUtils.ELECTRIC_TIERS;
-
 public class SkufSingleblockMachines {
 
     public static final MachineDefinition[] NORMIS_FILTRATION_MACHINE = new MachineDefinition[GTValues.TIER_COUNT];
@@ -29,7 +27,7 @@ public class SkufSingleblockMachines {
 
     private static void registerTiltMachines(MachineDefinition[] target, String baseName,
                                              GTRecipeType recipeType, String langSuffix) {
-        for (int tier : ELECTRIC_TIERS) {
+        for (int tier : GTValues.tiersBetween(GTValues.LV, GTValues.UHV)) {
             String name = GTValues.VN[tier].toLowerCase() + "_" + baseName;
             target[tier] = SkufAddon.REGISTRATE
                     .machine(name, holder -> new SkufTiltMachine(holder, tier))

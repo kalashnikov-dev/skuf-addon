@@ -42,7 +42,7 @@
   "item.skufaddon.stabilized_vibe_bucket": "Stabilized Vibe Bucket",
 
   "item.skufaddon.pukan_core": "Pukan Core",
-  "block.skufaddon.pukan_core_casing": "Pukan Core Casing",
+  "block.skufaddon.pukan_core_casing": "Pukan Casing",
   "block.skufaddon.skufit_frame": "Skufit Frame",
   "item.skufaddon.skufit_frame": "Skufit Frame",
   "block.skufaddon.pokhuit_frame": "Pokhuit Frame",
@@ -65,7 +65,7 @@
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "3x3x3: Skufit frames, Pukan Core column, hatches on top layer (E/I/O/M)",
+  "skufaddon.multiblock.skufizator.tooltip.structure": "3x3x3: Skufit frames, Pukan Core column; hatches anywhere on the outer shell",
 
   "gtceu.recipe.normis_filtration": "Normis Filtration",
   "gtceu.recipe.skufization": "Skufization",
