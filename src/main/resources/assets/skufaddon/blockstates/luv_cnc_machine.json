@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/luv_cnc_machine",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/luv_cnc_machine"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/luv_cnc_machine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/luv_cnc_machine",
+      "y": 270
+    }
+  }
+}

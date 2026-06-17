@@ -1,5 +1,6 @@
 package com.arturgpt.skufaddon;
 
+import com.arturgpt.skufaddon.common.data.SkufOres;
 import com.arturgpt.skufaddon.common.data.SkufRecipes;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
@@ -37,4 +38,9 @@ public class SkufGTAddon implements IGTAddon {
 
     @Override
     public void registerElements() {}
+
+    @Override
+    public void registerOreVeins() {
+        SkufOres.init();
+    }
 }

@@ -1,0 +1,51 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "skufaddon:ev_vibe_stabilizer",
+  "variants": {
+    "recipe_logic_status=idle": {
+      "model": {
+        "parent": "gtceu:block/casings/voltage/ev",
+        "textures": {
+          "overlay_back": "skufaddon:block/machines/vibe_stabilizer/overlay_back",
+          "overlay_front": "skufaddon:block/machines/vibe_stabilizer/overlay_front",
+          "overlay_side": "skufaddon:block/machines/vibe_stabilizer/overlay_side",
+          "overlay_top": "skufaddon:block/machines/vibe_stabilizer/overlay_top"
+        }
+      }
+    },
+    "recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gtceu:block/casings/voltage/ev",
+        "textures": {
+          "overlay_back": "skufaddon:block/machines/vibe_stabilizer/overlay_back",
+          "overlay_front": "skufaddon:block/machines/vibe_stabilizer/overlay_front",
+          "overlay_side": "skufaddon:block/machines/vibe_stabilizer/overlay_side",
+          "overlay_top": "skufaddon:block/machines/vibe_stabilizer/overlay_top"
+        }
+      }
+    },
+    "recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gtceu:block/casings/voltage/ev",
+        "textures": {
+          "overlay_back": "skufaddon:block/machines/vibe_stabilizer/overlay_back_active",
+          "overlay_front": "skufaddon:block/machines/vibe_stabilizer/overlay_front_active",
+          "overlay_side": "skufaddon:block/machines/vibe_stabilizer/overlay_side_active",
+          "overlay_top": "skufaddon:block/machines/vibe_stabilizer/overlay_top_active"
+        }
+      }
+    },
+    "recipe_logic_status=working": {
+      "model": {
+        "parent": "gtceu:block/casings/voltage/ev",
+        "textures": {
+          "overlay_back": "skufaddon:block/machines/vibe_stabilizer/overlay_back_active",
+          "overlay_front": "skufaddon:block/machines/vibe_stabilizer/overlay_front_active",
+          "overlay_side": "skufaddon:block/machines/vibe_stabilizer/overlay_side_active",
+          "overlay_top": "skufaddon:block/machines/vibe_stabilizer/overlay_top_active"
+        }
+      }
+    }
+  }
+}

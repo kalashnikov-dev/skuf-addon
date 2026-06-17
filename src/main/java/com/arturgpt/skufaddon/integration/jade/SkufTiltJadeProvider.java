@@ -1,8 +1,8 @@
 package com.arturgpt.skufaddon.integration.jade;
 
 import com.arturgpt.skufaddon.SkufAddon;
-import com.arturgpt.skufaddon.common.machine.tilt.SkufTiltRecipeLogic;
-import com.arturgpt.skufaddon.common.machine.tilt.SkufTiltUtils;
+import com.arturgpt.skufaddon.common.machine.singleblock.tilt.SkufTiltRecipeLogic;
+import com.arturgpt.skufaddon.common.machine.singleblock.tilt.SkufTiltUtils;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;

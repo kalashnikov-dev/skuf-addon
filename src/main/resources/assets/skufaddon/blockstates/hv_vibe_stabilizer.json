@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/hv_vibe_stabilizer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/hv_vibe_stabilizer"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/hv_vibe_stabilizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/hv_vibe_stabilizer",
+      "y": 270
+    }
+  }
+}

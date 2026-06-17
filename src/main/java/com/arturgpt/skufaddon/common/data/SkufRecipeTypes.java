@@ -19,8 +19,35 @@ public class SkufRecipeTypes {
             .setSound(GTSoundEntries.CHEMICAL)
             .setEUIO(IO.IN);
 
+    public static final GTRecipeType SKUFIZATION_RECIPES = register("skufization", ELECTRIC)
+            .setMaxIOSize(2, 2, 0, 0)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CHEMICAL)
+            .setEUIO(IO.IN);
+
+    public static final GTRecipeType CNC_RECIPES = register("cnc_machine", ELECTRIC)
+            .setMaxIOSize(3, 1, 1, 0)
+            .setEUIO(IO.IN)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.MACERATOR)
+            .setMaxTooltips(3);
+
+    public static final GTRecipeType POT_DISTILLERY_RECIPES = register("pot_distillery", ELECTRIC)
+            .setMaxIOSize(1, 1, 1, 1)
+            .setEUIO(IO.IN)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_DISTILLATION_TOWER, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CHEMICAL)
+            .setMaxTooltips(3);
+
+    public static final GTRecipeType VIBE_STABILIZER_RECIPES = register("vibe_stabilizer", ELECTRIC)
+            .setMaxIOSize(1, 1, 1, 1)
+            .setEUIO(IO.IN)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_MIXER, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CHEMICAL)
+            .setMaxTooltips(3);
+
     public static void init() {
-        // Ensures static fields are initialized during GTCEu recipe type registration.
         var unused = NORMIS_FILTRATION_RECIPES;
+        var unusedMultiblock = SKUFIZATION_RECIPES;
     }
 }

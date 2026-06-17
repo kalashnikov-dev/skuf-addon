@@ -1,8 +1,11 @@
 package com.arturgpt.skufaddon;
 
-import com.arturgpt.skufaddon.common.data.SkufMachines;
+import com.arturgpt.skufaddon.common.data.SkufBlocks;
+import com.arturgpt.skufaddon.common.data.SkufItems;
 import com.arturgpt.skufaddon.common.data.SkufMaterials;
+import com.arturgpt.skufaddon.common.data.SkufMultiblockMachines;
 import com.arturgpt.skufaddon.common.data.SkufRecipeTypes;
+import com.arturgpt.skufaddon.common.data.SkufSingleblockMachines;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
@@ -43,6 +46,8 @@ public class SkufAddon {
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
         modEventBus.addGenericListener(SoundEntry.class, this::registerSounds);
 
+        SkufItems.init();
+        SkufBlocks.init();
         REGISTRATE.registerRegistrate();
     }
 
@@ -73,7 +78,8 @@ public class SkufAddon {
     }
 
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
-        SkufMachines.init();
+        SkufSingleblockMachines.init();
+        SkufMultiblockMachines.init();
     }
 
     private void registerSounds(GTCEuAPI.RegisterEvent<ResourceLocation, SoundEntry> event) {}
