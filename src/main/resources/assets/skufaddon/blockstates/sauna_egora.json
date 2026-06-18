@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/sauna_egora",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/sauna_egora"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/sauna_egora",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/sauna_egora",
+      "y": 270
+    }
+  }
+}

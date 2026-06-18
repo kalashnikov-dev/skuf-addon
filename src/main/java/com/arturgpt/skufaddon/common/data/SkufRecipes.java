@@ -190,20 +190,9 @@ public class SkufRecipes {
                 .EUt(30)
                 .save(provider);
 
-        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("pukan_indicator_core_assembly")
-                .inputItems(dust, SkufMaterials.uralIsotope)
-                .inputItems(plate, SkufMaterials.honestSteel, 2)
-                .inputItems(plate, SkufMaterials.correctMatter)
-                .circuitMeta(3)
-                .outputItems(SkufItems.PUKAN_INDICATOR_CORE)
-                .duration(300)
-                .EUt(120)
-                .save(provider);
-
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("pravilnaya_vesh_assembly")
                 .inputItems(gem, SkufMaterials.correctMatter, 2)
                 .inputItems(plate, SkufMaterials.honestSteel, 2)
-                .inputItems(SkufItems.PUKAN_INDICATOR_CORE)
                 .inputItems(SkufItems.CNC_CUTTER)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(250))
                 .circuitMeta(4)
@@ -256,16 +245,6 @@ public class SkufRecipes {
                 .duration(180)
                 .EUt(48)
                 .save(provider);
-
-        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("repair_charred_developer_circuit")
-                .inputItems(SkufItems.CHARRED_DEVELOPER_CIRCUIT.asStack(1))
-                .inputItems(dust, SkufMaterials.normieDust, 2)
-                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(500))
-                .circuitMeta(5)
-                .outputItems(SkufItems.PUKAN_INDICATOR_CORE)
-                .duration(300)
-                .EUt(120)
-                .save(provider);
     }
 
     private static void myposhkoChain(Consumer<FinishedRecipe> provider) {
@@ -293,7 +272,6 @@ public class SkufRecipes {
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_egor_core")
                 .inputItems(gem, SkufMaterials.correctMatter, 2)
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
-                .inputItems(SkufItems.PUKAN_INDICATOR_CORE)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(1000))
                 .circuitMeta(8)
                 .outputItems(SkufItems.EGOR_CORE)
@@ -392,7 +370,6 @@ public class SkufRecipes {
                 .inputItems(plate, SkufMaterials.honestSteel, 8)
                 .inputItems(gem, SkufMaterials.correctMatter, 4)
                 .inputItems(SkufItems.MYPOSHKO_SCRIPT)
-                .inputItems(SkufItems.PUKAN_INDICATOR_CORE)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(2000))
                 .circuitMeta(14)
                 .outputItems(SkufItems.ARTURIAN_MAINFRAME)

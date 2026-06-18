@@ -1,5 +1,8 @@
 package com.arturgpt.skufaddon.common.machine.singleblock.tilt;
 
+import com.arturgpt.skufaddon.api.machine.ISaunaProvider;
+import com.arturgpt.skufaddon.api.machine.ISaunaReceiver;
+
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
@@ -131,7 +134,9 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         if (getMachine().isRemote()) {
             return;
         }
-        if (SkufTiltUtils.needsTiltTicks(tiltLevel, isWorking(), isWorkingEnabled(), isWaiting())) {
+        boolean needsTicks = SkufTiltUtils.needsTiltTicks(tiltLevel, isWorking(), isWorkingEnabled(), isWaiting()) ||
+                (tiltLevel > 0 && isInActiveSauna());
+        if (needsTicks) {
             tiltSubscription = getMachine().subscribeServerTick(tiltSubscription, this::tiltServerTick);
         } else if (tiltSubscription != null) {
             tiltSubscription.unsubscribe();
@@ -143,7 +148,13 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         MetaMachine metaMachine = getMachine();
         int previousTiltLevel = tiltLevel;
 
-        if (SkufTiltUtils.shouldGrowTilt(isWorking(), isWorkingEnabled())) {
+        if (isInActiveSauna()) {
+            // An active sauna relaxes the machine: tilt cools down even while working.
+            if (tiltLevel > 0 && metaMachine.getOffsetTimer() % SkufTiltUtils.TILT_GROW_INTERVAL == 0) {
+                tiltLevel--;
+            }
+            ticksAtMaxTilt = 0;
+        } else if (SkufTiltUtils.shouldGrowTilt(isWorking(), isWorkingEnabled())) {
             if (tiltLevel < SkufTiltUtils.MAX_TILT_LEVEL) {
                 if (metaMachine.getOffsetTimer() % SkufTiltUtils.TILT_GROW_INTERVAL == 0) {
                     tiltLevel++;
@@ -162,6 +173,14 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
             invalidateTiltRecipeCache();
         }
         updateTiltTickSubscription();
+    }
+
+    private boolean isInActiveSauna() {
+        if (getMachine() instanceof ISaunaReceiver receiver) {
+            ISaunaProvider sauna = receiver.getSauna();
+            return sauna != null && sauna.isHot();
+        }
+        return false;
     }
 
     private void invalidateTiltRecipeCache() {

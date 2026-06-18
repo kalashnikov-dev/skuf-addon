@@ -16,7 +16,7 @@ public class SkufRecipeTypes {
     public static final GTRecipeType NORMIS_FILTRATION_RECIPES = register("normis_filtration", ELECTRIC)
             .setMaxIOSize(1, 1, 1, 1)
             .setSlotOverlay(true, true, GuiTextures.FLUID_SLOT)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.CHEMICAL)
             .setEUIO(IO.IN);
 

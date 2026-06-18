@@ -17,7 +17,6 @@ public class SkufItems {
 
     public static ItemEntry<Item> CNC_BIT;
     public static ItemEntry<Item> CNC_CUTTER;
-    public static ItemEntry<Item> PUKAN_INDICATOR_CORE;
 
     public static ItemEntry<Item> MELTED_CAPACITOR;
     public static ItemEntry<Item> BURNT_CABLE_DEBRIS;
@@ -48,10 +47,6 @@ public class SkufItems {
 
         CNC_CUTTER = SkufAddon.REGISTRATE
                 .item("cnc_cutter", Item::new)
-                .register();
-
-        PUKAN_INDICATOR_CORE = SkufAddon.REGISTRATE
-                .item("pukan_indicator_core", Item::new)
                 .register();
 
         MELTED_CAPACITOR = SkufAddon.REGISTRATE

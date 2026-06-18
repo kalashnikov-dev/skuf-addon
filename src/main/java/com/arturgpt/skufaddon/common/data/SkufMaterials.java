@@ -29,6 +29,7 @@ public class SkufMaterials {
     public static Material ugarGas;
     public static Material hiddenSweat;
     public static Material condensedSweat;
+    public static Material dilutedSweat;
 
     public static Material technicalTears;
     public static Material coolantOfDenial;
@@ -162,6 +163,13 @@ public class SkufMaterials {
                 .liquid(new FluidBuilder().temperature(305))
                 .color(0xE6D24A)
                 .iconSet(MaterialIconSet.SHINY)
+                .buildAndRegister();
+
+        dilutedSweat = new Material.Builder(SkufAddon.id("diluted_sweat"))
+                .liquid(new FluidBuilder()
+                        .temperature(300)
+                        .color(0xA8E0D880))
+                .color(0xE0D880)
                 .buildAndRegister();
 
         technicalTears = new Material.Builder(SkufAddon.id("technical_tears"))

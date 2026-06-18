@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "skufaddon:item/pukan_indicator_core"
-  }
-}
