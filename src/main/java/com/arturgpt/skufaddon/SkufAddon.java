@@ -1,6 +1,7 @@
 package com.arturgpt.skufaddon;
 
 import com.arturgpt.skufaddon.common.data.SkufBlocks;
+import com.arturgpt.skufaddon.common.data.SkufComponentMachines;
 import com.arturgpt.skufaddon.common.data.SkufItems;
 import com.arturgpt.skufaddon.common.data.SkufMaterials;
 import com.arturgpt.skufaddon.common.data.SkufMultiblockMachines;
@@ -79,6 +80,7 @@ public class SkufAddon {
 
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         SkufSingleblockMachines.init();
+        SkufComponentMachines.init();
         SkufMultiblockMachines.init();
     }
 

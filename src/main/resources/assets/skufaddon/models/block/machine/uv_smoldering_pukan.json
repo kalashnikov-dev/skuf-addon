@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "skufaddon:uv_smoldering_pukan",
+  "replaceable_textures": [
+    "bottom",
+    "top",
+    "side"
+  ],
+  "variants": {
+    "is_formed=false": {
+      "model": {
+        "parent": "skufaddon:block/machine/part/smoldering_pukan",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    },
+    "is_formed=true": {
+      "model": {
+        "parent": "skufaddon:block/machine/part/smoldering_pukan",
+        "textures": {
+          "bottom": "gtceu:block/casings/voltage/uv/bottom",
+          "side": "gtceu:block/casings/voltage/uv/side",
+          "top": "gtceu:block/casings/voltage/uv/top"
+        }
+      }
+    }
+  }
+}

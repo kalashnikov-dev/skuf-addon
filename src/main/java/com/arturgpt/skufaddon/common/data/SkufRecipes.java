@@ -1,5 +1,7 @@
 package com.arturgpt.skufaddon.common.data;
 
+import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraMachine;
+
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
@@ -27,26 +29,10 @@ public class SkufRecipes {
     }
 
     private static void baseRecipes(Consumer<FinishedRecipe> provider) {
-        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("jizhnyak_mixing")
-                .inputFluids(SkufMaterials.sweat.getFluid(1000))
-                .inputFluids(SkufMaterials.puffSmoke.getFluid(1000))
-                .outputFluids(SkufMaterials.jizhnyak.getFluid(1000))
-                .duration(200)
-                .EUt(30)
-                .save(provider);
-
-        GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("jizhnyak_separation")
-                .inputFluids(SkufMaterials.jizhnyak.getFluid(1000))
-                .outputFluids(SkufMaterials.sweat.getFluid(1000))
-                .outputFluids(SkufMaterials.puffSmoke.getFluid(1000))
-                .duration(400)
-                .EUt(30)
-                .save(provider);
-
         SkufRecipeTypes.NORMIS_FILTRATION_RECIPES.recipeBuilder("normis_filtration")
                 .inputFluids(GTMaterials.Water.getFluid(1000))
-                .outputFluids(SkufMaterials.sweat.getFluid(1000))
-                .duration(200)
+                .outputFluids(SkufMaterials.sweat.getFluid(200))
+                .duration(600)
                 .EUt(30)
                 .save(provider);
     }
@@ -105,13 +91,6 @@ public class SkufRecipes {
                 .duration(300)
                 .EUt(60)
                 .save(provider);
-
-        GTRecipeTypes.COMPRESSOR_RECIPES.recipeBuilder("pukan_core_casing")
-                .inputItems(SkufItems.PUKAN_CORE.asStack())
-                .outputItems(SkufBlocks.PUKAN_CORE_CASING.asStack())
-                .duration(100)
-                .EUt(16)
-                .save(provider);
     }
 
     private static void productionChain(Consumer<FinishedRecipe> provider) {
@@ -138,14 +117,6 @@ public class SkufRecipes {
                 .outputFluids(SkufMaterials.jizhnyak.getFluid(2000))
                 .duration(180)
                 .EUt(30)
-                .save(provider);
-
-        GTRecipeTypes.ELECTROLYZER_RECIPES.recipeBuilder("correct_matter_electrolysis")
-                .inputFluids(SkufMaterials.jizhnyak.getFluid(2000))
-                .outputItems(dust, SkufMaterials.correctMatter)
-                .outputFluids(SkufMaterials.puffSmoke.getFluid(1000))
-                .duration(300)
-                .EUt(60)
                 .save(provider);
 
         SkufRecipeTypes.POT_DISTILLERY_RECIPES.recipeBuilder("jizhnyak_distillation")
@@ -269,6 +240,13 @@ public class SkufRecipes {
     }
 
     private static void saunaChain(Consumer<FinishedRecipe> provider) {
+        // EMI/JEI info recipe — base rate at EV with no Tilt machines inside; see recipe type tooltips.
+        SkufRecipeTypes.SAUNA_EGORA_RECIPES.recipeBuilder("diluted_sweat")
+                .outputFluids(SkufMaterials.dilutedSweat.getFluid(SaunaEgoraMachine.SWEAT_BASE_MB))
+                .duration(20)
+                .EUt(GTValues.VA[GTValues.EV])
+                .save(provider);
+
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_egor_core")
                 .inputItems(gem, SkufMaterials.correctMatter, 2)
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
@@ -381,7 +359,7 @@ public class SkufRecipes {
     private static void exampleRecipes(Consumer<FinishedRecipe> provider) {
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("skufizator")
                 .inputItems(frameGt, SkufMaterials.skufit, 4)
-                .inputItems(SkufItems.PUKAN_CORE.asStack())
+                .inputItems(block, SkufMaterials.correctMatter, 3)
                 .inputItems(screw, GTMaterials.Electrum, 2)
                 .circuitMeta(6)
                 .outputItems(SkufMultiblockMachines.SKUFIZATOR.asStack())

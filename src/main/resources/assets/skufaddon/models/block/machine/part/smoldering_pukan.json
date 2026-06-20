@@ -1,0 +1,6 @@
+{
+  "parent": "gtceu:block/overlay/front",
+  "textures": {
+    "overlay": "skufaddon:item/smoldering_pukan"
+  }
+}

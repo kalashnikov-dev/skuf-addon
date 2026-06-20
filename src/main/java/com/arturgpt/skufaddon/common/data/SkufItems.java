@@ -9,10 +9,10 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 /**
  * Standalone items that are not tied to the GregTech material system.
  * For material-based items (ingots, gears, bolts, etc.) use {@link SkufMaterials} instead.
+ * Tiered hull-style blocks live in {@link SkufComponentMachines}.
  */
 public class SkufItems {
 
-    public static ItemEntry<Item> PUKAN_CORE;
     public static ItemEntry<Item> PRAVILNAYA_VESH;
 
     public static ItemEntry<Item> CNC_BIT;
@@ -33,10 +33,6 @@ public class SkufItems {
     public static ItemEntry<Item> ARTURIAN_MAINFRAME;
 
     public static void init() {
-        PUKAN_CORE = SkufAddon.REGISTRATE
-                .item("pukan_core", Item::new)
-                .register();
-
         PRAVILNAYA_VESH = SkufAddon.REGISTRATE
                 .item("pravilnaya_vesh", Item::new)
                 .register();

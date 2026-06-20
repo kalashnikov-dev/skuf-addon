@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "skufaddon:block/machine/uv_smoldering_pukan",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "skufaddon:block/machine/uv_smoldering_pukan",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/uv_smoldering_pukan"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/uv_smoldering_pukan",
+      "y": 180
+    },
+    "facing=up": {
+      "gtceu:z": 180,
+      "model": "skufaddon:block/machine/uv_smoldering_pukan",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/uv_smoldering_pukan",
+      "y": 270
+    }
+  }
+}

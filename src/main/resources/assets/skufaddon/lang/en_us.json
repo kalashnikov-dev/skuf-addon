@@ -43,8 +43,24 @@
   "item.skufaddon.jizhnyak_bucket": "Jizhnyak Bucket",
   "item.skufaddon.stabilized_vibe_bucket": "Stabilized Vibe Bucket",
 
-  "item.skufaddon.pukan_core": "Pukan Core",
-  "block.skufaddon.pukan_core_casing": "Pukan Casing",
+  "item.skufaddon.lv_smoldering_pukan": "Smoldering Pukan (§7LV§r)",
+  "item.skufaddon.mv_smoldering_pukan": "Smoldering Pukan (§bMV§r)",
+  "item.skufaddon.hv_smoldering_pukan": "Smoldering Pukan (§6HV§r)",
+  "item.skufaddon.ev_smoldering_pukan": "Smoldering Pukan (§5EV§r)",
+  "item.skufaddon.iv_smoldering_pukan": "Smoldering Pukan (§9IV§r)",
+  "item.skufaddon.luv_smoldering_pukan": "Smoldering Pukan (§dLuV§r)",
+  "item.skufaddon.zpm_smoldering_pukan": "Smoldering Pukan (§cZPM§r)",
+  "item.skufaddon.uv_smoldering_pukan": "Smoldering Pukan (§3UV§r)",
+  "item.skufaddon.uhv_smoldering_pukan": "Smoldering Pukan (§4UHV§r)",
+  "block.skufaddon.lv_smoldering_pukan": "Smoldering Pukan (§7LV§r)",
+  "block.skufaddon.mv_smoldering_pukan": "Smoldering Pukan (§bMV§r)",
+  "block.skufaddon.hv_smoldering_pukan": "Smoldering Pukan (§6HV§r)",
+  "block.skufaddon.ev_smoldering_pukan": "Smoldering Pukan (§5EV§r)",
+  "block.skufaddon.iv_smoldering_pukan": "Smoldering Pukan (§9IV§r)",
+  "block.skufaddon.luv_smoldering_pukan": "Smoldering Pukan (§dLuV§r)",
+  "block.skufaddon.zpm_smoldering_pukan": "Smoldering Pukan (§cZPM§r)",
+  "block.skufaddon.uv_smoldering_pukan": "Smoldering Pukan (§3UV§r)",
+  "block.skufaddon.uhv_smoldering_pukan": "Smoldering Pukan (§4UHV§r)",
   "block.skufaddon.skufit_frame": "Skufit Frame",
   "item.skufaddon.skufit_frame": "Skufit Frame",
   "block.skufaddon.pokhuit_frame": "Pokhuit Frame",
@@ -66,7 +82,7 @@
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "3x3x3: Skufit frames, Pukan Core column; hatches anywhere on the outer shell",
+  "skufaddon.multiblock.skufizator.tooltip.structure": "3x3x3: Skufit frames, Correct Matter Block column; hatches anywhere on the outer shell",
 
   "block.skufaddon.sauna_egora": "Sauna Egora",
   "item.skufaddon.sauna_egora": "Sauna Egora",
@@ -82,6 +98,7 @@
 
   "gtceu.normis_filtration": "Normis Filtration",
   "gtceu.skufization": "Skufization",
+  "gtceu.sauna_egora": "Sauna Egora",
   "gtceu.cnc_machine": "CNC Machining",
   "gtceu.pot_distillery": "Pot Distillation",
   "gtceu.vibe_stabilizer": "Vibe Stabilization",
@@ -168,6 +185,7 @@
 
   "gtceu.normis_filtration.description": "Allows separating skufs from normies.",
   "gtceu.skufization.description": "Converts almost-normie materials into proper skuf.",
+  "gtceu.sauna_egora.description": "Produces Diluted Sweat while hot (heat ≥ 95%). Base output at EV: 80 mB/s. +40 mB/s per energy tier above EV. +60 mB/s per Tilt machine inside the cavity.",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Tilt Level",
 

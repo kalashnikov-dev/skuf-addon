@@ -43,8 +43,24 @@
   "item.skufaddon.jizhnyak_bucket": "Ведро Жижняка",
   "item.skufaddon.stabilized_vibe_bucket": "Ведро Стабилизированного Вайба",
 
-  "item.skufaddon.pukan_core": "Ядро Пукана",
-  "block.skufaddon.pukan_core_casing": "Оболочка Пукана",
+  "item.skufaddon.lv_smoldering_pukan": "Тлеющий Пукан (§7LV§r)",
+  "item.skufaddon.mv_smoldering_pukan": "Тлеющий Пукан (§bMV§r)",
+  "item.skufaddon.hv_smoldering_pukan": "Тлеющий Пукан (§6HV§r)",
+  "item.skufaddon.ev_smoldering_pukan": "Тлеющий Пукан (§5EV§r)",
+  "item.skufaddon.iv_smoldering_pukan": "Тлеющий Пукан (§9IV§r)",
+  "item.skufaddon.luv_smoldering_pukan": "Тлеющий Пукан (§dLuV§r)",
+  "item.skufaddon.zpm_smoldering_pukan": "Тлеющий Пукан (§cZPM§r)",
+  "item.skufaddon.uv_smoldering_pukan": "Тлеющий Пукан (§3UV§r)",
+  "item.skufaddon.uhv_smoldering_pukan": "Тлеющий Пукан (§4UHV§r)",
+  "block.skufaddon.lv_smoldering_pukan": "Тлеющий Пукан (§7LV§r)",
+  "block.skufaddon.mv_smoldering_pukan": "Тлеющий Пукан (§bMV§r)",
+  "block.skufaddon.hv_smoldering_pukan": "Тлеющий Пукан (§6HV§r)",
+  "block.skufaddon.ev_smoldering_pukan": "Тлеющий Пукан (§5EV§r)",
+  "block.skufaddon.iv_smoldering_pukan": "Тлеющий Пукан (§9IV§r)",
+  "block.skufaddon.luv_smoldering_pukan": "Тлеющий Пукан (§dLuV§r)",
+  "block.skufaddon.zpm_smoldering_pukan": "Тлеющий Пукан (§cZPM§r)",
+  "block.skufaddon.uv_smoldering_pukan": "Тлеющий Пукан (§3UV§r)",
+  "block.skufaddon.uhv_smoldering_pukan": "Тлеющий Пукан (§4UHV§r)",
   "block.skufaddon.skufit_frame": "Скуфит (Каркас)",
   "item.skufaddon.skufit_frame": "Скуфит (Каркас)",
   "block.skufaddon.pokhuit_frame": "Похуит (Каркас)",
@@ -66,7 +82,7 @@
 
   "block.skufaddon.skufizator": "Скуфизатор",
   "item.skufaddon.skufizator": "Скуфизатор",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "3×3×3: каркасы Скуфита, колонка Оболочки Пукана; люки в любой ячейке оболочки",
+  "skufaddon.multiblock.skufizator.tooltip.structure": "3×3×3: каркасы Скуфита, колонка Блока Правильной Материи; люки в любой ячейке оболочки",
 
   "block.skufaddon.sauna_egora": "Сауна Егора",
   "item.skufaddon.sauna_egora": "Сауна Егора",
@@ -82,6 +98,7 @@
 
   "gtceu.normis_filtration": "Нормис-фильтрация",
   "gtceu.skufization": "Скуфизация",
+  "gtceu.sauna_egora": "Сауна Егора",
   "gtceu.cnc_machine": "ЧПУ-обработка",
   "gtceu.pot_distillery": "Пот-перегонка",
   "gtceu.vibe_stabilizer": "Стабилизация Вайба",
@@ -168,6 +185,7 @@
 
   "gtceu.normis_filtration.description": "Позволяет отделить скуфов от нормисов.",
   "gtceu.skufization.description": "Превращает почти-нормисные материалы в настоящий скуф.",
+  "gtceu.sauna_egora.description": "Вырабатывает Разбавленный Пот при нагреве (жар ≥ 95%). База на EV: 80 mB/с. +40 mB/с за каждый тир энергии выше EV. +60 mB/с за каждую Tilt-машину внутри полости.",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Уровень УТ",
 
