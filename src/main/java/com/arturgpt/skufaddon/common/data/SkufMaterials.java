@@ -2,6 +2,7 @@ package com.arturgpt.skufaddon.common.data;
 
 import com.arturgpt.skufaddon.SkufAddon;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
@@ -30,6 +31,8 @@ public class SkufMaterials {
     public static Material hiddenSweat;
     public static Material condensedSweat;
     public static Material dilutedSweat;
+
+    public static Material crystallizedDodikSweat;
 
     public static Material technicalTears;
     public static Material coolantOfDenial;
@@ -60,6 +63,7 @@ public class SkufMaterials {
                 .liquid(new FluidBuilder().temperature(2400))
                 .color(0x3A7A5C)
                 .iconSet(MaterialIconSet.SHINY)
+                .cableProperties(GTValues.V[GTValues.MV], 4, 4, false)
                 .flags(
                         GENERATE_PLATE,
                         GENERATE_ROD,
@@ -100,6 +104,7 @@ public class SkufMaterials {
                 .liquid(new FluidBuilder().temperature(1700))
                 .color(0x9AA4AD)
                 .iconSet(MaterialIconSet.METALLIC)
+                .cableProperties(GTValues.V[GTValues.LV], 2, 2, false)
                 .flags(
                         GENERATE_PLATE,
                         GENERATE_ROD,
@@ -188,6 +193,14 @@ public class SkufMaterials {
         warmVibeSteam = new Material.Builder(SkufAddon.id("warm_vibe_steam"))
                 .gas(new FluidBuilder().temperature(380))
                 .color(0xC9B98F)
+                .buildAndRegister();
+
+        crystallizedDodikSweat = new Material.Builder(SkufAddon.id("crystallized_dodik_sweat"))
+                .gem()
+                .color(0xE6C84A)
+                .iconSet(MaterialIconSet.SHINY)
+                .flags(GENERATE_PLATE)
+                .cableProperties(GTValues.V[GTValues.HV], 4, 2)
                 .buildAndRegister();
 
         padikNobleGas = new Material.Builder(SkufAddon.id("padik_noble_gas"))
