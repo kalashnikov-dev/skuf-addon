@@ -18,6 +18,7 @@ public class SkufRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         baseRecipes(provider);
         bootstrapFix(provider);
+        circuitsChain(provider);
         machineCrafting(provider);
         productionChain(provider);
         stabilizerChain(provider);
@@ -25,6 +26,7 @@ public class SkufRecipes {
         myposhkoChain(provider);
         saunaChain(provider);
         endgameChain(provider);
+        mvpOrphanFixes(provider);
         exampleRecipes(provider);
     }
 
@@ -54,11 +56,46 @@ public class SkufRecipes {
                 .save(provider);
     }
 
+    // SKU-47: 3 tiered circuit boards — Dodik → Lyudskaya → Zapizdosh
+    private static void circuitsChain(Consumer<FinishedRecipe> provider) {
+        // LV: dodik_circuit_basic from 2x honestSteelPlate + 2x electrically_wet_sweat + circuit(1)
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_dodik_board")
+                .inputItems(plate, SkufMaterials.honestSteel, 2)
+                .inputFluids(SkufMaterials.sweat.getFluid(200))
+                .circuitMeta(1)
+                .outputItems(SkufItems.DODIK_CIRCUIT_BASIC)
+                .duration(200)
+                .EUt(GTValues.V[GTValues.LV])
+                .save(provider);
+
+        // MV: dodik_circuit_advanced from 2x dodik_circuit_basic + 2x pokhuitPlate + circuit(2)
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_lyudskaya_board")
+                .inputItems(SkufItems.DODIK_CIRCUIT_BASIC, 2)
+                .inputItems(plate, SkufMaterials.pokhuit, 2)
+                .circuitMeta(2)
+                .outputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .duration(240)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        // HV: dodik_circuit_extreme from 2x dodik_circuit_advanced + 2x crystallizedDodikSweatPlate + circuit(3)
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_zapizdosh_mainframe")
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED, 2)
+                .inputItems(plate, SkufMaterials.crystallizedDodikSweat, 2)
+                .circuitMeta(3)
+                .outputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
+                .duration(300)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
+    }
+
     private static void machineCrafting(Consumer<FinishedRecipe> provider) {
+        // ── LV: dodik_circuit_basic + honestSteel cable ─────────────────────────
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine")
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
                 .inputItems(dust, SkufMaterials.normieDust, 2)
-                .circuitMeta(5)
+                .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.LV].asStack())
                 .duration(200)
                 .EUt(30)
@@ -67,7 +104,8 @@ public class SkufRecipes {
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine")
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
                 .inputItems(SkufItems.CNC_BIT, 2)
-                .circuitMeta(6)
+                .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.CNC_MACHINE[GTValues.LV].asStack())
                 .duration(200)
                 .EUt(30)
@@ -76,7 +114,8 @@ public class SkufRecipes {
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery")
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
                 .inputItems(plate, SkufMaterials.correctMatter)
-                .circuitMeta(7)
+                .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.LV].asStack())
                 .duration(200)
                 .EUt(30)
@@ -86,10 +125,95 @@ public class SkufRecipes {
                 .inputItems(plate, SkufMaterials.honestSteel, 4)
                 .inputItems(plate, SkufMaterials.correctMatter)
                 .inputItems(frameGt, SkufMaterials.pokhuit)
-                .circuitMeta(9)
+                .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.VIBE_STABILIZER[GTValues.LV].asStack())
                 .duration(300)
                 .EUt(60)
+                .save(provider);
+
+        // ── MV: dodik_circuit_advanced + pokhuit cable ────────────────────────
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine_mv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(dust, SkufMaterials.normieDust, 2)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(cableGtSingle, SkufMaterials.pokhuit)
+                .outputItems(SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.MV].asStack())
+                .duration(200)
+                .EUt(120)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine_mv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufItems.CNC_BIT, 2)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(cableGtSingle, SkufMaterials.pokhuit)
+                .outputItems(SkufSingleblockMachines.CNC_MACHINE[GTValues.MV].asStack())
+                .duration(200)
+                .EUt(120)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery_mv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(cableGtSingle, SkufMaterials.pokhuit)
+                .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.MV].asStack())
+                .duration(200)
+                .EUt(120)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer_mv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(frameGt, SkufMaterials.pokhuit)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(cableGtSingle, SkufMaterials.pokhuit)
+                .outputItems(SkufSingleblockMachines.VIBE_STABILIZER[GTValues.MV].asStack())
+                .duration(300)
+                .EUt(240)
+                .save(provider);
+
+        // ── HV: dodik_circuit_extreme + crystallizedDodikSweat cable ──────────
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine_hv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(dust, SkufMaterials.normieDust, 2)
+                .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
+                .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
+                .outputItems(SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.HV].asStack())
+                .duration(200)
+                .EUt(480)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine_hv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufItems.CNC_BIT, 2)
+                .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
+                .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
+                .outputItems(SkufSingleblockMachines.CNC_MACHINE[GTValues.HV].asStack())
+                .duration(200)
+                .EUt(480)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery_hv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
+                .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
+                .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.HV].asStack())
+                .duration(200)
+                .EUt(480)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer_hv")
+                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(frameGt, SkufMaterials.pokhuit)
+                .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
+                .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
+                .outputItems(SkufSingleblockMachines.VIBE_STABILIZER[GTValues.HV].asStack())
+                .duration(300)
+                .EUt(960)
                 .save(provider);
     }
 
@@ -166,7 +290,7 @@ public class SkufRecipes {
                 .inputItems(plate, SkufMaterials.honestSteel, 2)
                 .inputItems(SkufItems.CNC_CUTTER)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(250))
-                .circuitMeta(4)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
                 .outputItems(SkufItems.PRAVILNAYA_VESH)
                 .duration(600)
                 .EUt(120)
@@ -223,7 +347,7 @@ public class SkufRecipes {
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputItems(gem, SkufMaterials.correctMatter)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(250))
-                .circuitMeta(7)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
                 .outputItems(SkufItems.MYPOSHKO_SCRIPT)
                 .duration(160)
                 .EUt(48)
@@ -353,6 +477,39 @@ public class SkufRecipes {
                 .outputItems(SkufItems.ARTURIAN_MAINFRAME)
                 .duration(800)
                 .EUt(8192)
+                .save(provider);
+    }
+
+    private static void mvpOrphanFixes(Consumer<FinishedRecipe> provider) {
+        // condensed_sweat source: concentrate raw sweat (also feeds repair_melted_capacitor)
+        GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("condense_sweat")
+                .inputFluids(SkufMaterials.sweat.getFluid(1000))
+                .circuitMeta(1)
+                .outputFluids(SkufMaterials.condensedSweat.getFluid(250))
+                .outputFluids(GTMaterials.Water.getFluid(750))
+                .duration(120)
+                .EUt(24)
+                .save(provider);
+
+        // crystallized_dodik_sweat (HV conductor) source: crystallize condensed sweat
+        // around a correct_matter seed. Gates the HV cable behind MV chemistry.
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("crystallize_dodik_sweat")
+                .inputItems(dust, SkufMaterials.correctMatter)
+                .inputFluids(SkufMaterials.condensedSweat.getFluid(1000))
+                .circuitMeta(2)
+                .outputItems(dust, SkufMaterials.crystallizedDodikSweat, 2)
+                .duration(200)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        // ugar_gas sink: scrubber ugar_gas + water -> diluted sweat
+        // Prevents ugar_gas from being a dead-end; feeds back into main loop.
+        GTRecipeTypes.CHEMICAL_BATH_RECIPES.recipeBuilder("ugar_gas_scrubber")
+                .inputFluids(SkufMaterials.ugarGas.getFluid(1000))
+                .inputFluids(GTMaterials.Water.getFluid(500))
+                .outputFluids(SkufMaterials.dilutedSweat.getFluid(1500))
+                .duration(120)
+                .EUt(48)
                 .save(provider);
     }
 

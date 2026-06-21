@@ -197,5 +197,10 @@
 
   "skufaddon.tooltip.eut_with_tilt": "EU/t (с УТ): %sA %s EU/t (x%s)",
   "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",
-  "skufaddon.tooltip.voltage": "Напряжение: %s EU/t (%s)"
+  "skufaddon.tooltip.voltage": "Напряжение: %s EU/t (%s)",
+
+  "material.skufaddon.crystallized_dodik_sweat": "Кристаллизованный Пот Додика",
+  "item.skufaddon.dodik_circuit_basic": "Плата Додика",
+  "item.skufaddon.dodik_circuit_advanced": "Людская Плата",
+  "item.skufaddon.dodik_circuit_extreme": "Запиздош-мейнфрейм"
 }

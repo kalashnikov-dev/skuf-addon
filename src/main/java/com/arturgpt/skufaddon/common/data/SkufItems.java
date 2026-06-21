@@ -18,6 +18,10 @@ public class SkufItems {
     public static ItemEntry<Item> CNC_BIT;
     public static ItemEntry<Item> CNC_CUTTER;
 
+    public static ItemEntry<Item> DODIK_CIRCUIT_BASIC;
+    public static ItemEntry<Item> DODIK_CIRCUIT_ADVANCED;
+    public static ItemEntry<Item> DODIK_CIRCUIT_EXTREME;
+
     public static ItemEntry<Item> MELTED_CAPACITOR;
     public static ItemEntry<Item> BURNT_CABLE_DEBRIS;
     public static ItemEntry<Item> CHARRED_DEVELOPER_CIRCUIT;
@@ -43,6 +47,18 @@ public class SkufItems {
 
         CNC_CUTTER = SkufAddon.REGISTRATE
                 .item("cnc_cutter", Item::new)
+                .register();
+
+        DODIK_CIRCUIT_BASIC = SkufAddon.REGISTRATE
+                .item("dodik_circuit_basic", Item::new)
+                .register();
+
+        DODIK_CIRCUIT_ADVANCED = SkufAddon.REGISTRATE
+                .item("dodik_circuit_advanced", Item::new)
+                .register();
+
+        DODIK_CIRCUIT_EXTREME = SkufAddon.REGISTRATE
+                .item("dodik_circuit_extreme", Item::new)
                 .register();
 
         MELTED_CAPACITOR = SkufAddon.REGISTRATE

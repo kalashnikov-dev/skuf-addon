@@ -197,5 +197,10 @@
 
   "skufaddon.tooltip.eut_with_tilt": "EU/t (with Tilt): %sA %s EU/t (x%s)",
   "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",
-  "skufaddon.tooltip.voltage": "Voltage: %s EU/t (%s)"
+  "skufaddon.tooltip.voltage": "Voltage: %s EU/t (%s)",
+
+  "material.skufaddon.crystallized_dodik_sweat": "Crystallized Dodik Sweat",
+  "item.skufaddon.dodik_circuit_basic": "Dodik Board",
+  "item.skufaddon.dodik_circuit_advanced": "Lyudskaya Board",
+  "item.skufaddon.dodik_circuit_extreme": "Zapizdosh Mainframe"
 }
