@@ -11,12 +11,16 @@ import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
+
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 
 public class SkufRecipes {
 
     public static void init(Consumer<FinishedRecipe> provider) {
         baseRecipes(provider);
+        vanillaCrafting(provider);
         bootstrapFix(provider);
         circuitsChain(provider);
         machineCrafting(provider);
@@ -511,6 +515,123 @@ public class SkufRecipes {
                 .duration(120)
                 .EUt(48)
                 .save(provider);
+    }
+
+    private static void vanillaCrafting(Consumer<FinishedRecipe> provider) {
+        // ── Hulls: smoldering_pukan ───────────────────────────────────────────
+        // LV Smoldering Pukan
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_lv",
+                SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
+                "PPP", "PCP", "PPP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel)
+        );
+
+        // MV Smoldering Pukan
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_mv",
+                SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
+                "PPP", "PCP", "PPP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit)
+        );
+
+        // HV Smoldering Pukan
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_hv",
+                SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack(),
+                "PPP", "PCP", "PPP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.crystallizedDodikSweat),
+                'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
+        );
+
+        // ── LV Machines ───────────────────────────────────────────────────────
+        // LV CNC Machine
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_lv",
+                SkufSingleblockMachines.CNC_MACHINE[GTValues.LV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
+                'S', SkufItems.CNC_BIT.asStack()
+        );
+
+        // LV Normis Filtration
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_normis_filtration_lv",
+                SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.LV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
+                'S', ChemicalHelper.get(dust, SkufMaterials.normieDust)
+        );
+
+        // LV Pot Distillery
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_pot_distillery_lv",
+                SkufSingleblockMachines.POT_DISTILLERY[GTValues.LV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
+                'S', ChemicalHelper.get(plate, SkufMaterials.correctMatter)
+        );
+
+        // LV Vibe Stabilizer
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_vibe_stabilizer_lv",
+                SkufSingleblockMachines.VIBE_STABILIZER[GTValues.LV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
+                'S', ChemicalHelper.get(frameGt, SkufMaterials.pokhuit)
+        );
+
+        // ── MV Machines ───────────────────────────────────────────────────────
+        // MV CNC Machine
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_mv",
+                SkufSingleblockMachines.CNC_MACHINE[GTValues.MV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
+                'S', SkufItems.CNC_BIT.asStack()
+        );
+
+        // MV Normis Filtration
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_normis_filtration_mv",
+                SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.MV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
+                'S', ChemicalHelper.get(dust, SkufMaterials.normieDust)
+        );
+
+        // MV Pot Distillery
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_pot_distillery_mv",
+                SkufSingleblockMachines.POT_DISTILLERY[GTValues.MV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
+                'S', ChemicalHelper.get(plate, SkufMaterials.correctMatter)
+        );
+
+        // MV Vibe Stabilizer
+        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_vibe_stabilizer_mv",
+                SkufSingleblockMachines.VIBE_STABILIZER[GTValues.MV].asStack(),
+                "PCP", "BHB", "PSP",
+                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
+                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
+                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
+                'S', ChemicalHelper.get(frameGt, SkufMaterials.pokhuit)
+        );
     }
 
     private static void exampleRecipes(Consumer<FinishedRecipe> provider) {

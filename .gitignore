@@ -35,3 +35,4 @@ run-data/
 # local reference / notes
 .tmp-gtceu-src/
 mds/
+.temp/
