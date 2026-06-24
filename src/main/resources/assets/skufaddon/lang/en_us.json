@@ -22,6 +22,7 @@
   "material.skufaddon.warm_vibe_steam": "Warm Vibe Steam",
   "material.skufaddon.padik_noble_gas": "Padik Noble Gas",
   "material.skufaddon.dense_jizhnyak": "Dense Jizhnyak",
+  "material.skufaddon.broken_monitor": "Broken Monitor",
 
   "fluid.skufaddon.sweat": "Sweat",
   "fluid.skufaddon.puff_smoke": "Puff Smoke",
@@ -79,6 +80,10 @@
   "item.skufaddon.normis_singularity": "Normie Singularity",
   "item.skufaddon.absolute_pohuit": "Absolute Pohuit",
   "item.skufaddon.arturian_mainframe": "Arturian Mainframe",
+  "item.skufaddon.raw_demo": "Raw Demo",
+
+  "block.skufaddon.block_broken_monitor": "Broken Monitor Block",
+  "item.skufaddon.block_broken_monitor": "Broken Monitor Block",
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
@@ -88,17 +93,22 @@
   "item.skufaddon.sauna_egora": "Sauna Egora",
   "skufaddon.multiblock.sauna_egora.tooltip.0": "Relaxes nearby Tilt machines, lowering their Tilt level.",
   "skufaddon.multiblock.sauna_egora.tooltip.1": "Place facing outward; the 16-block-long cavity extends behind the controller.",
-  "skufaddon.multiblock.sauna_egora.tooltip.structure": "16×9 Plastcrete pad with one Pokhuit Frame, Plastcrete walls and a 16×9 outward-overhanging rim with chamfered corners. Needs a Maintenance Hatch, an Energy Input Hatch (EV+ only) and a Fluid Output Hatch.",
+  "skufaddon.multiblock.sauna_egora.tooltip.structure": "16×9 Plastcrete pad with one Pokhuit Frame, Plastcrete walls and a 16×9 outward-overhanging rim with chamfered corners. Needs a Maintenance Hatch, an Energy Input Hatch (EV+ only), a Fluid Input Hatch (water) and a Fluid Output Hatch.",
   "skufaddon.multiblock.sauna_egora.hot": "Sauna is hot: Tilt is cooling down",
   "skufaddon.multiblock.sauna_egora.cold": "Sauna is heating up...",
   "skufaddon.multiblock.sauna_egora.heat_amount": "Heat: %s%%",
-  "skufaddon.multiblock.sauna_egora.sweat_rate": "Diluted Sweat: %s mB/s",
-  "skufaddon.multiblock.sauna_egora.sweat_output_full": "Fluid output hatch is full",
+  "skufaddon.multiblock.sauna_egora.steam_rate": "Warm Vibe Steam: %s mB/s",
+  "skufaddon.multiblock.sauna_egora.steam_output_full": "Fluid output hatch is full",
   "skufaddon.multiblock.sauna_egora.insufficient_tier": "Energy Input Hatch must be EV tier or higher",
+
+  "block.skufaddon.razbor_geympleya": "Gameplay Breakdown",
+  "item.skufaddon.razbor_geympleya": "Gameplay Breakdown",
+  "skufaddon.multiblock.razbor_geympleya.tooltip": "a screen for watching e-girls on twitch",
 
   "gtceu.normis_filtration": "Normis Filtration",
   "gtceu.skufization": "Skufization",
   "gtceu.sauna_egora": "Sauna Egora",
+  "gtceu.razbor_geympleya": "Gameplay Breakdown",
   "gtceu.cnc_machine": "CNC Machining",
   "gtceu.pot_distillery": "Pot Distillation",
   "gtceu.vibe_stabilizer": "Vibe Stabilization",
@@ -185,7 +195,8 @@
 
   "gtceu.normis_filtration.description": "Allows separating skufs from normies.",
   "gtceu.skufization.description": "Converts almost-normie materials into proper skuf.",
-  "gtceu.sauna_egora.description": "Produces Diluted Sweat while hot (heat ≥ 95%). Base output at EV: 80 mB/s. +40 mB/s per energy tier above EV. +60 mB/s per Tilt machine inside the cavity.",
+  "gtceu.sauna_egora.description": "Consumes Water while running. Produces Warm Vibe Steam while hot (heat ≥ 95%). Base output at EV: 80 mB/s water in, 80 mB/s steam out. +40 mB/s per energy tier above EV. +60 mB/s per Tilt machine inside the cavity.",
+  "gtceu.razbor_geympleya.description": "a screen for watching e-girls on twitch",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Tilt Level",
 

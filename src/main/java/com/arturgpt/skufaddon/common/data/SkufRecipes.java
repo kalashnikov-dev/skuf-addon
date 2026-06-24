@@ -28,6 +28,7 @@ public class SkufRecipes {
         recyclingChain(provider);
         myposhkoChain(provider);
         saunaChain(provider);
+        gameplayBreakdownChain(provider);
         endgameChain(provider);
         mvpOrphanFixes(provider);
         exampleRecipes(provider);
@@ -95,7 +96,7 @@ public class SkufRecipes {
     private static void machineCrafting(Consumer<FinishedRecipe> provider) {
         // ── LV: dodik_circuit_basic + honestSteel cable ─────────────────────────
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
                 .inputItems(cableGtSingle, SkufMaterials.honestSteel)
@@ -105,7 +106,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
                 .inputItems(SkufItems.CNC_BIT, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
                 .inputItems(cableGtSingle, SkufMaterials.honestSteel)
@@ -115,8 +116,8 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
-                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
+                .inputItems(frameGt, SkufMaterials.skufit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
                 .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.LV].asStack())
@@ -125,7 +126,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
                 .inputItems(plate, SkufMaterials.correctMatter)
                 .inputItems(frameGt, SkufMaterials.pokhuit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
@@ -137,7 +138,7 @@ public class SkufRecipes {
 
         // ── MV: dodik_circuit_advanced + pokhuit cable ────────────────────────
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine_mv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
                 .inputItems(cableGtSingle, SkufMaterials.pokhuit)
@@ -147,7 +148,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine_mv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
                 .inputItems(SkufItems.CNC_BIT, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
                 .inputItems(cableGtSingle, SkufMaterials.pokhuit)
@@ -157,8 +158,8 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery_mv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
-                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
+                .inputItems(frameGt, SkufMaterials.skufit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
                 .inputItems(cableGtSingle, SkufMaterials.pokhuit)
                 .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.MV].asStack())
@@ -167,7 +168,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer_mv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
                 .inputItems(plate, SkufMaterials.correctMatter)
                 .inputItems(frameGt, SkufMaterials.pokhuit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
@@ -179,7 +180,7 @@ public class SkufRecipes {
 
         // ── HV: dodik_circuit_extreme + crystallizedDodikSweat cable ──────────
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine_hv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
                 .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
@@ -189,7 +190,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_cnc_machine_hv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
                 .inputItems(SkufItems.CNC_BIT, 2)
                 .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
                 .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
@@ -199,8 +200,8 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_pot_distillery_hv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
-                .inputItems(plate, SkufMaterials.correctMatter)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
+                .inputItems(frameGt, SkufMaterials.skufit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
                 .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat)
                 .outputItems(SkufSingleblockMachines.POT_DISTILLERY[GTValues.HV].asStack())
@@ -209,7 +210,7 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer_hv")
-                .inputItems(plate, SkufMaterials.honestSteel, 4)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
                 .inputItems(plate, SkufMaterials.correctMatter)
                 .inputItems(frameGt, SkufMaterials.pokhuit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME)
@@ -368,8 +369,9 @@ public class SkufRecipes {
 
     private static void saunaChain(Consumer<FinishedRecipe> provider) {
         // EMI/JEI info recipe — base rate at EV with no Tilt machines inside; see recipe type tooltips.
-        SkufRecipeTypes.SAUNA_EGORA_RECIPES.recipeBuilder("diluted_sweat")
-                .outputFluids(SkufMaterials.dilutedSweat.getFluid(SaunaEgoraMachine.SWEAT_BASE_MB))
+        SkufRecipeTypes.SAUNA_EGORA_RECIPES.recipeBuilder("warm_vibe_steam")
+                .inputFluids(GTMaterials.Water.getFluid(SaunaEgoraMachine.STEAM_BASE_MB))
+                .outputFluids(SkufMaterials.warmVibeSteam.getFluid(SaunaEgoraMachine.STEAM_BASE_MB))
                 .duration(20)
                 .EUt(GTValues.VA[GTValues.EV])
                 .save(provider);
@@ -389,7 +391,7 @@ public class SkufRecipes {
                 .outputFluids(GTMaterials.Water.getFluid(1000))
                 .outputFluids(SkufMaterials.ugarGas.getFluid(250))
                 .duration(100)
-                .EUt(120)
+                .EUt(GTValues.VA[GTValues.EV])
                 .save(provider);
 
         GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("brew_coolant_of_denial")
@@ -399,6 +401,56 @@ public class SkufRecipes {
                 .outputFluids(SkufMaterials.coolantOfDenial.getFluid(1000))
                 .duration(160)
                 .EUt(480)
+                .save(provider);
+    }
+
+    private static void gameplayBreakdownChain(Consumer<FinishedRecipe> provider) {
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_broken_monitor_block")
+                .inputItems(SkufItems.MELTED_CAPACITOR, 1)
+                .inputItems(dust, SkufMaterials.normieDust, 2)
+                .inputItems(plate, SkufMaterials.honestSteel, 1)
+                .inputItems(gem, SkufMaterials.correctMatter)
+                .circuitMeta(7)
+                .outputItems(block, SkufMaterials.brokenMonitor)
+                .duration(300)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_raw_demo")
+                .inputItems(SkufItems.CHARRED_DEVELOPER_CIRCUIT)
+                .inputItems(SkufItems.MYPOSHKO_SCRIPT)
+                .inputItems(dust, SkufMaterials.normieDust, 2)
+                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(250))
+                .circuitMeta(9)
+                .outputItems(SkufItems.RAW_DEMO)
+                .duration(160)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        SkufRecipeTypes.RAZBOR_GEYMPLAYA_RECIPES.recipeBuilder("demo_to_technical_tears")
+                .inputItems(SkufItems.RAW_DEMO)
+                .outputFluids(SkufMaterials.technicalTears.getFluid(500))
+                .duration(240)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("dry_technical_tears")
+                .inputFluids(SkufMaterials.technicalTears.getFluid(500))
+                .outputItems(dust, SkufMaterials.technicalTears)
+                .outputFluids(GTMaterials.Water.getFluid(250))
+                .duration(160)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_razbor_geympleya")
+                .inputItems(frameGt, SkufMaterials.pokhuit, 20)
+                .inputItems(block, SkufMaterials.brokenMonitor, 12)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
+                .circuitMeta(12)
+                .outputItems(SkufMultiblockMachines.RAZBOR_GEYMPLAYA.asStack())
+                .duration(600)
+                .EUt(GTValues.V[GTValues.MV])
                 .save(provider);
     }
 
@@ -505,14 +557,21 @@ public class SkufRecipes {
                 .EUt(GTValues.V[GTValues.MV])
                 .save(provider);
 
-        // ugar_gas sink: scrubber ugar_gas + water -> diluted sweat
-        // Prevents ugar_gas from being a dead-end; feeds back into main loop.
-        GTRecipeTypes.CHEMICAL_BATH_RECIPES.recipeBuilder("ugar_gas_scrubber")
+        // ugar gas scrubber: ugar gas + water -> diluted sweat (EV+)
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("ugar_gas_scrubber")
                 .inputFluids(SkufMaterials.ugarGas.getFluid(1000))
                 .inputFluids(GTMaterials.Water.getFluid(500))
                 .outputFluids(SkufMaterials.dilutedSweat.getFluid(1500))
-                .duration(120)
-                .EUt(48)
+                .duration(160)
+                .EUt(GTValues.VA[GTValues.EV])
+                .save(provider);
+
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("hide_sweat_with_denial")
+                .inputFluids(SkufMaterials.sweat.getFluid(1000))
+                .inputFluids(SkufMaterials.coolantOfDenial.getFluid(500))
+                .outputFluids(SkufMaterials.hiddenSweat.getFluid(1000))
+                .duration(240)
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
     }
 
@@ -543,8 +602,7 @@ public class SkufRecipes {
         // LV CNC Machine
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_lv",
                 SkufSingleblockMachines.CNC_MACHINE[GTValues.LV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
@@ -553,8 +611,7 @@ public class SkufRecipes {
         // LV Normis Filtration
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_normis_filtration_lv",
                 SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.LV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
@@ -563,18 +620,16 @@ public class SkufRecipes {
         // LV Pot Distillery
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_pot_distillery_lv",
                 SkufSingleblockMachines.POT_DISTILLERY[GTValues.LV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
-                'S', ChemicalHelper.get(plate, SkufMaterials.correctMatter));
+                'S', ChemicalHelper.get(frameGt, SkufMaterials.skufit));
 
         // LV Vibe Stabilizer
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_vibe_stabilizer_lv",
                 SkufSingleblockMachines.VIBE_STABILIZER[GTValues.LV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
@@ -584,8 +639,7 @@ public class SkufRecipes {
         // MV CNC Machine
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_mv",
                 SkufSingleblockMachines.CNC_MACHINE[GTValues.MV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
@@ -594,8 +648,7 @@ public class SkufRecipes {
         // MV Normis Filtration
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_normis_filtration_mv",
                 SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.MV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
@@ -604,18 +657,16 @@ public class SkufRecipes {
         // MV Pot Distillery
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_pot_distillery_mv",
                 SkufSingleblockMachines.POT_DISTILLERY[GTValues.MV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
-                'S', ChemicalHelper.get(plate, SkufMaterials.correctMatter));
+                'S', ChemicalHelper.get(frameGt, SkufMaterials.skufit));
 
         // MV Vibe Stabilizer
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_vibe_stabilizer_mv",
                 SkufSingleblockMachines.VIBE_STABILIZER[GTValues.MV].asStack(),
-                "PCP", "BHB", "PSP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
+                " C ", "BHB", " S ",
                 'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),

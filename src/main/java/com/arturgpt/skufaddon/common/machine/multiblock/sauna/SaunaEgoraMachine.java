@@ -50,15 +50,18 @@ import java.util.Set;
 public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine implements ISaunaProvider, IDisplayUIMachine {
 
     /** mB produced per {@link SaunaEgoraLogic#FLUID_PRODUCTION_INTERVAL} while hot. */
-    public static final int SWEAT_BASE_MB = 80;
-    public static final int SWEAT_MB_PER_TIER = 40;
-    public static final int SWEAT_MB_PER_TILT = 60;
+    public static final int STEAM_BASE_MB = 80;
+    public static final int STEAM_MB_PER_TIER = 40;
+    public static final int STEAM_MB_PER_TILT = 60;
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             SaunaEgoraMachine.class, WorkableMultiblockMachine.MANAGED_FIELD_HOLDER);
 
     @Nullable
     private EnergyContainerList inputEnergyContainers;
+
+    @Nullable
+    private FluidHandlerList inputFluidHandlers;
 
     @Nullable
     private FluidHandlerList outputFluidHandlers;
@@ -97,6 +100,7 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
     public void onStructureInvalid() {
         super.onStructureInvalid();
         this.inputEnergyContainers = null;
+        this.inputFluidHandlers = null;
         this.outputFluidHandlers = null;
         getRecipeLogic().resetHeatAmount();
         unbindReceivers();
@@ -133,6 +137,7 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
 
     protected void initializeAbilities() {
         List<IEnergyContainer> energyContainers = new ArrayList<>();
+        List<IFluidHandler> fluidInputHandlers = new ArrayList<>();
         List<IFluidHandler> fluidOutputHandlers = new ArrayList<>();
         Long2ObjectMap<IO> ioMap = getMultiblockState().getMatchContext()
                 .getOrCreate("ioMap", Long2ObjectMaps::emptyMap);
@@ -146,6 +151,10 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
                             .filter(IEnergyContainer.class::isInstance)
                             .map(IEnergyContainer.class::cast)
                             .forEach(energyContainers::add);
+                    handlerList.getCapability(FluidRecipeCapability.CAP).stream()
+                            .filter(IFluidHandler.class::isInstance)
+                            .map(IFluidHandler.class::cast)
+                            .forEach(fluidInputHandlers::add);
                 }
             }
             if (io != IO.NONE && io != IO.IN) {
@@ -162,8 +171,10 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
             }
         }
         this.inputEnergyContainers = new EnergyContainerList(energyContainers);
+        this.inputFluidHandlers = fluidInputHandlers.isEmpty() ? null : new FluidHandlerList(fluidInputHandlers);
         this.outputFluidHandlers = fluidOutputHandlers.isEmpty() ? null : new FluidHandlerList(fluidOutputHandlers);
         getRecipeLogic().setEnergyContainer(this.inputEnergyContainers);
+        getRecipeLogic().setInputFluidHandler(this.inputFluidHandlers);
         getRecipeLogic().setOutputFluidHandler(this.outputFluidHandlers);
         this.tier = Math.min(GTValues.MAX, GTUtil.getFloorTierByVoltage(getMaxVoltage()));
     }
@@ -186,16 +197,26 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
         return saunaReceivers != null ? saunaReceivers.size() : 0;
     }
 
-    /** mB of diluted sweat per production cycle while the sauna is hot. */
-    public int getDilutedSweatAmountPerCycle() {
-        int tierBonus = Math.max(0, getTier() - GTValues.EV) * SWEAT_MB_PER_TIER;
-        int tiltBonus = getSaunaReceiverCount() * SWEAT_MB_PER_TILT;
-        return SWEAT_BASE_MB + tierBonus + tiltBonus;
+    /** mB of warm vibe steam per production cycle while the sauna is hot. */
+    public int getWarmVibeSteamAmountPerCycle() {
+        int tierBonus = Math.max(0, getTier() - GTValues.EV) * STEAM_MB_PER_TIER;
+        int tiltBonus = getSaunaReceiverCount() * STEAM_MB_PER_TILT;
+        return STEAM_BASE_MB + tierBonus + tiltBonus;
     }
 
     /** mB per second at 20-tick production interval. */
-    public int getDilutedSweatRatePerSecond() {
-        return getDilutedSweatAmountPerCycle() * 20 / SaunaEgoraLogic.FLUID_PRODUCTION_INTERVAL;
+    public int getWarmVibeSteamRatePerSecond() {
+        return getWarmVibeSteamAmountPerCycle() * 20 / SaunaEgoraLogic.FLUID_PRODUCTION_INTERVAL;
+    }
+
+    /** Water consumed per tick while the sauna is running (scales with steam output). */
+    public int getWaterAmountPerTick() {
+        return Math.max(1, getWarmVibeSteamAmountPerCycle() / SaunaEgoraLogic.FLUID_PRODUCTION_INTERVAL);
+    }
+
+    /** mB of water per second at 20-tick production interval. */
+    public int getWaterRatePerSecond() {
+        return getWaterAmountPerTick() * 20;
     }
 
     @Override
@@ -226,8 +247,8 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
 
             if (isHot()) {
                 textList.add(Component.translatable("skufaddon.multiblock.sauna_egora.hot"));
-                textList.add(Component.translatable("skufaddon.multiblock.sauna_egora.sweat_rate",
-                        getDilutedSweatRatePerSecond()));
+                textList.add(Component.translatable("skufaddon.multiblock.sauna_egora.steam_rate",
+                        getWarmVibeSteamRatePerSecond()));
             } else {
                 textList.add(Component.translatable("skufaddon.multiblock.sauna_egora.cold"));
             }
@@ -265,6 +286,11 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
     @Nullable
     public EnergyContainerList getInputEnergyContainers() {
         return inputEnergyContainers;
+    }
+
+    @Nullable
+    public FluidHandlerList getInputFluidHandlers() {
+        return inputFluidHandlers;
     }
 
     @Nullable

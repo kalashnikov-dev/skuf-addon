@@ -30,4 +30,9 @@ public final class SkufBlocks {
     public static BlockEntry<Block> correctMatterBlock() {
         return (BlockEntry<Block>) GTMaterialBlocks.MATERIAL_BLOCKS.get(TagPrefix.block, SkufMaterials.correctMatter);
     }
+
+    @SuppressWarnings("unchecked")
+    public static BlockEntry<Block> brokenMonitorBlock() {
+        return (BlockEntry<Block>) GTMaterialBlocks.MATERIAL_BLOCKS.get(TagPrefix.block, SkufMaterials.brokenMonitor);
+    }
 }

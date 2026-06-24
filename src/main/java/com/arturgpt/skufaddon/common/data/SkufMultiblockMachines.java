@@ -1,6 +1,7 @@
 package com.arturgpt.skufaddon.common.data;
 
 import com.arturgpt.skufaddon.SkufAddon;
+import com.arturgpt.skufaddon.common.machine.multiblock.gameplay.RazborGeympleyaPatterns;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraMachine;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraPatterns;
 
@@ -28,6 +29,7 @@ import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.OC_NON_PERFECT
 public class SkufMultiblockMachines {
 
     private static final int SKUFIZATOR_HATCH_TIER = 2;
+    private static final int RAZBOR_GEYMPLAYA_HATCH_TIER = GTValues.MV;
 
     private static final net.minecraft.resources.ResourceLocation SKUFIZATOR_CASING = GTCEu
             .id("block/casings/solid/machine_casing_inert_ptfe");
@@ -35,12 +37,17 @@ public class SkufMultiblockMachines {
     private static final net.minecraft.resources.ResourceLocation SAUNA_CASING = GTCEu
             .id("block/casings/cleanroom/plascrete");
 
+    private static final net.minecraft.resources.ResourceLocation RAZBOR_GEYMPLAYA_CASING = GTCEu
+            .id("block/casings/solid/machine_casing_inert_ptfe");
+
     public static MultiblockMachineDefinition SKUFIZATOR;
     public static MultiblockMachineDefinition SAUNA_EGORA;
+    public static MultiblockMachineDefinition RAZBOR_GEYMPLAYA;
 
     public static void init() {
         initSkufizator();
         initSaunaEgora();
+        initRazborGeympleya();
     }
 
     private static void initSkufizator() {
@@ -87,6 +94,63 @@ public class SkufMultiblockMachines {
                 .register();
     }
 
+    private static void initRazborGeympleya() {
+        RAZBOR_GEYMPLAYA = SkufAddon.REGISTRATE
+                .multiblock("razbor_geympleya", WorkableElectricMultiblockMachine::new)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .allowExtendedFacing(false)
+                .recipeType(SkufRecipeTypes.RAZBOR_GEYMPLAYA_RECIPES)
+                .recipeModifiers(OC_NON_PERFECT_SUBTICK, BATCH_MODE)
+                .appearanceBlock(SkufBlocks.pokhuitFrame())
+                .pattern(RazborGeympleyaPatterns::create)
+                .shapeInfos(SkufMultiblockMachines::razborGeympleyaShapeInfos)
+                .workableCasingModel(
+                        RAZBOR_GEYMPLAYA_CASING,
+                        SkufAddon.id("block/multiblock/razbor_geympleya"))
+                .tooltips(Component.translatable("skufaddon.multiblock.razbor_geympleya.tooltip"))
+                .register();
+    }
+
+    private static List<MultiblockShapeInfo> razborGeympleyaShapeInfos(MultiblockMachineDefinition definition) {
+        return List.of(
+                razborGeympleyaShapeInfo(definition, Direction.EAST),
+                razborGeympleyaShapeInfo(definition, Direction.WEST, true),
+                razborGeympleyaShapeInfo(definition, Direction.SOUTH),
+                razborGeympleyaShapeInfo(definition, Direction.NORTH));
+    }
+
+    private static MultiblockShapeInfo razborGeympleyaShapeInfo(MultiblockMachineDefinition definition,
+                                                                Direction outwardFacing) {
+        return razborGeympleyaShapeInfo(definition, outwardFacing, false);
+    }
+
+    private static MultiblockShapeInfo razborGeympleyaShapeInfo(MultiblockMachineDefinition definition,
+                                                                Direction outwardFacing,
+                                                                boolean mirrorWidth) {
+        var base = MultiblockShapeInfo.builder()
+                .where('C', definition, outwardFacing)
+                .where('P', SkufBlocks.pokhuitFrame().getDefaultState())
+                .where('X', SkufBlocks.brokenMonitorBlock().getDefaultState())
+                .where('E', ENERGY_INPUT_HATCH[RAZBOR_GEYMPLAYA_HATCH_TIER], outwardFacing)
+                .where('I', ITEM_IMPORT_BUS[RAZBOR_GEYMPLAYA_HATCH_TIER], outwardFacing)
+                .where('M', MAINTENANCE_HATCH, outwardFacing)
+                .where('O', FLUID_EXPORT_HATCH[RAZBOR_GEYMPLAYA_HATCH_TIER], outwardFacing);
+
+        var builder = base;
+        for (int w = 0; w < RazborGeympleyaPatterns.WIDTH; w++) {
+            int widthIndex = mirrorWidth ? RazborGeympleyaPatterns.WIDTH - 1 - w : w;
+            builder = builder.aisle(
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 0, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 1, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 2, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 3, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 4, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 5, true),
+                    RazborGeympleyaPatterns.sliceRow(widthIndex, 6, true));
+        }
+        return builder.build();
+    }
+
     private static List<MultiblockShapeInfo> saunaShapeInfos(MultiblockMachineDefinition definition) {
         // ShapeInfo bakes [z][y][x]: controller is on the +X edge, so front must point EAST to show the overlay in EMI.
         return List.of(
@@ -109,6 +173,7 @@ public class SkufMultiblockMachines {
                 .where('P', GTBlocks.PLASTCRETE.getDefaultState())
                 .where('F', SkufBlocks.pokhuitFrame().getDefaultState())
                 .where('E', ENERGY_INPUT_HATCH[GTValues.EV], outwardFacing)
+                .where('I', FLUID_IMPORT_HATCH[GTValues.EV], outwardFacing)
                 .where('M', MAINTENANCE_HATCH, outwardFacing)
                 .where('O', FLUID_EXPORT_HATCH[GTValues.EV], outwardFacing)
                 .where('#', Blocks.AIR.defaultBlockState());

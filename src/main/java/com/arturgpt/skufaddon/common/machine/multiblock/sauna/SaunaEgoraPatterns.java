@@ -40,10 +40,7 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.controller;
  */
 public final class SaunaEgoraPatterns {
 
-    public static final int WIDTH = 18;
     public static final int DEPTH = 11;
-    public static final int CORE_WIDTH = 16;
-    public static final int CORE_DEPTH = 9;
 
     private SaunaEgoraPatterns() {}
 
@@ -92,7 +89,7 @@ public final class SaunaEgoraPatterns {
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
-                " PPPPPPPPPPPOEFMC ",
+                " PPPPPPPPPPIOEFMC ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
@@ -146,7 +143,10 @@ public final class SaunaEgoraPatterns {
                         .setMaxGlobalLimited(1))
                 .or(abilities(PartAbility.EXPORT_FLUIDS)
                         .setMinGlobalLimited(1)
-                        .setMaxGlobalLimited(2));
+                        .setMaxGlobalLimited(2))
+                .or(abilities(PartAbility.IMPORT_FLUIDS)
+                        .setMinGlobalLimited(1)
+                        .setMaxGlobalLimited(1));
     }
 
     private static TraceabilityPredicate innerPredicate() {

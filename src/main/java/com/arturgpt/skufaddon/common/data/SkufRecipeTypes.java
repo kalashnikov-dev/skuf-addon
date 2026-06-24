@@ -26,11 +26,19 @@ public class SkufRecipeTypes {
             .setSound(GTSoundEntries.CHEMICAL)
             .setEUIO(IO.IN);
 
-    /** EMI/JEI info category for passive Diluted Sweat output (actual logic is in {@code SaunaEgoraLogic}). */
+    /** EMI/JEI info category for passive Warm Vibe Steam output (actual logic is in {@code SaunaEgoraLogic}). */
     public static final GTRecipeType SAUNA_EGORA_RECIPES = register("sauna_egora", MULTIBLOCK)
-            .setMaxIOSize(0, 0, 0, 1)
+            .setMaxIOSize(0, 0, 1, 1)
             .setSlotOverlay(false, false, GuiTextures.FLUID_SLOT)
             .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CHEMICAL)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(4);
+
+    public static final GTRecipeType RAZBOR_GEYMPLAYA_RECIPES = register("razbor_geympleya", MULTIBLOCK)
+            .setMaxIOSize(1, 0, 0, 1)
+            .setSlotOverlay(true, false, GuiTextures.FLUID_SLOT)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.CHEMICAL)
             .setEUIO(IO.IN)
             .setMaxTooltips(4);
@@ -60,5 +68,6 @@ public class SkufRecipeTypes {
         var unused = NORMIS_FILTRATION_RECIPES;
         var unusedMultiblock = SKUFIZATION_RECIPES;
         var unusedSauna = SAUNA_EGORA_RECIPES;
+        var unusedRazbor = RAZBOR_GEYMPLAYA_RECIPES;
     }
 }

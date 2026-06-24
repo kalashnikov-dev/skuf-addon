@@ -36,6 +36,8 @@ public class SkufItems {
     public static ItemEntry<Item> ABSOLUTE_POHUIT;
     public static ItemEntry<Item> ARTURIAN_MAINFRAME;
 
+    public static ItemEntry<Item> RAW_DEMO;
+
     public static void init() {
         PRAVILNAYA_VESH = SkufAddon.REGISTRATE
                 .item("pravilnaya_vesh", Item::new)
@@ -103,6 +105,10 @@ public class SkufItems {
 
         ARTURIAN_MAINFRAME = SkufAddon.REGISTRATE
                 .item("arturian_mainframe", Item::new)
+                .register();
+
+        RAW_DEMO = SkufAddon.REGISTRATE
+                .item("raw_demo", Item::new)
                 .register();
     }
 }

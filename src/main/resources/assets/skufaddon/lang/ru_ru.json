@@ -22,6 +22,7 @@
   "material.skufaddon.warm_vibe_steam": "Тёплый Вайбовый Пар",
   "material.skufaddon.padik_noble_gas": "Благородный Газ Падика",
   "material.skufaddon.dense_jizhnyak": "Плотный Жижняк",
+  "material.skufaddon.broken_monitor": "Разбитый Монитор",
 
   "fluid.skufaddon.sweat": "Пот",
   "fluid.skufaddon.puff_smoke": "Дым от Пыхчения",
@@ -79,6 +80,10 @@
   "item.skufaddon.normis_singularity": "Нормисная Сингулярность",
   "item.skufaddon.absolute_pohuit": "Абсолютный Похуит",
   "item.skufaddon.arturian_mainframe": "Артурийский Мейнфрейм",
+  "item.skufaddon.raw_demo": "Сырая Демка",
+
+  "block.skufaddon.block_broken_monitor": "Блок Разбитого Монитора",
+  "item.skufaddon.block_broken_monitor": "Блок Разбитого Монитора",
 
   "block.skufaddon.skufizator": "Скуфизатор",
   "item.skufaddon.skufizator": "Скуфизатор",
@@ -88,17 +93,22 @@
   "item.skufaddon.sauna_egora": "Сауна Егора",
   "skufaddon.multiblock.sauna_egora.tooltip.0": "Расслабляет находящиеся внутри Tilt-механизмы, понижая их уровень УТ.",
   "skufaddon.multiblock.sauna_egora.tooltip.1": "Ставьте лицевой стороной наружу — длинная полость (16 блоков) уходит за контроллер.",
-  "skufaddon.multiblock.sauna_egora.tooltip.structure": "Пол 16×9 из пластбетона с одним Каркасом Похуита, стены из пластбетона и крыша 16×9, выступающая наружу со срезанными углами. Нужны Люк Обслуживания, Энерговвод (только EV+) и Жидкостный Выходной Люк.",
+  "skufaddon.multiblock.sauna_egora.tooltip.structure": "Пол 16×9 из пластбетона с одним Каркасом Похуита, стены из пластбетона и крыша 16×9, выступающая наружу со срезанными углами. Нужны Люк Обслуживания, Энерговвод (только EV+), Жидкостный Входной Люк (вода) и Жидкостный Выходной Люк.",
   "skufaddon.multiblock.sauna_egora.hot": "Сауна нагрета: УТ остывает",
   "skufaddon.multiblock.sauna_egora.cold": "Сауна нагревается...",
   "skufaddon.multiblock.sauna_egora.heat_amount": "Жар: %s%%",
-  "skufaddon.multiblock.sauna_egora.sweat_rate": "Разбавленный Пот: %s mB/с",
-  "skufaddon.multiblock.sauna_egora.sweat_output_full": "Жидкостный выходной люк переполнен",
+  "skufaddon.multiblock.sauna_egora.steam_rate": "Тёплый Вайбовый Пар: %s mB/с",
+  "skufaddon.multiblock.sauna_egora.steam_output_full": "Жидкостный выходной люк переполнен",
   "skufaddon.multiblock.sauna_egora.insufficient_tier": "Энерговвод должен быть тира EV или выше",
+
+  "block.skufaddon.razbor_geympleya": "Разбор Геймплея",
+  "item.skufaddon.razbor_geympleya": "Разбор Геймплея",
+  "skufaddon.multiblock.razbor_geympleya.tooltip": "экран для просмотра тянок на твиче",
 
   "gtceu.normis_filtration": "Нормис-фильтрация",
   "gtceu.skufization": "Скуфизация",
   "gtceu.sauna_egora": "Сауна Егора",
+  "gtceu.razbor_geympleya": "Разбор Геймплея",
   "gtceu.cnc_machine": "ЧПУ-обработка",
   "gtceu.pot_distillery": "Пот-перегонка",
   "gtceu.vibe_stabilizer": "Стабилизация Вайба",
@@ -185,7 +195,8 @@
 
   "gtceu.normis_filtration.description": "Позволяет отделить скуфов от нормисов.",
   "gtceu.skufization.description": "Превращает почти-нормисные материалы в настоящий скуф.",
-  "gtceu.sauna_egora.description": "Вырабатывает Разбавленный Пот при нагреве (жар ≥ 95%). База на EV: 80 mB/с. +40 mB/с за каждый тир энергии выше EV. +60 mB/с за каждую Tilt-машину внутри полости.",
+  "gtceu.sauna_egora.description": "Потребляет Воду при работе. Вырабатывает Тёплый Вайбовый Пар при нагреве (жар ≥ 95%). База на EV: 80 mB/с воды, 80 mB/с пара. +40 mB/с за каждый тир энергии выше EV. +60 mB/с за каждую Tilt-машину внутри полости.",
+  "gtceu.razbor_geympleya.description": "экран для просмотра тянок на твиче",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Уровень УТ",
 

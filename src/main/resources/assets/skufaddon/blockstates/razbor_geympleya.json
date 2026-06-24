@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "skufaddon:block/machine/razbor_geympleya"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/razbor_geympleya",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/razbor_geympleya",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "skufaddon:block/machine/razbor_geympleya",
+      "y": 90
+    }
+  }
+}

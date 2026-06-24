@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMaintenanceMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.transfer.fluid.FluidHandlerList;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.utils.GTTransferUtils;
 
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
@@ -23,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Drives the Sauna Egora multiblock. Closely mirrors GregTech's {@code CleanroomLogic}, but
- * accumulates "heat" instead of "cleanliness". While hot, the sauna also condenses diluted sweat
- * into its fluid output hatch.
+ * accumulates "heat" instead of "cleanliness". While running it consumes water from a fluid input hatch
+ * and vents warm vibe steam into its fluid output hatch.
  */
 public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
 
@@ -40,6 +41,9 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
 
     @Nullable
     private IEnergyContainer energyContainer;
+
+    @Nullable
+    private FluidHandlerList inputFluidHandler;
 
     @Nullable
     private FluidHandlerList outputFluidHandler;
@@ -90,6 +94,17 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
         }
 
         if (maintenanceMachine == null || maintenanceMachine.getNumMaintenanceProblems() < 6) {
+            if (!consumeWater()) {
+                if (progress > 0 && machine.regressWhenWaiting()) {
+                    this.progress = 1;
+                }
+                if (machine.self().getOffsetTimer() % duration == 0) {
+                    adjustHeat(true);
+                }
+                setWaiting(Component.translatable("gtceu.recipe_logic.insufficient_in").append(": ")
+                        .append(GTMaterials.Water.getLocalizedName()));
+                return;
+            }
             if (!consumeEnergy()) {
                 if (progress > 0 && machine.regressWhenWaiting()) {
                     this.progress = 1;
@@ -103,7 +118,7 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
             }
             setStatus(Status.WORKING);
             if (getMachine().isHot()) {
-                tryProduceDilutedSweat();
+                tryProduceWarmVibeSteam();
             }
             if (progress++ < getMaxProgress()) {
                 if (!machine.onWorking()) {
@@ -128,7 +143,7 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
         }
     }
 
-    private void tryProduceDilutedSweat() {
+    private void tryProduceWarmVibeSteam() {
         if (outputFluidHandler == null) {
             return;
         }
@@ -136,11 +151,11 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
             return;
         }
 
-        int amount = getMachine().getDilutedSweatAmountPerCycle();
-        FluidStack stack = SkufMaterials.dilutedSweat.getFluid(amount);
+        int amount = getMachine().getWarmVibeSteamAmountPerCycle();
+        FluidStack stack = SkufMaterials.warmVibeSteam.getFluid(amount);
         int filled = GTTransferUtils.fillFluidAccountNotifiableList(outputFluidHandler, stack, FluidAction.EXECUTE);
         if (filled <= 0) {
-            setWaiting(Component.translatable("skufaddon.multiblock.sauna_egora.sweat_output_full"));
+            setWaiting(Component.translatable("skufaddon.multiblock.sauna_egora.steam_output_full"));
         }
     }
 
@@ -168,6 +183,21 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
         return false;
     }
 
+    private boolean consumeWater() {
+        if (inputFluidHandler == null) {
+            return false;
+        }
+        int amount = getMachine().getWaterAmountPerTick();
+        FluidStack toDrain = GTMaterials.Water.getFluid(amount);
+        FluidStack drained = GTTransferUtils.drainFluidAccountNotifiableList(
+                inputFluidHandler, toDrain, FluidAction.SIMULATE);
+        if (drained.isEmpty() || drained.getAmount() < amount) {
+            return false;
+        }
+        GTTransferUtils.drainFluidAccountNotifiableList(inputFluidHandler, toDrain, FluidAction.EXECUTE);
+        return true;
+    }
+
     private int getTierDifference() {
         return Math.max(0, getMachine().getTier() - GTValues.EV);
     }
@@ -178,6 +208,10 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
 
     public void setEnergyContainer(@Nullable IEnergyContainer energyContainer) {
         this.energyContainer = energyContainer;
+    }
+
+    public void setInputFluidHandler(@Nullable FluidHandlerList inputFluidHandler) {
+        this.inputFluidHandler = inputFluidHandler;
     }
 
     public void setOutputFluidHandler(@Nullable FluidHandlerList outputFluidHandler) {
