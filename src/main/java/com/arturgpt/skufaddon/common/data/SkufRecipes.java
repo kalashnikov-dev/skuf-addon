@@ -44,13 +44,6 @@ public class SkufRecipes {
     }
 
     private static void bootstrapFix(Consumer<FinishedRecipe> provider) {
-        GTRecipeTypes.MACERATOR_RECIPES.recipeBuilder("normie_dust_maceration")
-                .inputItems(Items.ROTTEN_FLESH)
-                .outputItems(dust, SkufMaterials.normieDust)
-                .duration(120)
-                .EUt(16)
-                .save(provider);
-
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("puff_smoke_extraction")
                 .inputItems(dust, SkufMaterials.normieDust)
                 .circuitMeta(5)

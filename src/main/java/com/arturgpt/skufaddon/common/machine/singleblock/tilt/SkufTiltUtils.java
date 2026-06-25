@@ -18,6 +18,23 @@ public final class SkufTiltUtils {
     public static final int MAX_TILT_LEVEL = 100;
     /** Ticks at max tilt before the level is hidden in tooltips (1 second). */
     public static final int HIDDEN_MODE_DELAY_TICKS = 20;
+    /** Ticks spent at peak tilt ("Ваще похуй") before the overheat visuals reach full intensity (~30s). */
+    public static final int OVERHEAT_RAMP_TICKS = 600;
+
+    /**
+     * Visual overheat progress in {@code [0, 1]}. Non-zero only once the machine is at peak tilt,
+     * then ramps up the longer it stays there. Used client-side to drive the red glow and smoke.
+     */
+    public static float getOverheatProgress(int tiltLevel, int ticksAtMaxTilt) {
+        if (tiltLevel < MAX_TILT_LEVEL) {
+            return 0.0f;
+        }
+        float progress = ticksAtMaxTilt / (float) OVERHEAT_RAMP_TICKS;
+        if (progress < 0.0f) {
+            return 0.0f;
+        }
+        return Math.min(progress, 1.0f);
+    }
 
     public static double getTiltMultiplier(int tiltLevel) {
         return 1.0 + (tiltLevel / (double) MAX_TILT_LEVEL) * 3.0;

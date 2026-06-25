@@ -1,5 +1,6 @@
 package com.arturgpt.skufaddon;
 
+import com.arturgpt.skufaddon.client.render.SkufOverheatRenderer;
 import com.arturgpt.skufaddon.common.data.SkufBlocks;
 import com.arturgpt.skufaddon.common.data.SkufComponentMachines;
 import com.arturgpt.skufaddon.common.data.SkufItems;
@@ -61,7 +62,7 @@ public class SkufAddon {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        // Client-only initialization goes here.
+        event.enqueueWork(SkufOverheatRenderer::init);
     }
 
     private void addMaterialRegistries(MaterialRegistryEvent event) {
