@@ -41,8 +41,6 @@ public class SkufMaterials {
     public static Material padikNobleGas;
     public static Material denseJizhnyak;
 
-    public static Material brokenMonitor;
-
     public static void init() {
         skufit = new Material.Builder(SkufAddon.id("skufit"))
                 .ingot()
@@ -214,12 +212,6 @@ public class SkufMaterials {
         denseJizhnyak = new Material.Builder(SkufAddon.id("dense_jizhnyak"))
                 .liquid(new FluidBuilder().temperature(330))
                 .color(0x3E5A2A)
-                .buildAndRegister();
-
-        brokenMonitor = new Material.Builder(SkufAddon.id("broken_monitor"))
-                .gem()
-                .color(0x2A2A4A)
-                .iconSet(MaterialIconSet.SHINY)
                 .buildAndRegister();
     }
 }

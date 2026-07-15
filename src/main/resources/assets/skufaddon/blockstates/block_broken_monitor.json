@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skufaddon:block/block_broken_monitor"
+    }
+  }
+}

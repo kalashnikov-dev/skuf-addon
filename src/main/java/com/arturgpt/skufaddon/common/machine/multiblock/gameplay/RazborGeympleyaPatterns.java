@@ -95,7 +95,7 @@ public final class RazborGeympleyaPatterns {
 
     private static TraceabilityPredicate casing() {
         return blocks(SkufBlocks.pokhuitFrame().get())
-                .or(ability(PartAbility.INPUT_ENERGY, GTValues.tiersBetween(GTValues.MV, GTValues.MAX))
+                .or(ability(PartAbility.INPUT_ENERGY, GTValues.tiersBetween(GTValues.HV, GTValues.MAX))
                         .setMinGlobalLimited(1)
                         .setMaxGlobalLimited(2))
                 .or(abilities(PartAbility.MAINTENANCE)

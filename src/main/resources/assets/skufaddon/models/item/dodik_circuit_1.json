@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "skufaddon:item/dodik_circuit_basic"
+    "layer0": "skufaddon:item/dodik_circuit_1"
   }
 }

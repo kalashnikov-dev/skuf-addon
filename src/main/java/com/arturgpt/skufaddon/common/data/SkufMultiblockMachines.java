@@ -29,7 +29,7 @@ import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.OC_NON_PERFECT
 public class SkufMultiblockMachines {
 
     private static final int SKUFIZATOR_HATCH_TIER = 2;
-    private static final int RAZBOR_GEYMPLAYA_HATCH_TIER = GTValues.MV;
+    private static final int RAZBOR_GEYMPLAYA_HATCH_TIER = GTValues.HV;
 
     private static final net.minecraft.resources.ResourceLocation SKUFIZATOR_CASING = GTCEu
             .id("block/casings/solid/machine_casing_inert_ptfe");

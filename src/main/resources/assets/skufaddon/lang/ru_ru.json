@@ -22,8 +22,6 @@
   "material.skufaddon.warm_vibe_steam": "Тёплый Вайбовый Пар",
   "material.skufaddon.padik_noble_gas": "Благородный Газ Падика",
   "material.skufaddon.dense_jizhnyak": "Плотный Жижняк",
-  "material.skufaddon.broken_monitor": "Разбитый Монитор",
-
   "fluid.skufaddon.sweat": "Пот",
   "fluid.skufaddon.puff_smoke": "Дым от Пыхчения",
   "fluid.skufaddon.jizhnyak": "Жижняк",
@@ -69,7 +67,8 @@
   "item.skufaddon.pravilnaya_vesh": "Правильная Вещь",
   "item.skufaddon.cnc_bit": "ЧПУ-резец",
   "item.skufaddon.cnc_cutter": "Резак ЧПУ",
-  "item.skufaddon.melted_capacitor": "Оплавленный Конденсатор",
+  "item.skufaddon.capacitor": "Конденсатор",
+  "item.skufaddon.burnt_capacitor": "Подгоревший Конденсатор",
   "item.skufaddon.burnt_cable_debris": "Кабельные Обломки",
   "item.skufaddon.charred_developer_circuit": "Обугленная Плата Разработчика",
   "item.skufaddon.myposhko_script": "Скрипт Мыпошко",
@@ -80,10 +79,10 @@
   "item.skufaddon.normis_singularity": "Нормисная Сингулярность",
   "item.skufaddon.absolute_pohuit": "Абсолютный Похуит",
   "item.skufaddon.arturian_mainframe": "Артурийский Мейнфрейм",
-  "item.skufaddon.raw_demo": "Сырая Демка",
+  "item.skufaddon.demo": "Демка",
 
-  "block.skufaddon.block_broken_monitor": "Блок Разбитого Монитора",
-  "item.skufaddon.block_broken_monitor": "Блок Разбитого Монитора",
+  "block.skufaddon.block_broken_monitor": "Разбитый Монитор",
+  "item.skufaddon.block_broken_monitor": "Разбитый Монитор",
 
   "block.skufaddon.skufizator": "Скуфизатор",
   "item.skufaddon.skufizator": "Скуфизатор",
@@ -211,7 +210,7 @@
   "skufaddon.tooltip.voltage": "Напряжение: %s EU/t (%s)",
 
   "material.skufaddon.crystallized_dodik_sweat": "Кристаллизованный Пот Додика",
-  "item.skufaddon.dodik_circuit_basic": "Плата Додика",
-  "item.skufaddon.dodik_circuit_advanced": "Людская Плата",
-  "item.skufaddon.dodik_circuit_extreme": "Запиздош-мейнфрейм"
+  "item.skufaddon.dodik_circuit_1": "Плата Додика",
+  "item.skufaddon.dodik_circuit_2": "Людская Плата",
+  "item.skufaddon.dodik_circuit_3": "Запиздош-мейнфрейм"
 }

@@ -12,7 +12,6 @@ RES = Path(r"C:\Users\daynt\IdeaProjects\skuf-addon\src\main\resources\assets\sk
 ITEM_COLORS = {
     "cnc_bit": 0x9AA4AD,
     "cnc_cutter": 0x8A949D,
-    "melted_capacitor": 0xB85C1E,
     "burnt_cable_debris": 0x2A2A2A,
     "charred_developer_circuit": 0x4A4038,
     "myposhko_script": 0x4F7FB5,

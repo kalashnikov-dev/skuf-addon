@@ -22,8 +22,6 @@
   "material.skufaddon.warm_vibe_steam": "Warm Vibe Steam",
   "material.skufaddon.padik_noble_gas": "Padik Noble Gas",
   "material.skufaddon.dense_jizhnyak": "Dense Jizhnyak",
-  "material.skufaddon.broken_monitor": "Broken Monitor",
-
   "fluid.skufaddon.sweat": "Sweat",
   "fluid.skufaddon.puff_smoke": "Puff Smoke",
   "fluid.skufaddon.jizhnyak": "Jizhnyak",
@@ -69,7 +67,8 @@
   "item.skufaddon.pravilnaya_vesh": "Correct Thing",
   "item.skufaddon.cnc_bit": "CNC Bit",
   "item.skufaddon.cnc_cutter": "CNC Cutter",
-  "item.skufaddon.melted_capacitor": "Melted Capacitor",
+  "item.skufaddon.capacitor": "Capacitor",
+  "item.skufaddon.burnt_capacitor": "Burnt Capacitor",
   "item.skufaddon.burnt_cable_debris": "Burnt Cable Debris",
   "item.skufaddon.charred_developer_circuit": "Charred Developer Circuit",
   "item.skufaddon.myposhko_script": "Myposhko Script",
@@ -80,10 +79,10 @@
   "item.skufaddon.normis_singularity": "Normie Singularity",
   "item.skufaddon.absolute_pohuit": "Absolute Pohuit",
   "item.skufaddon.arturian_mainframe": "Arturian Mainframe",
-  "item.skufaddon.raw_demo": "Raw Demo",
+  "item.skufaddon.demo": "Demo",
 
-  "block.skufaddon.block_broken_monitor": "Broken Monitor Block",
-  "item.skufaddon.block_broken_monitor": "Broken Monitor Block",
+  "block.skufaddon.block_broken_monitor": "Broken Monitor",
+  "item.skufaddon.block_broken_monitor": "Broken Monitor",
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
@@ -211,7 +210,7 @@
   "skufaddon.tooltip.voltage": "Voltage: %s EU/t (%s)",
 
   "material.skufaddon.crystallized_dodik_sweat": "Crystallized Dodik Sweat",
-  "item.skufaddon.dodik_circuit_basic": "Dodik Board",
-  "item.skufaddon.dodik_circuit_advanced": "Lyudskaya Board",
-  "item.skufaddon.dodik_circuit_extreme": "Zapizdosh Mainframe"
+  "item.skufaddon.dodik_circuit_1": "Dodik Board",
+  "item.skufaddon.dodik_circuit_2": "Lyudskaya Board",
+  "item.skufaddon.dodik_circuit_3": "Zapizdosh Mainframe"
 }

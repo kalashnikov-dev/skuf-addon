@@ -18,10 +18,10 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 public class SkufRecipes {
 
     public static void init(Consumer<FinishedRecipe> provider) {
+        circuitsChain(provider);
         baseRecipes(provider);
         vanillaCrafting(provider);
         bootstrapFix(provider);
-        circuitsChain(provider);
         machineCrafting(provider);
         productionChain(provider);
         stabilizerChain(provider);
@@ -56,7 +56,7 @@ public class SkufRecipes {
     // SKU-47: 3 tiered circuit boards — Dodik → Lyudskaya → Zapizdosh
     private static void circuitsChain(Consumer<FinishedRecipe> provider) {
         // LV: dodik_circuit_basic from 2x honestSteelPlate + 2x electrically_wet_sweat + circuit(1)
-        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_dodik_board")
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("circuit_1_craft_dodik_board")
                 .inputItems(plate, SkufMaterials.honestSteel, 2)
                 .inputFluids(SkufMaterials.sweat.getFluid(200))
                 .circuitMeta(1)
@@ -66,7 +66,7 @@ public class SkufRecipes {
                 .save(provider);
 
         // MV: dodik_circuit_advanced from 2x dodik_circuit_basic + 2x pokhuitPlate + circuit(2)
-        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_lyudskaya_board")
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("circuit_2_craft_lyudskaya_board")
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC, 2)
                 .inputItems(plate, SkufMaterials.pokhuit, 2)
                 .circuitMeta(2)
@@ -76,7 +76,7 @@ public class SkufRecipes {
                 .save(provider);
 
         // HV: dodik_circuit_extreme from 2x dodik_circuit_advanced + 2x crystallizedDodikSweatPlate + circuit(3)
-        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("craft_zapizdosh_mainframe")
+        GTRecipeTypes.CHEMICAL_RECIPES.recipeBuilder("circuit_3_craft_zapizdosh_mainframe")
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED, 2)
                 .inputItems(plate, SkufMaterials.crystallizedDodikSweat, 2)
                 .circuitMeta(3)
@@ -313,6 +313,15 @@ public class SkufRecipes {
     }
 
     private static void recyclingChain(Consumer<FinishedRecipe> provider) {
+        GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("slag_ignore_from_centrifuge")
+                .inputFluids(SkufMaterials.zhizhnyakLoss.getFluid(1000))
+                .circuitMeta(5)
+                .outputItems(dust, SkufMaterials.slagIgnore)
+                .outputFluids(SkufMaterials.puffSmoke.getFluid(250))
+                .duration(200)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("reclaim_zhizhnyak_loss")
                 .inputFluids(SkufMaterials.zhizhnyakLoss.getFluid(1000))
                 .circuitMeta(4)
@@ -322,8 +331,16 @@ public class SkufRecipes {
                 .EUt(60)
                 .save(provider);
 
-        GTRecipeTypes.ARC_FURNACE_RECIPES.recipeBuilder("repair_melted_capacitor")
-                .inputItems(SkufItems.MELTED_CAPACITOR.asStack(2))
+        GTRecipeTypes.ARC_FURNACE_RECIPES.recipeBuilder("burn_capacitor")
+                .inputItems(SkufItems.CAPACITOR)
+                .inputFluids(SkufMaterials.puffSmoke.getFluid(2000))
+                .outputItems(SkufItems.BURNT_CAPACITOR)
+                .duration(120)
+                .EUt(90)
+                .save(provider);
+
+        GTRecipeTypes.ARC_FURNACE_RECIPES.recipeBuilder("repair_burnt_capacitor")
+                .inputItems(SkufItems.BURNT_CAPACITOR.asStack(2))
                 .inputFluids(SkufMaterials.condensedSweat.getFluid(250))
                 .outputItems(ingot, SkufMaterials.honestSteel)
                 .duration(200)
@@ -395,36 +412,66 @@ public class SkufRecipes {
                 .duration(160)
                 .EUt(480)
                 .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_sauna_egora")
+                .inputItems(SkufItems.EGOR_CORE)
+                .inputItems(SkufItems.PRAVILNAYA_VESH, 2)
+                .inputItems(frameGt, SkufMaterials.pokhuit, 4)
+                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(2000))
+                .circuitMeta(8)
+                .outputItems(SkufMultiblockMachines.SAUNA_EGORA.asStack())
+                .duration(600)
+                .EUt(GTValues.V[GTValues.EV])
+                .save(provider);
     }
 
     private static void gameplayBreakdownChain(Consumer<FinishedRecipe> provider) {
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_capacitor")
+                .inputItems(plate, SkufMaterials.honestSteel, 2)
+                .inputItems(dust, SkufMaterials.pokhuit, 1)
+                .circuitMeta(4)
+                .outputItems(SkufItems.CAPACITOR)
+                .duration(160)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_broken_monitor_block")
-                .inputItems(SkufItems.MELTED_CAPACITOR, 1)
+                .inputItems(SkufItems.BURNT_CAPACITOR, 1)
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputItems(plate, SkufMaterials.honestSteel, 1)
                 .inputItems(gem, SkufMaterials.correctMatter)
                 .circuitMeta(7)
-                .outputItems(block, SkufMaterials.brokenMonitor)
+                .outputItems(SkufBlocks.brokenMonitorBlock().asStack())
                 .duration(300)
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
 
-        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_raw_demo")
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_charred_developer_circuit")
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
+                .inputItems(dust, SkufMaterials.slagIgnore)
+                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(100))
+                .circuitMeta(5)
+                .outputItems(SkufItems.CHARRED_DEVELOPER_CIRCUIT)
+                .duration(200)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_demo")
                 .inputItems(SkufItems.CHARRED_DEVELOPER_CIRCUIT)
                 .inputItems(SkufItems.MYPOSHKO_SCRIPT)
                 .inputItems(dust, SkufMaterials.normieDust, 2)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(250))
                 .circuitMeta(9)
-                .outputItems(SkufItems.RAW_DEMO)
+                .outputItems(SkufItems.DEMO)
                 .duration(160)
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
 
         SkufRecipeTypes.RAZBOR_GEYMPLAYA_RECIPES.recipeBuilder("demo_to_technical_tears")
-                .inputItems(SkufItems.RAW_DEMO)
+                .inputItems(SkufItems.DEMO)
                 .outputFluids(SkufMaterials.technicalTears.getFluid(500))
                 .duration(240)
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
 
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("dry_technical_tears")
@@ -432,18 +479,18 @@ public class SkufRecipes {
                 .outputItems(dust, SkufMaterials.technicalTears)
                 .outputFluids(GTMaterials.Water.getFluid(250))
                 .duration(160)
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_razbor_geympleya")
                 .inputItems(frameGt, SkufMaterials.pokhuit, 20)
-                .inputItems(block, SkufMaterials.brokenMonitor, 12)
+                .inputItems(SkufBlocks.brokenMonitorBlock(), 12)
                 .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
-                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack())
+                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
                 .circuitMeta(12)
                 .outputItems(SkufMultiblockMachines.RAZBOR_GEYMPLAYA.asStack())
                 .duration(600)
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
     }
 
@@ -529,7 +576,7 @@ public class SkufRecipes {
     }
 
     private static void mvpOrphanFixes(Consumer<FinishedRecipe> provider) {
-        // condensed_sweat source: concentrate raw sweat (also feeds repair_melted_capacitor)
+        // condensed_sweat source: concentrate raw sweat (also feeds repair_burnt_capacitor)
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("condense_sweat")
                 .inputFluids(SkufMaterials.sweat.getFluid(1000))
                 .circuitMeta(1)

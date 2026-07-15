@@ -1,4 +1,4 @@
-"""Generate Raw Demo (VHS-style) item texture."""
+"""Generate Demo (VHS-style) item texture."""
 
 from __future__ import annotations
 
@@ -64,9 +64,9 @@ def write_item_model(name: str) -> None:
 
 def main() -> None:
     ITEM_OUT.mkdir(parents=True, exist_ok=True)
-    draw_raw_demo().save(ITEM_OUT / "raw_demo.png")
-    write_item_model("raw_demo")
-    print("Wrote raw_demo item texture + model")
+    draw_raw_demo().save(ITEM_OUT / "demo.png")
+    write_item_model("demo")
+    print("Wrote demo item texture + model")
 
 
 if __name__ == "__main__":

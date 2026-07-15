@@ -22,7 +22,8 @@ public class SkufItems {
     public static ItemEntry<Item> DODIK_CIRCUIT_ADVANCED;
     public static ItemEntry<Item> DODIK_CIRCUIT_EXTREME;
 
-    public static ItemEntry<Item> MELTED_CAPACITOR;
+    public static ItemEntry<Item> CAPACITOR;
+    public static ItemEntry<Item> BURNT_CAPACITOR;
     public static ItemEntry<Item> BURNT_CABLE_DEBRIS;
     public static ItemEntry<Item> CHARRED_DEVELOPER_CIRCUIT;
 
@@ -36,9 +37,21 @@ public class SkufItems {
     public static ItemEntry<Item> ABSOLUTE_POHUIT;
     public static ItemEntry<Item> ARTURIAN_MAINFRAME;
 
-    public static ItemEntry<Item> RAW_DEMO;
+    public static ItemEntry<Item> DEMO;
 
     public static void init() {
+        DODIK_CIRCUIT_BASIC = SkufAddon.REGISTRATE
+                .item("dodik_circuit_1", Item::new)
+                .register();
+
+        DODIK_CIRCUIT_ADVANCED = SkufAddon.REGISTRATE
+                .item("dodik_circuit_2", Item::new)
+                .register();
+
+        DODIK_CIRCUIT_EXTREME = SkufAddon.REGISTRATE
+                .item("dodik_circuit_3", Item::new)
+                .register();
+
         PRAVILNAYA_VESH = SkufAddon.REGISTRATE
                 .item("pravilnaya_vesh", Item::new)
                 .register();
@@ -51,20 +64,12 @@ public class SkufItems {
                 .item("cnc_cutter", Item::new)
                 .register();
 
-        DODIK_CIRCUIT_BASIC = SkufAddon.REGISTRATE
-                .item("dodik_circuit_basic", Item::new)
+        CAPACITOR = SkufAddon.REGISTRATE
+                .item("capacitor", Item::new)
                 .register();
 
-        DODIK_CIRCUIT_ADVANCED = SkufAddon.REGISTRATE
-                .item("dodik_circuit_advanced", Item::new)
-                .register();
-
-        DODIK_CIRCUIT_EXTREME = SkufAddon.REGISTRATE
-                .item("dodik_circuit_extreme", Item::new)
-                .register();
-
-        MELTED_CAPACITOR = SkufAddon.REGISTRATE
-                .item("melted_capacitor", Item::new)
+        BURNT_CAPACITOR = SkufAddon.REGISTRATE
+                .item("burnt_capacitor", Item::new)
                 .register();
 
         BURNT_CABLE_DEBRIS = SkufAddon.REGISTRATE
@@ -107,8 +112,8 @@ public class SkufItems {
                 .item("arturian_mainframe", Item::new)
                 .register();
 
-        RAW_DEMO = SkufAddon.REGISTRATE
-                .item("raw_demo", Item::new)
+        DEMO = SkufAddon.REGISTRATE
+                .item("demo", Item::new)
                 .register();
     }
 }

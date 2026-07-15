@@ -1,9 +1,13 @@
 package com.arturgpt.skufaddon.common.data;
 
+import com.arturgpt.skufaddon.SkufAddon;
+
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.common.data.GTMaterialBlocks;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 
@@ -12,9 +16,21 @@ import com.tterrag.registrate.util.entry.BlockEntry;
  */
 public final class SkufBlocks {
 
+    public static BlockEntry<Block> BROKEN_MONITOR_BLOCK;
+
     private SkufBlocks() {}
 
-    public static void init() {}
+    public static void init() {
+        BROKEN_MONITOR_BLOCK = SkufAddon.REGISTRATE
+                .block("block_broken_monitor", Block::new)
+                .properties(props -> props
+                        .mapColor(MapColor.COLOR_PURPLE)
+                        .sound(SoundType.GLASS)
+                        .strength(0.8f, 0.8f)
+                        .requiresCorrectToolForDrops())
+                .simpleItem()
+                .register();
+    }
 
     @SuppressWarnings("unchecked")
     public static BlockEntry<Block> skufitFrame() {
@@ -31,8 +47,7 @@ public final class SkufBlocks {
         return (BlockEntry<Block>) GTMaterialBlocks.MATERIAL_BLOCKS.get(TagPrefix.block, SkufMaterials.correctMatter);
     }
 
-    @SuppressWarnings("unchecked")
     public static BlockEntry<Block> brokenMonitorBlock() {
-        return (BlockEntry<Block>) GTMaterialBlocks.MATERIAL_BLOCKS.get(TagPrefix.block, SkufMaterials.brokenMonitor);
+        return BROKEN_MONITOR_BLOCK;
     }
 }
