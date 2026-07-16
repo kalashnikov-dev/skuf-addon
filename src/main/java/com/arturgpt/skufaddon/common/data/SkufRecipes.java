@@ -44,6 +44,15 @@ public class SkufRecipes {
     }
 
     private static void bootstrapFix(Consumer<FinishedRecipe> provider) {
+        // SKU-62: expensive GT-macerator bootstrap (no addon machine). Filtration stays
+        // the proper path: 1 flesh → dust + sweat, cheaper and with a byproduct.
+        GTRecipeTypes.MACERATOR_RECIPES.recipeBuilder("normie_dust_maceration")
+                .inputItems(Items.ROTTEN_FLESH, 2)
+                .outputItems(dust, SkufMaterials.normieDust)
+                .duration(400)
+                .EUt(16)
+                .save(provider);
+
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("puff_smoke_extraction")
                 .inputItems(dust, SkufMaterials.normieDust)
                 .circuitMeta(5)
@@ -303,6 +312,17 @@ public class SkufRecipes {
                 .EUt(48)
                 .save(provider);
 
+        // P0-B: Skufit → Pokhuit via vibe (ore remains the primary source)
+        SkufRecipeTypes.VIBE_STABILIZER_RECIPES.recipeBuilder("pokhuit_from_skufit")
+                .inputItems(ingot, SkufMaterials.skufit)
+                .inputItems(dust, SkufMaterials.chelyabinskShale)
+                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(200))
+                .outputItems(ingot, SkufMaterials.pokhuit)
+                .outputItems(dust, SkufMaterials.slagIgnore)
+                .duration(240)
+                .EUt(48)
+                .save(provider);
+
         GTRecipeTypes.AUTOCLAVE_RECIPES.recipeBuilder("vibe_infused_crystallization")
                 .inputItems(dust, SkufMaterials.correctMatter, 2)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(500))
@@ -345,6 +365,16 @@ public class SkufRecipes {
                 .outputItems(ingot, SkufMaterials.honestSteel)
                 .duration(200)
                 .EUt(90)
+                .save(provider);
+
+        // P0-A': honest fallback until Burning Pukan drops debris. Fluid required —
+        // ARC recipes without fluid often fail to register / show in JEI (cf. burn_capacitor).
+        GTRecipeTypes.ARC_FURNACE_RECIPES.recipeBuilder("burnt_cable_debris_from_arc")
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel, 2)
+                .inputFluids(SkufMaterials.puffSmoke.getFluid(500))
+                .outputItems(SkufItems.BURNT_CABLE_DEBRIS.asStack(2))
+                .duration(120)
+                .EUt(30)
                 .save(provider);
 
         GTRecipeTypes.MACERATOR_RECIPES.recipeBuilder("repair_burnt_cable_debris")
