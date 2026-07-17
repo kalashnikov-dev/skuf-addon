@@ -129,13 +129,12 @@ public class SkufRecipes {
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_vibe_stabilizer")
                 .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
-                .inputItems(plate, SkufMaterials.correctMatter)
                 .inputItems(frameGt, SkufMaterials.pokhuit)
                 .inputItems(SkufItems.DODIK_CIRCUIT_BASIC)
                 .inputItems(cableGtSingle, SkufMaterials.honestSteel)
                 .outputItems(SkufSingleblockMachines.VIBE_STABILIZER[GTValues.LV].asStack())
-                .duration(300)
-                .EUt(60)
+                .duration(200)
+                .EUt(30)
                 .save(provider);
 
         // ── MV: dodik_circuit_advanced + pokhuit cable ────────────────────────
