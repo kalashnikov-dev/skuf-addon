@@ -311,17 +311,6 @@ public class SkufRecipes {
                 .EUt(48)
                 .save(provider);
 
-        // P0-B: Skufit → Pokhuit via vibe (ore remains the primary source)
-        SkufRecipeTypes.VIBE_STABILIZER_RECIPES.recipeBuilder("pokhuit_from_skufit")
-                .inputItems(ingot, SkufMaterials.skufit)
-                .inputItems(dust, SkufMaterials.chelyabinskShale)
-                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(200))
-                .outputItems(ingot, SkufMaterials.pokhuit)
-                .outputItems(dust, SkufMaterials.slagIgnore)
-                .duration(240)
-                .EUt(48)
-                .save(provider);
-
         GTRecipeTypes.AUTOCLAVE_RECIPES.recipeBuilder("vibe_infused_crystallization")
                 .inputItems(dust, SkufMaterials.correctMatter, 2)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(500))
@@ -750,7 +739,15 @@ public class SkufRecipes {
                 .circuitMeta(6)
                 .outputItems(SkufMultiblockMachines.SKUFIZATOR.asStack())
                 .duration(600)
-                .EUt(480)
+                .EUt(GTValues.V[GTValues.MV])
+                .save(provider);
+
+        SkufRecipeTypes.SKUFIZATION_RECIPES.recipeBuilder("pokhuit_from_skufit")
+                .inputItems(ingot, SkufMaterials.skufit)
+                .inputFluids(SkufMaterials.sweat.getFluid(250))
+                .outputItems(ingot, SkufMaterials.pokhuit, 2)
+                .duration(120)
+                .EUt(48)
                 .save(provider);
     }
 }

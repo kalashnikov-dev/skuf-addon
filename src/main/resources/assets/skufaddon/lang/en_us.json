@@ -86,13 +86,13 @@
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "3x3x3: Skufit frames, Correct Matter Block column; hatches anywhere on the outer shell",
+  "skufaddon.multiblock.skufizator.tooltip.structure": "Samovar: 5×5 Skufit-frame bowl + Correct Matter column on the floor (5 tall); required: 1 item input, 1 fluid input, 1 item output, energy, maintenance",
 
   "block.skufaddon.sauna_egora": "Sauna Egora",
   "item.skufaddon.sauna_egora": "Sauna Egora",
   "skufaddon.multiblock.sauna_egora.tooltip.0": "Relaxes nearby Tilt machines, lowering their Tilt level.",
   "skufaddon.multiblock.sauna_egora.tooltip.1": "Place facing outward; the 16-block-long cavity extends behind the controller.",
-  "skufaddon.multiblock.sauna_egora.tooltip.structure": "16×9 Plastcrete pad with one Pokhuit Frame, Plastcrete walls and a 16×9 outward-overhanging rim with chamfered corners. Needs a Maintenance Hatch, an Energy Input Hatch (EV+ only), a Fluid Input Hatch (water) and a Fluid Output Hatch.",
+  "skufaddon.multiblock.sauna_egora.tooltip.structure": "16×9 Plastcrete pad with one Pokhuit Frame, Plastcrete walls and a 16×9 outward-overhanging rim with chamfered corners. Needs a Maintenance Hatch, an Energy Input Hatch (EV+ only), a Fluid Input Hatch (water), a Fluid Output Hatch, and at least one Diode (or Hull / Passthrough Hatch) anywhere on the casing.",
   "skufaddon.multiblock.sauna_egora.hot": "Sauna is hot: Tilt is cooling down",
   "skufaddon.multiblock.sauna_egora.cold": "Sauna is heating up...",
   "skufaddon.multiblock.sauna_egora.heat_amount": "Heat: %s%%",

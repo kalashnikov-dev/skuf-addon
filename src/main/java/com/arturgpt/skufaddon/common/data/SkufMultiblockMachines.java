@@ -4,15 +4,14 @@ import com.arturgpt.skufaddon.SkufAddon;
 import com.arturgpt.skufaddon.common.machine.multiblock.gameplay.RazborGeympleyaPatterns;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraMachine;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraPatterns;
+import com.arturgpt.skufaddon.common.machine.multiblock.skufizator.SkufizatorPatterns;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
-import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.MultiblockShapeInfo;
-import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 
 import net.minecraft.core.Direction;
@@ -21,14 +20,12 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 
-import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GTMachines.*;
 import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.BATCH_MODE;
 import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.OC_NON_PERFECT_SUBTICK;
 
 public class SkufMultiblockMachines {
 
-    private static final int SKUFIZATOR_HATCH_TIER = 2;
     private static final int RAZBOR_GEYMPLAYA_HATCH_TIER = GTValues.HV;
 
     private static final net.minecraft.resources.ResourceLocation SKUFIZATOR_CASING = GTCEu
@@ -53,20 +50,12 @@ public class SkufMultiblockMachines {
     private static void initSkufizator() {
         SKUFIZATOR = SkufAddon.REGISTRATE
                 .multiblock("skufizator", WorkableElectricMultiblockMachine::new)
-                .rotationState(RotationState.ALL)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .allowExtendedFacing(false)
                 .recipeType(SkufRecipeTypes.SKUFIZATION_RECIPES)
                 .recipeModifiers(OC_NON_PERFECT_SUBTICK, BATCH_MODE)
                 .appearanceBlock(SkufBlocks.skufitFrame())
-                .pattern(definition -> FactoryBlockPattern.start()
-                        .aisle("CCC", "CCC", "CCC")
-                        .aisle("CPC", "CPC", "CPC")
-                        .aisle("CCC", "CSC", "CCC")
-                        .where('S', controller(blocks(definition.getBlock())))
-                        .where('P', blocks(SkufBlocks.correctMatterBlock().get()))
-                        .where('C', blocks(SkufBlocks.skufitFrame().get()).setMinGlobalLimited(12)
-                                .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                .or(Predicates.autoAbilities(true, false, false)))
-                        .build())
+                .pattern(SkufizatorPatterns::create)
                 .shapeInfos(SkufMultiblockMachines::skufizatorShapeInfos)
                 .workableCasingModel(
                         SKUFIZATOR_CASING,
@@ -174,6 +163,7 @@ public class SkufMultiblockMachines {
                 .where('F', SkufBlocks.pokhuitFrame().getDefaultState())
                 .where('E', ENERGY_INPUT_HATCH[GTValues.EV], outwardFacing)
                 .where('I', FLUID_IMPORT_HATCH[GTValues.EV], outwardFacing)
+                .where('D', DIODE[GTValues.EV], outwardFacing)
                 .where('M', MAINTENANCE_HATCH, outwardFacing)
                 .where('O', FLUID_EXPORT_HATCH[GTValues.EV], outwardFacing)
                 .where('#', Blocks.AIR.defaultBlockState());
@@ -199,35 +189,51 @@ public class SkufMultiblockMachines {
     }
 
     private static List<MultiblockShapeInfo> skufizatorShapeInfos(MultiblockMachineDefinition definition) {
-        var base = MultiblockShapeInfo.builder()
-                .where('S', definition, Direction.SOUTH)
-                .where('P', SkufBlocks.correctMatterBlock().getDefaultState())
-                .where('C', SkufBlocks.skufitFrame().getDefaultState())
-                .where('I', ITEM_IMPORT_BUS[SKUFIZATOR_HATCH_TIER], Direction.NORTH)
-                .where('O', ITEM_EXPORT_BUS[SKUFIZATOR_HATCH_TIER], Direction.SOUTH)
-                .where('E', ENERGY_INPUT_HATCH[SKUFIZATOR_HATCH_TIER], Direction.UP)
-                .where('M', MAINTENANCE_HATCH, Direction.DOWN);
-
+        // Same facing set as Sauna/Razbor — one hatch layout, four horizontal orientations.
         return List.of(
-                base.shallowCopy()
-                        .aisle("CCC", "CCC", "CCC")
-                        .aisle("CPC", "CPC", "CPC")
-                        .aisle("OCE", "ISC", "CMC")
-                        .build(),
-                base.shallowCopy()
-                        .aisle("EIC", "CCC", "CMC")
-                        .aisle("CPC", "CPC", "CPC")
-                        .aisle("CCC", "CSC", "CCC")
-                        .build(),
-                base.shallowCopy()
-                        .aisle("CCC", "CCC", "CCC")
-                        .aisle("IPC", "CPC", "OMC")
-                        .aisle("CCC", "CSC", "CCC")
-                        .build(),
-                base.shallowCopy()
-                        .aisle("EIC", "CCC", "CMC")
-                        .aisle("CPC", "CPC", "CPC")
-                        .aisle("OCC", "CSC", "CCC")
-                        .build());
+                skufizatorShapeInfo(definition, Direction.EAST),
+                skufizatorShapeInfo(definition, Direction.WEST, true),
+                skufizatorShapeInfo(definition, Direction.SOUTH),
+                skufizatorShapeInfo(definition, Direction.NORTH));
+    }
+
+    private static MultiblockShapeInfo skufizatorShapeInfo(MultiblockMachineDefinition definition,
+                                                           Direction outwardFacing) {
+        return skufizatorShapeInfo(definition, outwardFacing, false);
+    }
+
+    private static MultiblockShapeInfo skufizatorShapeInfo(MultiblockMachineDefinition definition,
+                                                           Direction outwardFacing,
+                                                           boolean mirrorWidth) {
+        int tier = SkufizatorPatterns.HATCH_TIER;
+        var base = MultiblockShapeInfo.builder()
+                .where('S', definition, outwardFacing)
+                .where('C', SkufBlocks.skufitFrame().getDefaultState())
+                .where('P', SkufBlocks.correctMatterBlock().getDefaultState())
+                .where('#', Blocks.AIR.defaultBlockState())
+                .where('E', ENERGY_INPUT_HATCH[tier], outwardFacing)
+                .where('I', ITEM_IMPORT_BUS[tier], outwardFacing)
+                .where('F', FLUID_IMPORT_HATCH[tier], outwardFacing)
+                .where('O', ITEM_EXPORT_BUS[tier], outwardFacing)
+                .where('M', MAINTENANCE_HATCH, outwardFacing);
+
+        String[] floor = mirrorWidth ? mirrorRows(SkufizatorPatterns.floorLayer()) : SkufizatorPatterns.floorLayer();
+        String[] bowl = mirrorWidth ? mirrorRows(SkufizatorPatterns.bowlShapeLayer()) :
+                SkufizatorPatterns.bowlShapeLayer();
+        String[] rim = mirrorWidth ? mirrorRows(SkufizatorPatterns.rimLayer()) : SkufizatorPatterns.rimLayer();
+        String[] chimney = mirrorWidth ? mirrorRows(SkufizatorPatterns.chimneyTopLayer()) :
+                SkufizatorPatterns.chimneyTopLayer();
+
+        var builder = base;
+        for (int i = 0; i < SkufizatorPatterns.WIDTH; i++) {
+            builder = builder.aisle(
+                    floor[i],
+                    bowl[i],
+                    rim[i],
+                    chimney[i],
+                    chimney[i],
+                    chimney[i]);
+        }
+        return builder.build();
     }
 }

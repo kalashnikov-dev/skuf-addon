@@ -89,7 +89,7 @@ public final class SaunaEgoraPatterns {
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
-                " PPPPPPPPPPIOEFMC ",
+                " PPPPPPPPPDIOEFMC ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
                 " PPPPPPPPPPPPPPPP ",
@@ -146,7 +146,10 @@ public final class SaunaEgoraPatterns {
                         .setMaxGlobalLimited(2))
                 .or(abilities(PartAbility.IMPORT_FLUIDS)
                         .setMinGlobalLimited(1)
-                        .setMaxGlobalLimited(1));
+                        .setMaxGlobalLimited(1))
+                .or(abilities(PartAbility.PASSTHROUGH_HATCH)
+                        .setMinGlobalLimited(1)
+                        .setMaxGlobalLimited(16));
     }
 
     private static TraceabilityPredicate innerPredicate() {

@@ -21,7 +21,8 @@ public class SkufRecipeTypes {
             .setEUIO(IO.IN);
 
     public static final GTRecipeType SKUFIZATION_RECIPES = register("skufization", MULTIBLOCK)
-            .setMaxIOSize(2, 2, 0, 0)
+            .setMaxIOSize(1, 1, 1, 0)
+            .setSlotOverlay(false, true, GuiTextures.FLUID_SLOT)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.CHEMICAL)
             .setEUIO(IO.IN);
