@@ -60,7 +60,7 @@ public class SkufMultiblockMachines {
                 .workableCasingModel(
                         SKUFIZATOR_CASING,
                         SkufAddon.id("block/multiblock/skufizator"))
-                .tooltips(Component.translatable("skufaddon.multiblock.skufizator.tooltip.structure"))
+                .tooltips(Component.translatable("skufaddon.multiblock.skufizator.tooltip.0"))
                 .register();
     }
 
@@ -76,10 +76,7 @@ public class SkufMultiblockMachines {
                 .workableCasingModel(
                         SAUNA_CASING,
                         SkufAddon.id("block/multiblock/sauna_egora"))
-                .tooltips(
-                        Component.translatable("skufaddon.multiblock.sauna_egora.tooltip.0"),
-                        Component.translatable("skufaddon.multiblock.sauna_egora.tooltip.1"),
-                        Component.translatable("skufaddon.multiblock.sauna_egora.tooltip.structure"))
+                .tooltips(Component.translatable("skufaddon.multiblock.sauna_egora.tooltip.0"))
                 .register();
     }
 
@@ -96,7 +93,7 @@ public class SkufMultiblockMachines {
                 .workableCasingModel(
                         RAZBOR_GEYMPLAYA_CASING,
                         SkufAddon.id("block/multiblock/razbor_geympleya"))
-                .tooltips(Component.translatable("skufaddon.multiblock.razbor_geympleya.tooltip"))
+                .tooltips(Component.translatable("skufaddon.multiblock.razbor_geympleya.tooltip.0"))
                 .register();
     }
 

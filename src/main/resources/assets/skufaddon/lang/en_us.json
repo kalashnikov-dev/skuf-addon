@@ -86,13 +86,11 @@
 
   "block.skufaddon.skufizator": "Skufizator",
   "item.skufaddon.skufizator": "Skufizator",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "Samovar: 5×5 Skufit-frame bowl + Correct Matter column on the floor (5 tall); required: 1 item input, 1 fluid input, 1 item output, energy, maintenance",
+  "skufaddon.multiblock.skufizator.tooltip.0": "Skufization is when you finally stop pretending that skufit is enough.",
 
   "block.skufaddon.sauna_egora": "Sauna Egora",
   "item.skufaddon.sauna_egora": "Sauna Egora",
-  "skufaddon.multiblock.sauna_egora.tooltip.0": "Relaxes nearby Tilt machines, lowering their Tilt level.",
-  "skufaddon.multiblock.sauna_egora.tooltip.1": "Place facing outward; the 16-block-long cavity extends behind the controller.",
-  "skufaddon.multiblock.sauna_egora.tooltip.structure": "16×9 Plastcrete pad with one Pokhuit Frame, Plastcrete walls and a 16×9 outward-overhanging rim with chamfered corners. Needs a Maintenance Hatch, an Energy Input Hatch (EV+ only), a Fluid Input Hatch (water), a Fluid Output Hatch, and at least one Diode (or Hull / Passthrough Hatch) anywhere on the casing.",
+  "skufaddon.multiblock.sauna_egora.tooltip.0": "The only legal place where you can admit you were sweating — and immediately forget it.",
   "skufaddon.multiblock.sauna_egora.hot": "Sauna is hot: Tilt is cooling down",
   "skufaddon.multiblock.sauna_egora.cold": "Sauna is heating up...",
   "skufaddon.multiblock.sauna_egora.heat_amount": "Heat: %s%%",
@@ -102,7 +100,7 @@
 
   "block.skufaddon.razbor_geympleya": "Gameplay Breakdown",
   "item.skufaddon.razbor_geympleya": "Gameplay Breakdown",
-  "skufaddon.multiblock.razbor_geympleya.tooltip": "a screen for watching e-girls on twitch",
+  "skufaddon.multiblock.razbor_geympleya.tooltip.0": "For watching demos and girls on Twitch. Monitors already broken in advance — saves time.",
 
   "gtceu.normis_filtration": "Normis Filtration",
   "gtceu.skufization": "Skufization",

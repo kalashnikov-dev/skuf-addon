@@ -433,7 +433,7 @@ public class SkufRecipes {
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_sauna_egora")
                 .inputItems(SkufItems.EGOR_CORE)
-                .inputItems(SkufItems.PRAVILNAYA_VESH, 2)
+                .inputItems(SkufItems.NORMIS_SINGULARITY, 2)
                 .inputItems(frameGt, SkufMaterials.pokhuit, 4)
                 .inputFluids(SkufMaterials.stabilizedVibe.getFluid(2000))
                 .circuitMeta(8)
@@ -487,7 +487,7 @@ public class SkufRecipes {
 
         SkufRecipeTypes.RAZBOR_GEYMPLAYA_RECIPES.recipeBuilder("demo_to_technical_tears")
                 .inputItems(SkufItems.DEMO)
-                .outputFluids(SkufMaterials.technicalTears.getFluid(500))
+                .outputFluids(SkufMaterials.technicalTears.getFluid(1000))
                 .duration(240)
                 .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
@@ -501,10 +501,11 @@ public class SkufRecipes {
                 .save(provider);
 
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_razbor_geympleya")
-                .inputItems(frameGt, SkufMaterials.pokhuit, 20)
-                .inputItems(SkufBlocks.brokenMonitorBlock(), 12)
-                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED)
-                .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack())
+                .inputItems(SkufItems.DEMO)
+                .inputItems(SkufItems.MYPOSHKO_SCRIPT)
+                .inputItems(SkufItems.CHARRED_DEVELOPER_CIRCUIT, 2)
+                .inputItems(SkufItems.BURNT_CABLE_DEBRIS, 4)
+                .inputFluids(SkufMaterials.puffSmoke.getFluid(2000))
                 .circuitMeta(12)
                 .outputItems(SkufMultiblockMachines.RAZBOR_GEYMPLAYA.asStack())
                 .duration(600)
@@ -732,10 +733,11 @@ public class SkufRecipes {
     }
 
     private static void exampleRecipes(Consumer<FinishedRecipe> provider) {
-        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("skufizator")
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_skufizator")
+                .inputItems(SkufItems.MYPOSHKO_SCRIPT)
+                .inputItems(SkufItems.PRAVILNAYA_VESH, 2)
                 .inputItems(frameGt, SkufMaterials.skufit, 4)
-                .inputItems(block, SkufMaterials.correctMatter, 3)
-                .inputItems(screw, GTMaterials.Electrum, 2)
+                .inputFluids(SkufMaterials.zhizhnyakLoss.getFluid(2000))
                 .circuitMeta(6)
                 .outputItems(SkufMultiblockMachines.SKUFIZATOR.asStack())
                 .duration(600)

@@ -86,13 +86,11 @@
 
   "block.skufaddon.skufizator": "Скуфизатор",
   "item.skufaddon.skufizator": "Скуфизатор",
-  "skufaddon.multiblock.skufizator.tooltip.structure": "Самовар: чаша 5×5 из каркасов Скуфита + колонна Блока Правильной Материи на дне (высота 5); обязательно: 1 вход предметов, 1 вход жидкостей, 1 выход предметов, энергия, техобслуживание",
+  "skufaddon.multiblock.skufizator.tooltip.0": "Скуфизация — это когда ты наконец перестаёшь притворяться, что тебе хватает скуфита.",
 
   "block.skufaddon.sauna_egora": "Сауна Егора",
   "item.skufaddon.sauna_egora": "Сауна Егора",
-  "skufaddon.multiblock.sauna_egora.tooltip.0": "Расслабляет находящиеся внутри Tilt-механизмы, понижая их уровень УТ.",
-  "skufaddon.multiblock.sauna_egora.tooltip.1": "Ставьте лицевой стороной наружу — длинная полость (16 блоков) уходит за контроллер.",
-  "skufaddon.multiblock.sauna_egora.tooltip.structure": "Пол 16×9 из пластбетона с одним Каркасом Похуита, стены из пластбетона и крыша 16×9, выступающая наружу со срезанными углами. Нужны Люк Обслуживания, Энерговвод (только EV+), Жидкостный Входной Люк (вода), Жидкостный Выходной Люк и минимум один Диод (или Корпус / Проходной Люк) в любом месте корпуса.",
+  "skufaddon.multiblock.sauna_egora.tooltip.0": "Единственное легальное место, где можно признать, что ты потел — и сразу это забыть.",
   "skufaddon.multiblock.sauna_egora.hot": "Сауна нагрета: УТ остывает",
   "skufaddon.multiblock.sauna_egora.cold": "Сауна нагревается...",
   "skufaddon.multiblock.sauna_egora.heat_amount": "Жар: %s%%",
@@ -102,7 +100,7 @@
 
   "block.skufaddon.razbor_geympleya": "Разбор Геймплея",
   "item.skufaddon.razbor_geympleya": "Разбор Геймплея",
-  "skufaddon.multiblock.razbor_geympleya.tooltip": "экран для просмотра тянок на твиче",
+  "skufaddon.multiblock.razbor_geympleya.tooltip.0": "Для просмотра демок и телок на твиче. Мониторы уже разбиты заранее — экономия времени.",
 
   "gtceu.normis_filtration": "Нормис-фильтрация",
   "gtceu.skufization": "Скуфизация",
