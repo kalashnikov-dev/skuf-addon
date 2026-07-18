@@ -99,12 +99,32 @@ jobs:
           name: skufaddon-jar
           path: /tmp/skuf-jar
 
+      - name: Validate deploy secrets
+        env:
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
+          DEPLOY_USER: ${{ secrets.GCP_USER }}
+          DEPLOY_KEY: ${{ secrets.GCP_SSH_KEY }}
+        run: |
+          if [ -z "$DEPLOY_HOST" ] || [ -z "$DEPLOY_USER" ] || [ -z "$DEPLOY_KEY" ]; then
+            echo "ERROR: Missing secret. Need GCP_HOST, GCP_USER, GCP_SSH_KEY"
+            exit 1
+          fi
+          # Частая ошибка: в Value секрета GCP_HOST написали gcp_host вместо IP
+          if echo "$DEPLOY_HOST" | grep -qiE '^(gcp_host|host|localhost)$'; then
+            echo "ERROR: GCP_HOST looks wrong: '$DEPLOY_HOST'"
+            echo "Set GCP_HOST secret Value to your VM External IP, e.g. 35.246.234.79"
+            exit 1
+          fi
+          echo "Deploy target: ${DEPLOY_USER}@${DEPLOY_HOST}"
+
       - name: Prepare SSH
+        env:
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.GCP_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.GCP_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: Decide flags
         id: flags
@@ -119,44 +139,43 @@ jobs:
 
       - name: Upload jar + update script
         env:
-          HOST: ${{ secrets.GCP_HOST }}
-          USER: ${{ secrets.GCP_USER }}
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
+          DEPLOY_USER: ${{ secrets.GCP_USER }}
         run: |
           SCP="scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
           SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
-          $SCP deploy/remote-update.sh "$USER@$HOST:/tmp/remote-update.sh"
-          $SSH "$USER@$HOST" "mkdir -p ~/skuf-ai/deploy && mv /tmp/remote-update.sh ~/skuf-ai/deploy/remote-update.sh && chmod +x ~/skuf-ai/deploy/remote-update.sh"
+          $SCP deploy/remote-update.sh "$DEPLOY_USER@$DEPLOY_HOST:/tmp/remote-update.sh"
+          $SSH "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p ~/skuf-ai/deploy && mv /tmp/remote-update.sh ~/skuf-ai/deploy/remote-update.sh && chmod +x ~/skuf-ai/deploy/remote-update.sh"
           if [ "${{ steps.flags.outputs.mod }}" = "true" ]; then
             JAR=$(ls /tmp/skuf-jar/skufaddon-*.jar | head -n1)
-            $SCP "$JAR" "$USER@$HOST:/tmp/skufaddon-upload.jar"
+            $SCP "$JAR" "$DEPLOY_USER@$DEPLOY_HOST:/tmp/skufaddon-upload.jar"
           fi
 
       - name: Sync observer sources (keep server .env)
         if: steps.flags.outputs.observer == 'true'
         env:
-          HOST: ${{ secrets.GCP_HOST }}
-          USER: ${{ secrets.GCP_USER }}
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
+          DEPLOY_USER: ${{ secrets.GCP_USER }}
         run: |
-          # rsync через ssh; .env на сервере не затираем
           sudo apt-get update -qq && sudo apt-get install -y -qq rsync
           rsync -az -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
             --exclude '.venv' --exclude '.env' --exclude '__pycache__' \
-            observer-service/ "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:~/skuf-ai/observer-service/"
+            observer-service/ "$DEPLOY_USER@$DEPLOY_HOST:~/skuf-ai/observer-service/"
           rsync -az -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
             deploy/docker-compose.yml deploy/remote-update.sh \
-            "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:~/skuf-ai/deploy/"
+            "$DEPLOY_USER@$DEPLOY_HOST:~/skuf-ai/deploy/"
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new \
-            "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}" \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
             "chmod +x ~/skuf-ai/deploy/remote-update.sh"
 
       - name: Run remote update
         env:
-          HOST: ${{ secrets.GCP_HOST }}
-          USER: ${{ secrets.GCP_USER }}
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
+          DEPLOY_USER: ${{ secrets.GCP_USER }}
         run: |
           MOD_FLAG=0
           OBS_FLAG=0
           [ "${{ steps.flags.outputs.mod }}" = "true" ] && MOD_FLAG=1
           [ "${{ steps.flags.outputs.observer }}" = "true" ] && OBS_FLAG=1
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$USER@$HOST" \
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$DEPLOY_USER@$DEPLOY_HOST" \
             "UPDATE_MOD=$MOD_FLAG UPDATE_OBSERVER=$OBS_FLAG RESTART_MC=1 bash ~/skuf-ai/deploy/remote-update.sh"
