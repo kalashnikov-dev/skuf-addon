@@ -1,0 +1,9 @@
+services:
+  observer-api:
+    build: ../observer-service
+    container_name: skuf-observer
+    ports:
+      - "127.0.0.1:8080:8080"
+    env_file:
+      - ../observer-service/.env
+    restart: unless-stopped

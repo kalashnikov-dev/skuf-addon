@@ -36,3 +36,9 @@ run-data/
 .tmp-gtceu-src/
 mds/
 .temp/
+
+# Python observer
+observer-service/.venv/
+observer-service/.env
+**/__pycache__/
+*.pyc

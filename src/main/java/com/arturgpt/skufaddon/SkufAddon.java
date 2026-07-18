@@ -8,6 +8,8 @@ import com.arturgpt.skufaddon.common.data.SkufMaterials;
 import com.arturgpt.skufaddon.common.data.SkufMultiblockMachines;
 import com.arturgpt.skufaddon.common.data.SkufRecipeTypes;
 import com.arturgpt.skufaddon.common.data.SkufSingleblockMachines;
+import com.arturgpt.skufaddon.observer.ObserverConfig;
+import com.arturgpt.skufaddon.observer.ObserverEvents;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
@@ -19,7 +21,9 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,6 +40,11 @@ public class SkufAddon {
     public static final GTRegistrate REGISTRATE = GTRegistrate.create(MOD_ID);
 
     public SkufAddon() {
+        ModLoadingContext.get().registerConfig(
+                ModConfig.Type.COMMON,
+                ObserverConfig.SPEC,
+                "skufaddon-observer.toml");
+
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
@@ -58,7 +67,14 @@ public class SkufAddon {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> LOGGER.info("Skuf Addon common setup complete"));
+        event.enqueueWork(() -> {
+            LOGGER.info("Skuf Addon common setup complete");
+            LOGGER.info(
+                    "Observer config: enabled={}, baseUrl={}",
+                    ObserverConfig.ENABLED.get(),
+                    ObserverConfig.BASE_URL.get());
+            ObserverEvents.init();
+        });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
