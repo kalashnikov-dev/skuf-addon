@@ -54,7 +54,7 @@ public final class ObserverHttpClient {
     /**
      * Антиспам для обычных событий.
      *
-     * @param important true = важное (смерть и т.п.) — всегда пропускаем в чат,
+     * @param important true = важное (death / advancement / dimension) — всегда в чат,
      *                  и сбрасываем таймер кулдауна (следующие «обычные» ждут снова 5 мин).
      */
     public static boolean tryAcquireAnnounceSlot(boolean important) {
