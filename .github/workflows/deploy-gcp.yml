@@ -1,0 +1,162 @@
+# Автодеплой на Google Cloud VM при push в main
+#
+# Нужны Secrets в GitHub (Settings → Secrets and variables → Actions):
+#   GCP_HOST          — External IP, например 35.246.234.79
+#   GCP_USER          — SSH user, например dayntypou
+#   GCP_SSH_KEY       — приватный ключ целиком (-----BEGIN ... PRIVATE KEY-----)
+#
+# Один раз на VM: положить публичный ключ в ~/.ssh/authorized_keys
+# и chmod +x ~/skuf-ai/deploy/remote-update.sh (скрипт также копируется при деплое).
+
+name: Deploy to GCP
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/**"
+      - "observer-service/**"
+      - "deploy/**"
+      - "build.gradle"
+      - "gradle.properties"
+      - ".github/workflows/deploy-gcp.yml"
+  workflow_dispatch:
+    inputs:
+      deploy_mod:
+        description: "Build and deploy skufaddon.jar + restart MC"
+        type: boolean
+        default: true
+      deploy_observer:
+        description: "Rebuild observer Docker"
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-gcp
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      mod: ${{ steps.filter.outputs.mod }}
+      observer: ${{ steps.filter.outputs.observer }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            mod:
+              - 'src/**'
+              - 'build.gradle'
+              - 'gradle.properties'
+              - 'settings.gradle'
+            observer:
+              - 'observer-service/**'
+              - 'deploy/docker-compose.yml'
+              - 'deploy/remote-update.sh'
+
+  build-mod:
+    needs: changes
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_mod) ||
+      (github.event_name == 'push' && needs.changes.outputs.mod == 'true')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build
+        run: ./gradlew build -x test
+      - name: Upload jar artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: skufaddon-jar
+          path: build/libs/skufaddon-*.jar
+          if-no-files-found: error
+
+  deploy:
+    needs: [changes, build-mod]
+    if: |
+      always() &&
+      (needs.build-mod.result == 'success' || needs.build-mod.result == 'skipped') &&
+      (
+        (github.event_name == 'workflow_dispatch' && (inputs.deploy_mod || inputs.deploy_observer)) ||
+        (github.event_name == 'push' && (needs.changes.outputs.mod == 'true' || needs.changes.outputs.observer == 'true'))
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download jar (if built)
+        if: needs.build-mod.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: skufaddon-jar
+          path: /tmp/skuf-jar
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCP_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.GCP_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Decide flags
+        id: flags
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mod=${{ inputs.deploy_mod }}" >> "$GITHUB_OUTPUT"
+            echo "observer=${{ inputs.deploy_observer }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "mod=${{ needs.changes.outputs.mod }}" >> "$GITHUB_OUTPUT"
+            echo "observer=${{ needs.changes.outputs.observer }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload jar + update script
+        env:
+          HOST: ${{ secrets.GCP_HOST }}
+          USER: ${{ secrets.GCP_USER }}
+        run: |
+          SCP="scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          $SCP deploy/remote-update.sh "$USER@$HOST:/tmp/remote-update.sh"
+          $SSH "$USER@$HOST" "mkdir -p ~/skuf-ai/deploy && mv /tmp/remote-update.sh ~/skuf-ai/deploy/remote-update.sh && chmod +x ~/skuf-ai/deploy/remote-update.sh"
+          if [ "${{ steps.flags.outputs.mod }}" = "true" ]; then
+            JAR=$(ls /tmp/skuf-jar/skufaddon-*.jar | head -n1)
+            $SCP "$JAR" "$USER@$HOST:/tmp/skufaddon-upload.jar"
+          fi
+
+      - name: Sync observer sources (keep server .env)
+        if: steps.flags.outputs.observer == 'true'
+        env:
+          HOST: ${{ secrets.GCP_HOST }}
+          USER: ${{ secrets.GCP_USER }}
+        run: |
+          # rsync через ssh; .env на сервере не затираем
+          sudo apt-get update -qq && sudo apt-get install -y -qq rsync
+          rsync -az -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            --exclude '.venv' --exclude '.env' --exclude '__pycache__' \
+            observer-service/ "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:~/skuf-ai/observer-service/"
+          rsync -az -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            deploy/docker-compose.yml deploy/remote-update.sh \
+            "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:~/skuf-ai/deploy/"
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new \
+            "${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}" \
+            "chmod +x ~/skuf-ai/deploy/remote-update.sh"
+
+      - name: Run remote update
+        env:
+          HOST: ${{ secrets.GCP_HOST }}
+          USER: ${{ secrets.GCP_USER }}
+        run: |
+          MOD_FLAG=0
+          OBS_FLAG=0
+          [ "${{ steps.flags.outputs.mod }}" = "true" ] && MOD_FLAG=1
+          [ "${{ steps.flags.outputs.observer }}" = "true" ] && OBS_FLAG=1
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$USER@$HOST" \
+            "UPDATE_MOD=$MOD_FLAG UPDATE_OBSERVER=$OBS_FLAG RESTART_MC=1 bash ~/skuf-ai/deploy/remote-update.sh"
