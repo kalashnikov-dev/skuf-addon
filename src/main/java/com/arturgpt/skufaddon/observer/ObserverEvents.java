@@ -31,8 +31,7 @@ public final class ObserverEvents {
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new ObserverEvents());
         SkufAddon.LOGGER.info(
-                "Observer events registered "
-                        + "(join=ordinary; death/advancement/dimension/chat=important)");
+                "Observer events registered " + "(join=ordinary; death/advancement/dimension/chat=important)");
     }
 
     @SubscribeEvent
@@ -211,5 +210,4 @@ public final class ObserverEvents {
                 payload,
                 true);
     }
-
 }

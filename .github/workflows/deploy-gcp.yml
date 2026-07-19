@@ -42,8 +42,8 @@ jobs:
       mod: ${{ steps.filter.outputs.mod }}
       observer: ${{ steps.filter.outputs.observer }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
@@ -64,16 +64,16 @@ jobs:
       (github.event_name == 'push' && needs.changes.outputs.mod == 'true')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           java-version: "17"
           distribution: "temurin"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Build
         run: ./gradlew build -x test
       - name: Upload jar artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: skufaddon-jar
           path: build/libs/skufaddon-*.jar
@@ -90,11 +90,11 @@ jobs:
       )
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download jar (if built)
         if: needs.build-mod.result == 'success'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: skufaddon-jar
           path: /tmp/skuf-jar
