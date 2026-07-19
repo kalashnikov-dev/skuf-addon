@@ -10,11 +10,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import com.google.gson.JsonObject;
@@ -22,8 +21,8 @@ import com.google.gson.JsonObject;
 /**
  * «Уши» наблюдателя.
  *
- * Обычные (join, sleep) — не чаще раз в cooldownSeconds (~5 мин).
- * Важные (death, advancement, dimension) — всегда, лимит игнорируется.
+ * Обычные (join) — не чаще раз в cooldownSeconds (~5 мин).
+ * Важные (death, advancement, dimension, chat-mention) — всегда, лимит игнорируется.
  */
 public final class ObserverEvents {
 
@@ -32,7 +31,8 @@ public final class ObserverEvents {
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new ObserverEvents());
         SkufAddon.LOGGER.info(
-                "Observer events registered (join/sleep=ordinary, death/advancement/dimension=important)");
+                "Observer events registered "
+                        + "(join=ordinary; death/advancement/dimension/chat=important)");
     }
 
     @SubscribeEvent
@@ -69,6 +69,40 @@ public final class ObserverEvents {
 
         String name = event.getEntity().getGameProfile().getName();
         SkufAddon.LOGGER.info("[Observer] player left: {}", name);
+    }
+
+    /**
+     * Обращение в чате: «Бог А», «Артур», «Арт», «бог», «А» (см. chatAliases).
+     */
+    @SubscribeEvent
+    public void onServerChat(ServerChatEvent event) {
+        if (!ObserverConfig.ENABLED.get()) {
+            return;
+        }
+
+        String raw = event.getRawText();
+        String matched = ObserverChatMentions.findMention(raw);
+        if (matched == null) {
+            return;
+        }
+
+        ServerPlayer player = event.getPlayer();
+        JsonObject payload = new JsonObject();
+        payload.addProperty("message", raw);
+        payload.addProperty("matched_alias", matched);
+
+        SkufAddon.LOGGER.info(
+                "[Observer] chat mention: {} alias='{}' msg='{}'",
+                player.getGameProfile().getName(),
+                matched,
+                raw);
+
+        ObserverHttpClient.sendEventAndAnnounce(
+                player.getServer(),
+                player,
+                "chat",
+                payload,
+                true);
     }
 
     @SubscribeEvent
@@ -178,39 +212,4 @@ public final class ObserverEvents {
                 true);
     }
 
-    /**
-     * Лёг спать — нормисный побег от смены (обычное, с кулдауном).
-     * LOWEST: комментируем только если никто не запретил сон.
-     */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onSleepInBed(PlayerSleepInBedEvent event) {
-        if (!ObserverConfig.ENABLED.get()) {
-            return;
-        }
-        if (event.getEntity().level().isClientSide()) {
-            return;
-        }
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
-        if (event.getResultStatus() != null) {
-            return;
-        }
-
-        JsonObject payload = new JsonObject();
-        if (event.getPos() != null) {
-            payload.addProperty("bed_x", event.getPos().getX());
-            payload.addProperty("bed_y", event.getPos().getY());
-            payload.addProperty("bed_z", event.getPos().getZ());
-        }
-
-        SkufAddon.LOGGER.info("[Observer] sleep: {}", player.getGameProfile().getName());
-
-        ObserverHttpClient.sendEventAndAnnounce(
-                player.getServer(),
-                player,
-                "sleep",
-                payload,
-                false);
-    }
 }

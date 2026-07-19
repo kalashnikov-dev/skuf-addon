@@ -62,7 +62,9 @@ def build_user_message(online_players: list[str], events_summary: str) -> str:
     return (
         f"Сейчас онлайн: {online}\n\n"
         f"События:\n{events_summary}\n\n"
-        "Напиши один короткий комментарий для чата."
+        "Если среди событий есть type=chat — это обращение к тебе: ответь на message игрока.\n"
+        "Иначе — короткий комментарий к событию.\n"
+        "Одна-две фразы для чата, без префикса имени."
     )
 
 

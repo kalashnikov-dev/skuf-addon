@@ -2,6 +2,8 @@ package com.arturgpt.skufaddon.observer;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.List;
+
 /**
  * Настройки ИИ-наблюдателя (серверные).
  *
@@ -17,7 +19,7 @@ public final class ObserverConfig {
 
     /**
      * Пауза между «обычными» комментариями (join и т.п.).
-     * Важные события (death) этот лимит игнорируют.
+     * Важные события (death, chat-mention) этот лимит игнорируют.
      * 300 = примерно раз в 5 минут.
      */
     public static final ForgeConfigSpec.IntValue COOLDOWN_SECONDS;
@@ -26,6 +28,12 @@ public final class ObserverConfig {
 
     /** Префикс в чате, например «Бог А» → сообщение вида «[Бог А] …». */
     public static final ForgeConfigSpec.ConfigValue<String> CHAT_PREFIX;
+
+    /**
+     * Как к наблюдателю обращаются в чате (регистр не важен).
+     * Сообщение с любым из этих слов/фраз → событие chat и ответ ИИ.
+     */
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> CHAT_ALIASES;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -47,7 +55,7 @@ public final class ObserverConfig {
         COOLDOWN_SECONDS = builder
                 .comment(
                         "Seconds between ordinary comments (join, etc.). " +
-                                "Important events (death) ignore this. Default 300 = 5 minutes.")
+                                "Important events (death, chat mention) ignore this. Default 300 = 5 minutes.")
                 .defineInRange("cooldownSeconds", 300, 5, 3600);
 
         REQUEST_TIMEOUT_SECONDS = builder
@@ -57,6 +65,15 @@ public final class ObserverConfig {
         CHAT_PREFIX = builder
                 .comment("Chat name inside <> before the AI comment. Example: <Бог А> …")
                 .define("chatPrefix", "Бог А");
+
+        CHAT_ALIASES = builder
+                .comment(
+                        "Chat aliases that address the observer (case-insensitive). " +
+                                "Single letter «А» only matches address-like uses, not conjunction «а я».")
+                .defineList(
+                        "chatAliases",
+                        List.of("Бог А", "бог", "Артур", "Арт", "А"),
+                        o -> o instanceof String);
 
         builder.pop();
         SPEC = builder.build();
