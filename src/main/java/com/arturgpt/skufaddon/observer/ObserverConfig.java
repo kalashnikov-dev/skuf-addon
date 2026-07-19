@@ -48,7 +48,7 @@ public final class ObserverConfig {
                 .comment(
                         "Seconds between ordinary comments (join, etc.). " +
                                 "Important events (death, advancement, dimension) ignore this. " +
-                                "Chat is always analyzed; cooldown only updates if the AI actually speaks. " +
+                                "Chat has NO cooldown — replies as soon as Azure answers. " +
                                 "Default 300 = 5 minutes.")
                 .defineInRange("cooldownSeconds", 300, 5, 3600);
 

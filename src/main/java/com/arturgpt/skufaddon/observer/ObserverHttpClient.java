@@ -39,23 +39,33 @@ public final class ObserverHttpClient {
             .connectTimeout(Duration.ofSeconds(2))
             .build();
 
-    /** Один фоновый поток для исходящих запросов наблюдателя. */
+    /** Один фоновый поток для join/death/и т.п. (не блокирует чат). */
     private static final ExecutorService WORKER = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r, "skuf-observer-http");
-        t.setDaemon(true); // не мешает JVM выключиться вместе с сервером
+        t.setDaemon(true);
         return t;
     });
 
-    /** Когда последний раз писали в чат (millis). 0 = ещё никогда. */
+    /**
+     * Отдельный пул для чата: ответы без очереди за death/join и без кулдауна.
+     * Несколько сообщений могут анализироваться параллельно.
+     */
+    private static final ExecutorService CHAT_WORKER = Executors.newCachedThreadPool(r -> {
+        Thread t = new Thread(r, "skuf-observer-chat");
+        t.setDaemon(true);
+        return t;
+    });
+
+    /** Когда последний раз писали в чат из ordinary/important (millis). 0 = ещё никогда. */
     private static volatile long lastAnnounceMillis = 0L;
 
     private ObserverHttpClient() {}
 
     /**
-     * Антиспам для обычных событий.
+     * Антиспам для обычных событий (join). На чат не распространяется.
      *
      * @param important true = важное (death / advancement / dimension) — всегда в чат,
-     *                  и сбрасываем таймер кулдауна (следующие «обычные» ждут снова 5 мин).
+     *                  и сбрасываем таймер кулдауна.
      */
     public static boolean tryAcquireAnnounceSlot(boolean important) {
         long now = System.currentTimeMillis();
@@ -75,13 +85,6 @@ public final class ObserverHttpClient {
         }
     }
 
-    /** Отметить, что только что написали в чат (для alwaysAnalyze-пути). */
-    private static void markAnnounced() {
-        synchronized (ObserverHttpClient.class) {
-            lastAnnounceMillis = System.currentTimeMillis();
-        }
-    }
-
     /**
      * Отправить одно событие и (если Python вернул comment) написать его в чат.
      *
@@ -97,8 +100,7 @@ public final class ObserverHttpClient {
     }
 
     /**
-     * @param alwaysAnalyze true = всегда слать в Python (чат): кулдаун не блокирует анализ;
-     *                      таймер обновляется только если ИИ реально ответил в чат
+     * @param alwaysAnalyze true = чат: без кулдауна, сразу в отдельном пуле (не ждёт death/join)
      */
     public static void sendEventAndAnnounce(
                                             MinecraftServer server,
@@ -143,7 +145,8 @@ public final class ObserverHttpClient {
         String json = body.toString();
         byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
 
-        WORKER.execute(() -> {
+        ExecutorService executor = alwaysAnalyze ? CHAT_WORKER : WORKER;
+        executor.execute(() -> {
             try {
                 int timeoutSec = ObserverConfig.REQUEST_TIMEOUT_SECONDS.get();
                 SkufAddon.LOGGER.info(
@@ -175,10 +178,6 @@ public final class ObserverHttpClient {
                 if (comment == null || comment.isBlank()) {
                     SkufAddon.LOGGER.info("[Observer] Python returned no comment (null)");
                     return;
-                }
-
-                if (alwaysAnalyze) {
-                    markAnnounced();
                 }
 
                 // Чат можно трогать только на Server thread
