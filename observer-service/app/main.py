@@ -76,6 +76,10 @@ async def receive_events(body: EventsRequest):
 
     if not azure_configured():
         first = body.events[0]
+        # В stub-режиме на chat не спамим — как SKIP
+        if first.type == "chat":
+            print("[observer] stub chat: SKIP", flush=True)
+            return EventsResponse(comment=None)
         stub = f"[заглушка] Видел: {first.player} -> {first.type}"
         print(f"[observer] stub: {stub}", flush=True)
         return EventsResponse(comment=stub)

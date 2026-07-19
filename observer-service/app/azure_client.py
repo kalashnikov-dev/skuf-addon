@@ -57,15 +57,48 @@ def load_system_prompt() -> str:
     return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip()
 
 
-def build_user_message(online_players: list[str], events_summary: str) -> str:
+def build_user_message(online_players: list[str], events: list[Any]) -> str:
     online = ", ".join(online_players) if online_players else "(никого)"
+    events_summary = format_events_for_prompt(events)
+    has_chat = any(getattr(e, "type", None) == "chat" for e in events)
+
+    if has_chat:
+        instruction = (
+            "Событие type=chat: ты видишь сообщение игрока (payload.message).\n"
+            "Сам реши, отвечать ли:\n"
+            "- Если к тебе обратились (по имени/клику/смыслу: Бог А, Артур, Арт, бог, А, hey и т.п.) "
+            "— ответь обязательно по сути.\n"
+            "- Если болтовня между игроками — чаще молчи; иногда можешь коротко врезаться, "
+            "если есть уместный угар/ирония по заводу.\n"
+            "- Если молчишь — верни ровно одно слово: SKIP\n"
+            "- Если говоришь — одна-две фразы, без префикса имени. "
+            "Ник игрока не обязателен — только если сам хочешь."
+        )
+    else:
+        instruction = (
+            "Короткий комментарий к событию (1–2 фразы), без префикса имени. "
+            "Ник игрока не обязателен. Если комментировать нечего — SKIP."
+        )
+
     return (
         f"Сейчас онлайн: {online}\n\n"
         f"События:\n{events_summary}\n\n"
-        "Если среди событий есть type=chat — это обращение к тебе: ответь на message игрока.\n"
-        "Иначе — короткий комментарий к событию.\n"
-        "Одна-две фразы для чата, без префикса имени."
+        f"{instruction}"
     )
+
+
+def _normalize_model_reply(text: str) -> str | None:
+    """Пустой ответ / SKIP → молчание в чате."""
+    t = text.strip()
+    if not t:
+        return None
+    # Срезаем кавычки/точки, если модель обернула SKIP
+    compact = t.strip("\"'`.").strip()
+    if compact.upper() in {"SKIP", "SILENT", "NONE", "NO", "NO_REPLY", "МОЛЧУ", "-"}:
+        return None
+    if compact.upper().startswith("SKIP"):
+        return None
+    return t
 
 
 def format_events_for_prompt(events: list[Any]) -> str:
@@ -89,7 +122,7 @@ def generate_comment(online_players: list[str], events: list[Any]) -> str | None
         return None
 
     deployment = _strip_quotes(os.getenv("AZURE_OPENAI_DEPLOYMENT") or "")
-    user_msg = build_user_message(online_players, format_events_for_prompt(events))
+    user_msg = build_user_message(online_players, events)
 
     # gpt-5-mini тратит completion-токены и на «внутренние» рассуждения.
     # Слишком маленький лимит (типа 120) → часто пустой content после долгого ожидания.
@@ -137,7 +170,7 @@ def generate_comment(online_players: list[str], events: list[Any]) -> str | None
                 response.usage.total_tokens,
             )
 
-        return text.strip()
+        return _normalize_model_reply(text)
     except Exception as exc:
         logger.exception(
             "Foundry chat completion failed (%s).",

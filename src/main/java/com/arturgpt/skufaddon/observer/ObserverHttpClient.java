@@ -54,7 +54,7 @@ public final class ObserverHttpClient {
     /**
      * Антиспам для обычных событий.
      *
-     * @param important true = важное (death / advancement / dimension / chat) — всегда в чат,
+     * @param important true = важное (death / advancement / dimension) — всегда в чат,
      *                  и сбрасываем таймер кулдауна (следующие «обычные» ждут снова 5 мин).
      */
     public static boolean tryAcquireAnnounceSlot(boolean important) {
@@ -75,6 +75,13 @@ public final class ObserverHttpClient {
         }
     }
 
+    /** Отметить, что только что написали в чат (для alwaysAnalyze-пути). */
+    private static void markAnnounced() {
+        synchronized (ObserverHttpClient.class) {
+            lastAnnounceMillis = System.currentTimeMillis();
+        }
+    }
+
     /**
      * Отправить одно событие и (если Python вернул comment) написать его в чат.
      *
@@ -86,10 +93,24 @@ public final class ObserverHttpClient {
                                             String type,
                                             JsonObject payload,
                                             boolean important) {
+        sendEventAndAnnounce(server, player, type, payload, important, false);
+    }
+
+    /**
+     * @param alwaysAnalyze true = всегда слать в Python (чат): кулдаун не блокирует анализ;
+     *                      таймер обновляется только если ИИ реально ответил в чат
+     */
+    public static void sendEventAndAnnounce(
+                                            MinecraftServer server,
+                                            ServerPlayer player,
+                                            String type,
+                                            JsonObject payload,
+                                            boolean important,
+                                            boolean alwaysAnalyze) {
         if (!ObserverConfig.ENABLED.get()) {
             return;
         }
-        if (!tryAcquireAnnounceSlot(important)) {
+        if (!alwaysAnalyze && !tryAcquireAnnounceSlot(important)) {
             return;
         }
 
@@ -154,6 +175,10 @@ public final class ObserverHttpClient {
                 if (comment == null || comment.isBlank()) {
                     SkufAddon.LOGGER.info("[Observer] Python returned no comment (null)");
                     return;
+                }
+
+                if (alwaysAnalyze) {
+                    markAnnounced();
                 }
 
                 // Чат можно трогать только на Server thread

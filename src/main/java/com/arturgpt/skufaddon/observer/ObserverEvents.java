@@ -22,7 +22,8 @@ import com.google.gson.JsonObject;
  * «Уши» наблюдателя.
  *
  * Обычные (join) — не чаще раз в cooldownSeconds (~5 мин).
- * Важные (death, advancement, dimension, chat-mention) — всегда, лимит игнорируется.
+ * Важные (death, advancement, dimension) — всегда.
+ * Чат — каждое сообщение уходит в ИИ; отвечать или молчать решает модель.
  */
 public final class ObserverEvents {
 
@@ -31,7 +32,8 @@ public final class ObserverEvents {
     public static void init() {
         MinecraftForge.EVENT_BUS.register(new ObserverEvents());
         SkufAddon.LOGGER.info(
-                "Observer events registered " + "(join=ordinary; death/advancement/dimension/chat=important)");
+                "Observer events registered " +
+                        "(join=ordinary; death/advancement/dimension=important; chat=always-analyze)");
     }
 
     @SubscribeEvent
@@ -71,7 +73,7 @@ public final class ObserverEvents {
     }
 
     /**
-     * Обращение в чате: «Бог А», «Артур», «Арт», «бог», «А» (см. chatAliases).
+     * Любое сообщение в чате → ИИ сам решает: ответить или SKIP.
      */
     @SubscribeEvent
     public void onServerChat(ServerChatEvent event) {
@@ -80,27 +82,27 @@ public final class ObserverEvents {
         }
 
         String raw = event.getRawText();
-        String matched = ObserverChatMentions.findMention(raw);
-        if (matched == null) {
+        if (raw == null || raw.isBlank()) {
+            return;
+        }
+        // Команды (/gamemode и т.п.) не анализируем
+        if (raw.trim().startsWith("/")) {
             return;
         }
 
         ServerPlayer player = event.getPlayer();
         JsonObject payload = new JsonObject();
         payload.addProperty("message", raw);
-        payload.addProperty("matched_alias", matched);
 
         SkufAddon.LOGGER.info(
-                "[Observer] chat mention: {} alias='{}' msg='{}'",
-                player.getGameProfile().getName(),
-                matched,
-                raw);
+                "[Observer] chat: {} -> '{}'", player.getGameProfile().getName(), raw);
 
         ObserverHttpClient.sendEventAndAnnounce(
                 player.getServer(),
                 player,
                 "chat",
                 payload,
+                false,
                 true);
     }
 
