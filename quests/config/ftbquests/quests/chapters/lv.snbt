@@ -1,0 +1,226 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "lv"
+	group: ""
+	icon: "skufaddon:dodik_circuit_1"
+	id: "5000000000000002"
+	images: [ ]
+	order_index: 1
+	title: "2 · ЧПУ-станкчанин (LV)"
+	quest_links: [ ]
+	quests: [
+	{
+		id: "A000000000000007"
+		title: "Тлеющий пукан (корпус LV)"
+		icon: "skufaddon:lv_smoldering_pukan"
+		x: 0.0d
+		y: 0.0d
+		shape: "circle"
+		description: ["&7Корпус всех машин: 8 плит честной стали + кабель, крафт в сетке.", "«Он уже тлеет. Как и ты.»"]
+		dependencies: ["A000000000000005"]
+		tasks: [
+		{
+			id: "7000000000000007"
+			item: "skufaddon:lv_smoldering_pukan"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000007"
+			type: "xp"
+			xp: 30
+		}
+		]
+	}
+	{
+		id: "A000000000000008"
+		title: "Плата дятла (LV)"
+		icon: "skufaddon:dodik_circuit_1"
+		x: 1.5d
+		y: 0.0d
+		shape: "circle"
+		description: ["&7Химреактор: 2 плиты стали + пот + схема(1) → dodik_circuit_1.", "«Схема кривая, как её сборщик. Но ток проводит.»"]
+		dependencies: ["A000000000000007"]
+		tasks: [
+		{
+			id: "7000000000000008"
+			count: 2L
+			item: { Count: 1, id: "skufaddon:dodik_circuit_1" }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000008"
+			item: "skufaddon:dodik_circuit_1"
+			type: "item"
+		}
+		{
+			id: "2000000000000009"
+			type: "xp"
+			xp: 30
+		}
+		]
+	}
+	{
+		id: "A000000000000009"
+		title: "Первый станок"
+		icon: "skufaddon:cnc_bit"
+		x: 0.8d
+		y: 1.5d
+		shape: "circle"
+		description: ["&7Собери &fLV ЧПУ-станок&7 (корпус + схема + кабель + фреза).", "«Настоящий человек делает станок, чтобы станок страдал вместо него.»"]
+		dependencies: ["A000000000000008"]
+		tasks: [
+		{
+			id: "7000000000000009"
+			item: "skufaddon:lv_cnc_machine"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000000A"
+			count: 2
+			item: { Count: 1, id: "skufaddon:cnc_bit" }
+			type: "item"
+		}
+		{
+			id: "200000000000000B"
+			type: "xp"
+			xp: 40
+		}
+		]
+	}
+	{
+		id: "A00000000000000A"
+		title: "Фильтр под напряжением"
+		icon: "skufaddon:lv_normis_filtration_machine"
+		x: 2.5d
+		y: 1.5d
+		shape: "circle"
+		description: ["&7Собери &fLV Фильтр Нормиса&7 — электрическая очистка пыли."]
+		dependencies: ["A000000000000008"]
+		tasks: [
+		{
+			id: "700000000000000A"
+			item: "skufaddon:lv_normis_filtration_machine"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000000C"
+			type: "xp"
+			xp: 40
+		}
+		]
+	}
+	{
+		id: "A00000000000000B"
+		title: "Фрезы и резцы"
+		icon: "skufaddon:cnc_cutter"
+		x: 0.8d
+		y: 3.0d
+		shape: "circle"
+		description: ["&7На ЧПУ точи &fcnc_bit&7 из прутка, затем собирай &fcnc_cutter&7."]
+		dependencies: ["A000000000000009"]
+		tasks: [
+		{
+			id: "700000000000000B"
+			count: 4L
+			item: { Count: 1, id: "skufaddon:cnc_bit" }
+			type: "item"
+		}
+		{
+			id: "700000000000000C"
+			item: "skufaddon:cnc_cutter"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000000D"
+			type: "xp"
+			xp: 40
+		}
+		]
+	}
+	{
+		id: "A00000000000000C"
+		title: "Дистилляция пота"
+		icon: "skufaddon:lv_pot_distillery"
+		x: 4.0d
+		y: 1.5d
+		shape: "circle"
+		description: ["&7Собери &fLV Дистиллятор пота&7. Жижняк → правильная материя."]
+		dependencies: ["A000000000000008"]
+		tasks: [
+		{
+			id: "700000000000000D"
+			item: "skufaddon:lv_pot_distillery"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000000E"
+			type: "xp"
+			xp: 40
+		}
+		]
+	}
+	{
+		id: "A00000000000000D"
+		title: "Первая жижа"
+		icon: "skufaddon:jizhnyak_bucket"
+		x: 4.0d
+		y: 3.0d
+		shape: "circle"
+		description: ["&7Миксер: нормисная пыль + пот + пых-дым → &fжижняк&7.", "«Мир не обязан быть удобным.»"]
+		dependencies: ["A00000000000000C"]
+		tasks: [
+		{
+			id: "700000000000000E"
+			amount: 1000L
+			fluid: "skufaddon:jizhnyak"
+			type: "fluid"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000000F"
+			type: "xp"
+			xp: 30
+		}
+		]
+	}
+	{
+		id: "A00000000000000E"
+		title: "Правильная материя"
+		icon: "skufaddon:correct_matter_gem"
+		x: 4.0d
+		y: 4.5d
+		shape: "circle"
+		description: ["&7Дистиллируй жижняк → &fcorrect_matter&7 (dust), затем автоклав → gem.", "«Концентрированная мудрость.»"]
+		dependencies: ["A00000000000000D"]
+		tasks: [
+		{
+			id: "700000000000000F"
+			count: 2L
+			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:gems/correct_matter" } }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000010"
+			type: "xp"
+			xp: 60
+		}
+		]
+	}
+	]
+}
