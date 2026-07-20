@@ -149,6 +149,15 @@ dependencies {
     modCompileOnly("curse.maven:jade-324717:5390389")
     modRuntimeOnly("curse.maven:jade-324717:5390389")
 
+    // FTB Quests + deps (runtime only — for testing the quest book in runClient).
+    // curse.maven does NOT resolve transitive deps, so every link is listed explicitly.
+    // Architectury -> FTB Library -> FTB Teams -> FTB Quests; Item Filters for tag tasks.
+    modRuntimeOnly("curse.maven:architectury-api-419699:5137938")   // 9.2.14 (1.20.1 Forge)
+    modRuntimeOnly("curse.maven:ftb-library-forge-404465:7296748")  // 2001.2.12
+    modRuntimeOnly("curse.maven:ftb-teams-forge-404468:7499810")    // 2001.3.2
+    modRuntimeOnly("curse.maven:ftb-quests-forge-289412:7260736")   // 2001.4.17
+    modRuntimeOnly("curse.maven:item-filters-309674:4838266")       // 2001.1.0-build.59
+
     // GregTech and dependencies
     modImplementation("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gtceu_version}:slim") { transitive = false }
     modImplementation("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
