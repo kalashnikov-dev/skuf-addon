@@ -187,10 +187,18 @@ class BogA:
 
     # --- модель ---
     def set_model(self, key: str) -> str:
-        if key not in MODELS:
+        """Ключ из MODELS или сырой id деплоя (Azure Foundry: gpt-5-mini и т.п.)."""
+        if key in MODELS:
+            self.model_key = key
+            self.model_name, self.model_id, self.model_ok = MODELS[key]
+            return self.model_id
+        # Passthrough для Azure/другого OpenAI-compatible деплоя
+        if not key or not str(key).strip():
             raise KeyError(key)
         self.model_key = key
-        self.model_name, self.model_id, self.model_ok = MODELS[key]
+        self.model_name = key
+        self.model_id = key
+        self.model_ok = True
         return self.model_id
 
     def _messages(self, tail: list[dict], n_fewshots: int | None = None) -> list[dict]:
@@ -216,6 +224,10 @@ class BogA:
             return min(float(m.group(1)) + 0.5, 30.0)
         return default
 
+    def _uses_max_completion_tokens(self) -> bool:
+        mid = (self.model_id or "").lower()
+        return mid.startswith("gpt-5") or "gpt-5" in mid
+
     def _complete(self, tail: list[dict], max_tokens: int = 400,
                   retries: int = 3) -> str:
         """
@@ -229,11 +241,18 @@ class BogA:
             messages = self._messages(tail, n_fewshots=fs)
             for i in range(retries):
                 try:
-                    r = self.client.chat.completions.create(
-                        model=self.model_id, messages=messages,
-                        temperature=self.temperature, top_p=0.95,
-                        max_tokens=max_tokens,
-                    )
+                    kwargs: dict = {
+                        "model": self.model_id,
+                        "messages": messages,
+                    }
+                    # gpt-5*: max_tokens часто даёт пустой content; temperature может быть запрещён
+                    if self._uses_max_completion_tokens():
+                        kwargs["max_completion_tokens"] = max(max_tokens, 800)
+                    else:
+                        kwargs["temperature"] = self.temperature
+                        kwargs["top_p"] = 0.95
+                        kwargs["max_tokens"] = max_tokens
+                    r = self.client.chat.completions.create(**kwargs)
                     raw_reply = (r.choices[0].message.content or "").strip()
                     return "".join(strip_html_tags_stream([raw_reply]))
                 except Exception as e:  # noqa: BLE001

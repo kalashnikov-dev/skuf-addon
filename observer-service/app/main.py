@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -20,12 +21,13 @@ _SERVICE_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(_SERVICE_ROOT / ".env")
 
 from app.azure_client import azure_configured  # noqa: E402
-from app.bog_a import BogA
+from app.bog_a import DEFAULT_MODEL, BogA  # noqa: E402
+from app.foundry import strip_quotes  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("observer")
 
-app = FastAPI(title="Skuf Observer", version="0.3.0")
+app = FastAPI(title="Skuf Observer", version="0.4.1")
 
 bog_arthur = None
 
@@ -52,27 +54,37 @@ class EventsResponse(BaseModel):
 @app.on_event("startup")
 def on_startup() -> None:
     global bog_arthur
-    import os
-    
-    # 1. Check Azure configuration
+
     if azure_configured():
-        endpoint = (os.getenv("AZURE_OPENAI_ENDPOINT") or "").strip().rstrip("/")
-        api_key = (os.getenv("AZURE_OPENAI_API_KEY") or "").strip()
-        deployment = (os.getenv("AZURE_OPENAI_DEPLOYMENT") or "").strip()
-        
+        endpoint = strip_quotes(os.getenv("AZURE_OPENAI_ENDPOINT") or "").rstrip("/")
+        api_key = strip_quotes(os.getenv("AZURE_OPENAI_API_KEY") or "")
+        deployment = strip_quotes(os.getenv("AZURE_OPENAI_DEPLOYMENT") or "")
+
         from openai import OpenAI
-        bog_arthur = BogA(model=deployment, api_key=api_key)
-        bog_arthur.client = OpenAI(base_url=endpoint, api_key=api_key)
-        bog_arthur.model_id = deployment
-        logger.info("BogA: Configured to use Azure GPT-5-mini")
-        print("[observer] BogA: Configured to use Azure GPT-5-mini", flush=True)
-        
-    # 2. Check Gemini configuration
+
+        # BogA.__init__ сначала ждёт ключ/модель; для Azure:
+        # 1) создаём с валидным Gemini-ключом реестра (не используется),
+        # 2) подменяем client + model_id на Foundry deployment.
+        bog_arthur = BogA(
+            model=DEFAULT_MODEL,
+            api_key=api_key,
+            cag_lines=150,
+        )
+        bog_arthur.client = OpenAI(
+            base_url=endpoint,
+            api_key=api_key,
+            timeout=float(os.getenv("AZURE_HTTP_TIMEOUT", "45")),
+            max_retries=0,
+        )
+        bog_arthur.set_model(deployment)
+        logger.info("BogA: Azure/Foundry deployment=%s", deployment)
+        print(f"[observer] BogA: Azure/Foundry deployment={deployment}", flush=True)
+
     elif os.getenv("GEMINI_API_KEY"):
         bog_arthur = BogA()
         logger.info("BogA: Configured to use Gemini")
         print("[observer] BogA: Configured to use Gemini", flush=True)
-        
+
     else:
         logger.warning("BogA: NOT configured (no Azure or Gemini) — stub mode")
         print("[observer] BogA: NOT configured — stub mode", flush=True)
@@ -80,12 +92,12 @@ def on_startup() -> None:
 
 @app.get("/health")
 async def health():
-    import os
     return {
         "status": "ok",
         "azure_configured": azure_configured(),
         "gemini_configured": bool(os.getenv("GEMINI_API_KEY")),
         "boga_ready": bog_arthur is not None,
+        "model_id": getattr(bog_arthur, "model_id", None) if bog_arthur else None,
     }
 
 
@@ -100,7 +112,6 @@ async def receive_events(body: EventsRequest):
 
     if bog_arthur is None:
         first = body.events[0]
-        # В stub-режиме на chat не спамим — как SKIP
         if first.type == "chat":
             print("[observer] stub chat: SKIP", flush=True)
             return EventsResponse(comment=None)
@@ -108,27 +119,35 @@ async def receive_events(body: EventsRequest):
         print(f"[observer] stub: {stub}", flush=True)
         return EventsResponse(comment=stub)
 
-    # Convert GameEvent objects to dicts for BogA
     events_dicts = []
     for e in body.events:
-        events_dicts.append({
-            "event_id": e.event_id,
-            "timestamp": e.timestamp,
-            "player": e.player,
-            "type": e.type,
-            "payload": e.payload,
-            "dimension": e.dimension,
-            "pos": e.pos
-        })
+        events_dicts.append(
+            {
+                "event_id": e.event_id,
+                "timestamp": e.timestamp,
+                "player": e.player,
+                "type": e.type,
+                "payload": e.payload,
+                "dimension": e.dimension,
+                "pos": e.pos,
+            }
+        )
 
-    # Call observe in a separate thread to avoid blocking the event loop
-    comment = await asyncio.to_thread(bog_arthur.observe, events_dicts, body.online_players)
+    try:
+        comment = await asyncio.to_thread(
+            bog_arthur.observe, events_dicts, body.online_players
+        )
+    except Exception as exc:
+        logger.exception("BogA.observe failed: %s", type(exc).__name__)
+        print(f"[observer] BogA.observe error: {exc}", flush=True)
+        return EventsResponse(comment=None)
+
     if comment:
         comment_clean = comment.strip()
         if comment_clean.upper() == "SKIP" or not comment_clean:
             print("[observer] comment: SKIP", flush=True)
             return EventsResponse(comment=None)
-            
+
         print(f"[observer] comment ok: {comment_clean[:120]}", flush=True)
         return EventsResponse(comment=comment_clean)
 
