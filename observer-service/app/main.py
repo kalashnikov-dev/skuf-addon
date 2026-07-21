@@ -19,12 +19,15 @@ from pydantic import BaseModel, Field
 _SERVICE_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(_SERVICE_ROOT / ".env")
 
-from app.azure_client import azure_configured, generate_comment  # noqa: E402
+from app.azure_client import azure_configured  # noqa: E402
+from app.bog_a import BogA
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("observer")
 
 app = FastAPI(title="Skuf Observer", version="0.3.0")
+
+bog_arthur = None
 
 
 class GameEvent(BaseModel):
@@ -48,20 +51,41 @@ class EventsResponse(BaseModel):
 
 @app.on_event("startup")
 def on_startup() -> None:
+    global bog_arthur
+    import os
+    
+    # 1. Check Azure configuration
     if azure_configured():
-        logger.info("Azure/Foundry: configured")
-        print("[observer] Azure/Foundry: configured", flush=True)
+        endpoint = (os.getenv("AZURE_OPENAI_ENDPOINT") or "").strip().rstrip("/")
+        api_key = (os.getenv("AZURE_OPENAI_API_KEY") or "").strip()
+        deployment = (os.getenv("AZURE_OPENAI_DEPLOYMENT") or "").strip()
+        
+        from openai import OpenAI
+        bog_arthur = BogA(model=deployment, api_key=api_key)
+        bog_arthur.client = OpenAI(base_url=endpoint, api_key=api_key)
+        bog_arthur.model_id = deployment
+        logger.info("BogA: Configured to use Azure GPT-5-mini")
+        print("[observer] BogA: Configured to use Azure GPT-5-mini", flush=True)
+        
+    # 2. Check Gemini configuration
+    elif os.getenv("GEMINI_API_KEY"):
+        bog_arthur = BogA()
+        logger.info("BogA: Configured to use Gemini")
+        print("[observer] BogA: Configured to use Gemini", flush=True)
+        
     else:
-        logger.warning("Azure/Foundry: NOT configured — stub mode")
-        print("[observer] Azure/Foundry: NOT configured — stub mode", flush=True)
+        logger.warning("BogA: NOT configured (no Azure or Gemini) — stub mode")
+        print("[observer] BogA: NOT configured — stub mode", flush=True)
 
 
 @app.get("/health")
 async def health():
-    # async = не ждёт Azure; всегда должен отвечать мгновенно
+    import os
     return {
         "status": "ok",
         "azure_configured": azure_configured(),
+        "gemini_configured": bool(os.getenv("GEMINI_API_KEY")),
+        "boga_ready": bog_arthur is not None,
     }
 
 
@@ -74,7 +98,7 @@ async def receive_events(body: EventsRequest):
     if not body.events:
         return EventsResponse(comment=None)
 
-    if not azure_configured():
+    if bog_arthur is None:
         first = body.events[0]
         # В stub-режиме на chat не спамим — как SKIP
         if first.type == "chat":
@@ -84,12 +108,30 @@ async def receive_events(body: EventsRequest):
         print(f"[observer] stub: {stub}", flush=True)
         return EventsResponse(comment=stub)
 
-    # Azure в другом потоке → event loop свободен для /health
-    comment = await asyncio.to_thread(generate_comment, body.online_players, body.events)
-    if comment:
-        print(f"[observer] comment ok: {comment[:120]}", flush=True)
-        return EventsResponse(comment=comment)
+    # Convert GameEvent objects to dicts for BogA
+    events_dicts = []
+    for e in body.events:
+        events_dicts.append({
+            "event_id": e.event_id,
+            "timestamp": e.timestamp,
+            "player": e.player,
+            "type": e.type,
+            "payload": e.payload,
+            "dimension": e.dimension,
+            "pos": e.pos
+        })
 
-    print("[observer] Azure returned no comment; staying silent", flush=True)
-    logger.warning("Azure returned no comment; staying silent")
+    # Call observe in a separate thread to avoid blocking the event loop
+    comment = await asyncio.to_thread(bog_arthur.observe, events_dicts, body.online_players)
+    if comment:
+        comment_clean = comment.strip()
+        if comment_clean.upper() == "SKIP" or not comment_clean:
+            print("[observer] comment: SKIP", flush=True)
+            return EventsResponse(comment=None)
+            
+        print(f"[observer] comment ok: {comment_clean[:120]}", flush=True)
+        return EventsResponse(comment=comment_clean)
+
+    print("[observer] BogA returned no comment; staying silent", flush=True)
+    logger.warning("BogA returned no comment; staying silent")
     return EventsResponse(comment=None)
