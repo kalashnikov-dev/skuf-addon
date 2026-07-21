@@ -16,6 +16,7 @@ on:
     paths:
       - "src/**"
       - "observer-service/**"
+      - "quests/**"
       - "deploy/**"
       - "build.gradle"
       - "gradle.properties"
@@ -30,6 +31,10 @@ on:
         description: "Rebuild observer Docker"
         type: boolean
         default: true
+      deploy_quests:
+        description: "Add ArthurTech FTB chapters (does not replace pack quests)"
+        type: boolean
+        default: true
 
 concurrency:
   group: deploy-gcp
@@ -41,6 +46,7 @@ jobs:
     outputs:
       mod: ${{ steps.filter.outputs.mod }}
       observer: ${{ steps.filter.outputs.observer }}
+      quests: ${{ steps.filter.outputs.quests }}
     steps:
       - uses: actions/checkout@v5
       - uses: dorny/paths-filter@v4
@@ -55,6 +61,9 @@ jobs:
             observer:
               - 'observer-service/**'
               - 'deploy/docker-compose.yml'
+              - 'deploy/remote-update.sh'
+            quests:
+              - 'quests/**'
               - 'deploy/remote-update.sh'
 
   build-mod:
@@ -85,8 +94,12 @@ jobs:
       always() &&
       (needs.build-mod.result == 'success' || needs.build-mod.result == 'skipped') &&
       (
-        (github.event_name == 'workflow_dispatch' && (inputs.deploy_mod || inputs.deploy_observer)) ||
-        (github.event_name == 'push' && (needs.changes.outputs.mod == 'true' || needs.changes.outputs.observer == 'true'))
+        (github.event_name == 'workflow_dispatch' && (inputs.deploy_mod || inputs.deploy_observer || inputs.deploy_quests)) ||
+        (github.event_name == 'push' && (
+          needs.changes.outputs.mod == 'true' ||
+          needs.changes.outputs.observer == 'true' ||
+          needs.changes.outputs.quests == 'true'
+        ))
       )
     runs-on: ubuntu-latest
     steps:
@@ -109,7 +122,6 @@ jobs:
             echo "ERROR: Missing secret. Need GCP_HOST, GCP_USER, GCP_SSH_KEY"
             exit 1
           fi
-          # Частая ошибка: в Value секрета GCP_HOST написали gcp_host вместо IP
           if echo "$DEPLOY_HOST" | grep -qiE '^(gcp_host|host|localhost)$'; then
             echo "ERROR: GCP_HOST looks wrong: '$DEPLOY_HOST'"
             echo "Set GCP_HOST secret Value to your VM External IP, e.g. 35.246.234.79"
@@ -132,9 +144,11 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "mod=${{ inputs.deploy_mod }}" >> "$GITHUB_OUTPUT"
             echo "observer=${{ inputs.deploy_observer }}" >> "$GITHUB_OUTPUT"
+            echo "quests=${{ inputs.deploy_quests }}" >> "$GITHUB_OUTPUT"
           else
             echo "mod=${{ needs.changes.outputs.mod }}" >> "$GITHUB_OUTPUT"
             echo "observer=${{ needs.changes.outputs.observer }}" >> "$GITHUB_OUTPUT"
+            echo "quests=${{ needs.changes.outputs.quests }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload jar + update script
@@ -150,6 +164,20 @@ jobs:
             JAR=$(ls /tmp/skuf-jar/skufaddon-*.jar | head -n1)
             $SCP "$JAR" "$DEPLOY_USER@$DEPLOY_HOST:/tmp/skufaddon-upload.jar"
           fi
+
+      - name: Sync ArthurTech quest chapters (additive)
+        if: steps.flags.outputs.quests == 'true'
+        env:
+          DEPLOY_HOST: ${{ secrets.GCP_HOST }}
+          DEPLOY_USER: ${{ secrets.GCP_USER }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq rsync
+          SSH_OPTS="-i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
+          ssh $SSH_OPTS "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p /tmp/skuf-quests-chapters && rm -f /tmp/skuf-quests-chapters/*.snbt"
+          # Только chapters/*.snbt — не data.snbt / chapter_groups (книга пака сохраняется)
+          rsync -az -e "ssh $SSH_OPTS" \
+            quests/config/ftbquests/quests/chapters/*.snbt \
+            "$DEPLOY_USER@$DEPLOY_HOST:/tmp/skuf-quests-chapters/"
 
       - name: Sync observer sources (keep server .env)
         if: steps.flags.outputs.observer == 'true'
@@ -175,7 +203,9 @@ jobs:
         run: |
           MOD_FLAG=0
           OBS_FLAG=0
+          QUEST_FLAG=0
           [ "${{ steps.flags.outputs.mod }}" = "true" ] && MOD_FLAG=1
           [ "${{ steps.flags.outputs.observer }}" = "true" ] && OBS_FLAG=1
+          [ "${{ steps.flags.outputs.quests }}" = "true" ] && QUEST_FLAG=1
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$DEPLOY_USER@$DEPLOY_HOST" \
-            "UPDATE_MOD=$MOD_FLAG UPDATE_OBSERVER=$OBS_FLAG RESTART_MC=1 bash ~/skuf-ai/deploy/remote-update.sh"
+            "UPDATE_MOD=$MOD_FLAG UPDATE_OBSERVER=$OBS_FLAG UPDATE_QUESTS=$QUEST_FLAG RESTART_MC=1 bash ~/skuf-ai/deploy/remote-update.sh"

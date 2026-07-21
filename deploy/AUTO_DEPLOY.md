@@ -6,9 +6,14 @@
 
 ```
 git push → GitHub Actions
-           ├─ изменился src/     → ./gradlew build → scp jar → stop/start Minecraft
+           ├─ изменился src/      → ./gradlew build → scp jar → stop/start Minecraft
+           ├─ изменился quests/  → дописать ArthurTech chapters рядом с квестами пака → restart MC
            └─ изменился observer → rsync кода → docker compose up --build
 ```
+
+Квесты **аддитивные**: на сервер уезжают только `quests/.../chapters/*.snbt`
+(steam / lv / mv / hv / sauna / endgame).  
+`data.snbt`, `chapter_groups.snbt`, `reward_tables` и главы Community Pack **не затираются**.
 
 `.env` с ключами Azure **остаётся только на VM**, Actions его не заливает.
 
@@ -69,10 +74,11 @@ chmod +x ~/skuf-ai/deploy/remote-update.sh
 ## Ручной запуск
 
 GitHub → Actions → **Deploy to GCP** → Run workflow  
-Можно выбрать только мод или только observer.
+Можно выбрать только мод, observer или quests.
 
 ## Важно
 
-- Деплой мода **рестартит сервер** — вас кикнет на ~1–2 минуты.
-- Меняешь только `README` / доки без `src` и `observer-service` — деплой **не** стартует.
+- Деплой мода / квестов **рестартит сервер** — вас кикнет на ~1–2 минуты.
+- Меняешь только `README` / доки без `src`, `observer-service`, `quests` — деплой **не** стартует.
 - IP VM лучше сделать **статическим** (Reserve external IP), иначе после Stop секрет `GCP_HOST` устареет.
+- Квесты = дополнение к книге пака, не замена.

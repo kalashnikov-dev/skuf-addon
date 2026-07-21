@@ -13,14 +13,19 @@ Questbook for the SkufAddon / ArthurTech modpack (FTB Quests, Minecraft 1.20.1 F
 
 ## Install / test
 
-Copy into the dev run dir (or a modpack instance) and clear the FTB cache:
+**Локально (аддитивно к книге пака):** скопируй только chapters из репо рядом с существующими,
+не затирая `data.snbt` пака:
 
 ```
-cp -r quests/config/ftbquests/quests/* run/config/ftbquests/quests/
-rm -rf run/local/ftbquests
+cp quests/config/ftbquests/quests/chapters/*.snbt <instance>/config/ftbquests/quests/chapters/
+rm -rf <instance>/local/ftbquests
 ```
 
-Then launch (`run.bat` → [1] runClient). In-game: pencil/edit icon or `/ftbquests editing_mode`.
+**На GCP:** push в `main` под `quests/**` сам допишет главы на serverpack (см. `deploy/AUTO_DEPLOY.md`).
+Либо Actions → Deploy to GCP → включи `deploy_quests`.
+
+Then launch. In-game: ищи главы вроде «1 · Грязный двор (Steam)» рядом с главами Community Pack.
+Pencil/edit icon or `/ftbquests editing_mode`.
 
 ## Known-incomplete: 3 locked finale quests
 
