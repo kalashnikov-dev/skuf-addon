@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/chelyabinsk_proval",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/chelyabinsk_proval"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/chelyabinsk_proval",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/chelyabinsk_proval",
+      "y": 270
+    }
+  }
+}

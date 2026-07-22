@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skufaddon:block/machine/myposhko_negation_bus"
+    }
+  }
+}

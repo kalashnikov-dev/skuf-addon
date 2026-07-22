@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/emergency_ignorance",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/emergency_ignorance"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/emergency_ignorance",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/emergency_ignorance",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "skufaddon:block/casing_pohuit_reinforced"
+  }
+}

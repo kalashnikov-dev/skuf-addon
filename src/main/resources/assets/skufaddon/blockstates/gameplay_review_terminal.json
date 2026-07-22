@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skufaddon:block/machine/gameplay_review_terminal"
+    }
+  }
+}

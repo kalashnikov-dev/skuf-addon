@@ -1,0 +1,8 @@
+{
+    "parent": "gtceu:block/machine/template/cube_all/single",
+    "textures": {
+        "all": "gtceu:block/casings/voltage/lv/side",
+        "overlay": "gtceu:block/machines/electric_furnace/overlay_front",
+        "overlay_emissive": "gtceu:block/void"
+    }
+}
