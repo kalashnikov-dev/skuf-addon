@@ -40,6 +40,7 @@ class RagSettings:
     chunk_overlap: int
     reindex_on_startup: bool
     knowledge_dir: Path
+    memory_dir: Path
 
 
 @lru_cache(maxsize=1)
@@ -49,8 +50,12 @@ def get_rag_settings() -> RagSettings:
         _strip(os.getenv("RAG_KNOWLEDGE_DIR"))
         or str(service_root / "knowledge")
     )
+    memory = Path(
+        _strip(os.getenv("MEMORY_DIR"))
+        or str(service_root / "data")
+    )
     return RagSettings(
-        enabled=_bool("RAG_ENABLED", True),
+        enabled=_bool("RAG_ENABLED", False),
         qdrant_url=_strip(os.getenv("QDRANT_URL")) or "http://127.0.0.1:6333",
         lore_collection=_strip(os.getenv("RAG_LORE_COLLECTION")) or "skuf_lore",
         memory_collection=_strip(os.getenv("RAG_MEMORY_COLLECTION")) or "skuf_memory",
@@ -65,6 +70,7 @@ def get_rag_settings() -> RagSettings:
         chunk_overlap=int(os.getenv("RAG_CHUNK_OVERLAP", "150")),
         reindex_on_startup=_bool("RAG_REINDEX_ON_STARTUP", False),
         knowledge_dir=knowledge,
+        memory_dir=memory,
     )
 
 

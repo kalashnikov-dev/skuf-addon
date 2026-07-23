@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "skufaddon:gameplay_review_terminal",
+  "variants": {
+    "": {
+      "model": "skufaddon:block/machine/template/gameplay_review_terminal"
+    }
+  }
+}

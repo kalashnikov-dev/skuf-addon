@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "skufaddon:myposhko_negation_bus",
+  "variants": {
+    "": {
+      "model": "skufaddon:block/machine/template/myposhko_negation_bus"
+    }
+  }
+}

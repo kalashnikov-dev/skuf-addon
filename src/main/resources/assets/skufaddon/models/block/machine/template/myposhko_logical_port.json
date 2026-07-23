@@ -1,0 +1,11 @@
+{
+    "parent": "gtceu:block/machine/template/cube_all/sided",
+    "textures": {
+        "all": "gtceu:block/casings/voltage/mv/side",
+        "overlay_front": "skufaddon:block/machine/myposhko_logical_port",
+        "overlay_back": "gtceu:block/void",
+        "overlay_top": "gtceu:block/void",
+        "overlay_bottom": "gtceu:block/void",
+        "overlay_side": "gtceu:block/void"
+    }
+}

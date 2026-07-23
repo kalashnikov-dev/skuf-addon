@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "skufaddon:myposhko_buffer_hatch",
+  "variants": {
+    "": {
+      "model": "skufaddon:block/machine/template/myposhko_buffer_hatch"
+    }
+  }
+}

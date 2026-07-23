@@ -183,6 +183,8 @@ class BogA:
         self.n_fewshots = n_fewshots      # сколько примеров подкладываем
         self.history: list[dict] = []      # живой диалог поверх few-shot
         self.temperature = temperature
+        # Станет True, если деплой отверг reasoning_effort — тогда шлём без него
+        self._reasoning_unsupported = False
         self.set_model(model)
 
     # --- модель ---
@@ -217,6 +219,14 @@ class BogA:
         return any(t in s for t in ("429", "503", "rate limit", "overloaded"))
 
     @staticmethod
+    def _is_reasoning_param_error(e: Exception) -> bool:
+        """Деплой не знает про reasoning_effort (400 unknown/unsupported parameter)."""
+        s = str(e).lower()
+        return "reasoning_effort" in s or (
+            "reasoning" in s and ("unsupported" in s or "unknown" in s or "unexpected" in s)
+        )
+
+    @staticmethod
     def _retry_delay(e: Exception, default: float) -> float:
         """Достаёт 'retryDelay': '18s' из тела 429, иначе default."""
         m = re.search(r"retry(?:Delay|.{0,4}in)['\":\s]+(\d+(?:\.\d+)?)s", str(e))
@@ -245,9 +255,14 @@ class BogA:
                         "model": self.model_id,
                         "messages": messages,
                     }
-                    # gpt-5*: max_tokens часто даёт пустой content; temperature может быть запрещён
+                    # gpt-5*: max_tokens часто даёт пустой content; temperature может быть запрещён.
+                    # reasoning_effort=minimal — чтобы reasoning-токены не съедали весь бюджет
+                    # и ответ не выходил пустым/сухим (главная причина «тупости» observer).
                     if self._uses_max_completion_tokens():
                         kwargs["max_completion_tokens"] = max(max_tokens, 800)
+                        effort = os.environ.get("AZURE_REASONING_EFFORT", "minimal").strip()
+                        if effort and not self._reasoning_unsupported:
+                            kwargs["reasoning_effort"] = effort
                     else:
                         kwargs["temperature"] = self.temperature
                         kwargs["top_p"] = 0.95
@@ -257,6 +272,10 @@ class BogA:
                     return "".join(strip_html_tags_stream([raw_reply]))
                 except Exception as e:  # noqa: BLE001
                     last = e
+                    # Деплой не принимает reasoning_effort — запоминаем и повторяем без него
+                    if not self._reasoning_unsupported and self._is_reasoning_param_error(e):
+                        self._reasoning_unsupported = True
+                        continue
                     if self._is_transient(e) and i < retries - 1:
                         time.sleep(self._retry_delay(e, default=2.0 * (2 ** i)))
                         continue
@@ -301,13 +320,17 @@ class BogA:
         self.history.append({"role": "assistant", "content": acc.strip()})
 
     # --- observer-режим (совместим с skuf-addon/observer-service POST /events) ---
-    def observe(self, events: list[dict], online_players: list[str] | None = None
-                ) -> str | None:
+    def observe(self, events: list[dict], online_players: list[str] | None = None,
+                memory_block: str | None = None) -> str | None:
         """
         Прогоняет игровые события через персону, возвращает реплику в чат или None
         (молчать). Формат events совпадает с payload observer-service:
         {event_id, timestamp, player, type, payload, dimension?, pos?}.
-        Не пишет в self.history — каждый вызов независимый (как stateless endpoint).
+
+        memory_block (факты + недавняя история) кладётся в ХВОСТ user-промпта, а не
+        в self.system — так статический префикс (persona+facts+fewshots) не меняется
+        между вызовами и провайдер кэширует его автоматически (prompt caching).
+        Сам вызов остаётся stateless: непрерывность даёт переданный memory_block.
         """
         if not events:
             return None
@@ -320,10 +343,15 @@ class BogA:
             payload = e.get("payload", {})
             extra = f" ({json.dumps(payload, ensure_ascii=False)})" if payload else ""
             lines.append(f"{who} -> {typ}{extra}")
-        prompt = (
-            "события в игре:\n" + "\n".join(lines) +
-            "\n\nкинь реплику в чат как артур (или пусто если не на что реагировать)"
+
+        prompt_parts = []
+        if memory_block:
+            prompt_parts.append(memory_block.strip())
+        prompt_parts.append("события в игре:\n" + "\n".join(lines))
+        prompt_parts.append(
+            "кинь реплику в чат как артур (или пусто если не на что реагировать)"
         )
+        prompt = "\n\n".join(prompt_parts)
         reply = self._complete([{"role": "user", "content": prompt}], max_tokens=200)
         return reply or None
 

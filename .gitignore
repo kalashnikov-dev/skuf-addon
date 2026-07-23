@@ -40,5 +40,9 @@ mds/
 # Python observer
 observer-service/.venv/
 observer-service/.env
+observer-service/data/
 **/__pycache__/
 *.pyc
+
+# IDE / config
+.mcp.json

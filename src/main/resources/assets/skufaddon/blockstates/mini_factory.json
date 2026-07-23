@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "skufaddon:block/machine/mini_factory",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skufaddon:block/machine/mini_factory"
+    },
+    "facing=south": {
+      "model": "skufaddon:block/machine/mini_factory",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "skufaddon:block/machine/mini_factory",
+      "y": 270
+    }
+  }
+}
