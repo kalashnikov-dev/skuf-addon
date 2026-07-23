@@ -40,6 +40,7 @@ class RagSettings:
     chunk_overlap: int
     reindex_on_startup: bool
     knowledge_dir: Path
+    memory_dir: Path
 
 
 @lru_cache(maxsize=1)
@@ -48,6 +49,10 @@ def get_rag_settings() -> RagSettings:
     knowledge = Path(
         _strip(os.getenv("RAG_KNOWLEDGE_DIR"))
         or str(service_root / "knowledge")
+    )
+    memory = Path(
+        _strip(os.getenv("MEMORY_DIR"))
+        or str(service_root / "data")
     )
     return RagSettings(
         enabled=_bool("RAG_ENABLED", True),
@@ -65,6 +70,7 @@ def get_rag_settings() -> RagSettings:
         chunk_overlap=int(os.getenv("RAG_CHUNK_OVERLAP", "150")),
         reindex_on_startup=_bool("RAG_REINDEX_ON_STARTUP", False),
         knowledge_dir=knowledge,
+        memory_dir=memory,
     )
 
 

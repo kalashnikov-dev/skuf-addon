@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import json
 import logging
+import os
 import threading
 import time
 from collections import deque
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Deque
 
 from app.rag.embeddings import embed_query
@@ -30,11 +33,40 @@ class SessionMemory:
         self,
         store: QdrantStore | None = None,
         settings: RagSettings | None = None,
+        persist_path: Path | str | None = None,
     ) -> None:
         self.settings = settings or get_rag_settings()
         self.store = store
+        self.persist_path = Path(persist_path) if persist_path else None
         self._turns: Deque[MemoryTurn] = deque(maxlen=max(4, self.settings.session_recent * 2))
         self._lock = threading.Lock()
+        if self.persist_path:
+            self._load()
+
+    def _load(self) -> None:
+        if not self.persist_path or not self.persist_path.exists():
+            return
+        try:
+            raw = json.loads(self.persist_path.read_text(encoding="utf-8"))
+        except Exception:
+            logger.exception("Failed to read history file %s — starting empty", self.persist_path)
+            return
+        for item in raw if isinstance(raw, list) else []:
+            try:
+                self._turns.append(MemoryTurn(**item))
+            except TypeError:
+                continue
+        logger.info("Loaded %s history turns from %s", len(self._turns), self.persist_path)
+
+    def _flush(self) -> None:
+        """Атомарная запись окна истории (только под self._lock)."""
+        if not self.persist_path:
+            return
+        self.persist_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = self.persist_path.with_suffix(self.persist_path.suffix + ".tmp")
+        data = [asdict(t) for t in self._turns]
+        tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        os.replace(tmp, self.persist_path)
 
     def add(
         self,
@@ -57,6 +89,11 @@ class SessionMemory:
         )
         with self._lock:
             self._turns.append(turn)
+            if self.persist_path:
+                try:
+                    self._flush()
+                except Exception:
+                    logger.exception("Failed to persist history to %s", self.persist_path)
 
         if persist_vector and self.store is not None:
             try:

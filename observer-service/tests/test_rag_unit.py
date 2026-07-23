@@ -37,3 +37,17 @@ def test_session_recent_and_prompt() -> None:
     block = mem.as_prompt_block()
     assert "Бог А" in block
     assert "не повторяй" in block.lower() or "Недавний" in block
+
+
+def test_session_persistence(tmp_path: Path) -> None:
+    path = tmp_path / "history.json"
+    mem = SessionMemory(store=None, persist_path=path)
+    mem.add("event", "Kostyan → join", player="Kostyan", event_type="join", persist_vector=False)
+    mem.add("observer", "здаров додик", persist_vector=False)
+    assert path.exists()
+
+    # Новый инстанс с того же файла — история восстановлена (пережила «рестарт»)
+    mem2 = SessionMemory(store=None, persist_path=path)
+    turns = mem2.recent()
+    assert len(turns) == 2
+    assert any(t.role == "observer" and "здаров" in t.text for t in turns)
