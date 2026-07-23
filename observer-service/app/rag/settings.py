@@ -55,7 +55,7 @@ def get_rag_settings() -> RagSettings:
         or str(service_root / "data")
     )
     return RagSettings(
-        enabled=_bool("RAG_ENABLED", True),
+        enabled=_bool("RAG_ENABLED", False),
         qdrant_url=_strip(os.getenv("QDRANT_URL")) or "http://127.0.0.1:6333",
         lore_collection=_strip(os.getenv("RAG_LORE_COLLECTION")) or "skuf_lore",
         memory_collection=_strip(os.getenv("RAG_MEMORY_COLLECTION")) or "skuf_memory",

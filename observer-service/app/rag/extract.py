@@ -26,7 +26,7 @@ _EXTRACT_SYSTEM = (
 def auto_extraction_enabled() -> bool:
     raw = os.getenv("AUTO_FACT_EXTRACTION")
     if raw is None or raw.strip() == "":
-        return True
+        return False
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
