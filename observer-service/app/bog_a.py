@@ -159,8 +159,26 @@ class BogA:
         self.client = OpenAI(api_key=key, base_url=GEMINI_OPENAI_BASE)
         system_base, self.fewshots, self.style, raw_chat = _load_persona(cag_lines)
         self.system = system_base
-        
-        # 1. Load facts.txt if it exists (CAG optimized database)
+
+        # 1. Append style_guide.json rules to system prompt
+        if self.style:
+            sections = []
+            for key, label in (("message_form", "ФОРМА СООБЩЕНИЙ"),
+                               ("lexicon", "ЛЕКСИКОН"),
+                               ("orthography", "ОРФОГРАФИЯ"),
+                               ("humor", "ЮМОР"),
+                               ("reactions", "РЕАКЦИИ"),
+                               ("topics", "ТЕМЫ"),
+                               ("donts", "НЕЛЬЗЯ")):
+                items = self.style.get(key)
+                if items:
+                    sections.append(f"--- {label} ---")
+                    for i, item in enumerate(items, 1):
+                        sections.append(f"{i}. {item}")
+            if sections:
+                self.system += "\n\n# СТИЛЬ АРТУРА:\n" + "\n".join(sections)
+
+        # 2. Load facts.txt if it exists (CAG optimized database)
         facts_path = PERSONA_DIR / "facts.txt"
         if facts_path.exists():
             print(f"[CAG] Loading pre-compiled facts database from {facts_path}")
@@ -170,8 +188,8 @@ class BogA:
             if raw_chat:
                 lines = raw_chat.splitlines()
                 raw_chat = "\n".join(lines[-min(cag_lines, 150):])
-        
-        # 2. Append raw chat as a style guide template
+
+        # 3. Append raw chat as a style guide template
         if raw_chat:
             self.system += (
                 "\n\n# ШАБЛОН СТИЛЯ И ПОСЛЕДНЯЯ ПЕРЕПИСКА (ПИШИ ТОЧНО В ТАКОМ ЖЕ СТИЛЕ И ФОРМАТЕ):\n"
