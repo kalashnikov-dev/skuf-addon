@@ -9,4 +9,7 @@ services:
     # host.docker.internal → хост VM (RCON 25575, inbound мода 8081)
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    volumes:
+      # факты/история не должны сгорать при --build
+      - ../observer-service/data:/app/data
     restart: unless-stopped

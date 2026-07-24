@@ -1,11 +1,11 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 openai==1.59.6
-python-dotenv==1.0.1
+python-dotenv==1.1.1
 # httpx нужен для Starlette/FastAPI TestClient в observe_local.py
 httpx==0.28.1
 mcrcon==0.7.0
-fastmcp>=2.3.0
+# <2.12: не требует openai>=1.95; >=2.3: dotenv>=1.1
+fastmcp>=2.3.0,<2.12
 # Опциональный семантический слой памяти (Qdrant). Файловая память работает и без сервера Qdrant.
 qdrant-client==1.12.1
-

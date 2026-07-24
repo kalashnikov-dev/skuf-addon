@@ -231,12 +231,24 @@ def _build_app() -> FastAPI:
 
     if mcp_enabled():
         try:
-            from fastmcp.utilities.lifespan import combine_lifespans
-
             from app.mcp_server import mcp
 
             mcp_app = mcp.http_app(path="/", transport="sse")
-            lifespan = combine_lifespans(app_lifespan, mcp_app.lifespan)
+            try:
+                from fastmcp.utilities.lifespan import combine_lifespans
+
+                lifespan = combine_lifespans(app_lifespan, mcp_app.lifespan)
+            except ImportError:
+                # Старые fastmcp без utilities.lifespan — склеиваем вручную
+                mcp_life = mcp_app.lifespan
+
+                @asynccontextmanager
+                async def lifespan(app: FastAPI):
+                    async with app_lifespan(app):
+                        async with mcp_life(app):
+                            yield
+
+)
             logger.info("FastMCP enabled — will mount at /mcp")
         except Exception as exc:
             logger.exception("FastMCP init failed: %s", type(exc).__name__)
