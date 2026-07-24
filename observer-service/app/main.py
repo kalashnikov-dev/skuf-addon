@@ -235,7 +235,7 @@ def _build_app() -> FastAPI:
 
             from app.mcp_server import mcp
 
-            mcp_app = mcp.http_app(path="/")
+            mcp_app = mcp.http_app(path="/", transport="sse")
             lifespan = combine_lifespans(app_lifespan, mcp_app.lifespan)
             logger.info("FastMCP enabled — will mount at /mcp")
         except Exception as exc:
