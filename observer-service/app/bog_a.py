@@ -355,7 +355,7 @@ class BogA:
             prompt_parts.append(memory_block.strip())
         prompt_parts.append("события в игре:\n" + "\n".join(lines))
         prompt_parts.append(
-            "Ответь прямо от своего лица в чат как Артур (1-2 фразы в твоём стиле) или напиши SKIP, если не на что реагировать."
+            "Ответь как Артур: коротко, рвано (1-3 коротких строки стаккато), без эмодзи, без точек в конце, от своего лица (или напиши SKIP если не на что реагировать)."
         )
         prompt = "\n\n".join(prompt_parts)
         reply = self._complete([{"role": "user", "content": prompt}], max_tokens=200)
