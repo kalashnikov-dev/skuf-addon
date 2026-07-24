@@ -7,8 +7,14 @@ import time
 import uuid
 from typing import Any
 
-from qdrant_client import QdrantClient
-from qdrant_client.http import models as qm
+try:
+    from qdrant_client import QdrantClient
+    from qdrant_client.http import models as qm
+    QDRANT_AVAILABLE = True
+except ImportError:
+    QdrantClient = None  # type: ignore[assignment, misc]
+    qm = None  # type: ignore[assignment]
+    QDRANT_AVAILABLE = False
 
 from app.rag.chunking import TextChunk
 from app.rag.settings import RagSettings, get_rag_settings
@@ -19,6 +25,8 @@ logger = logging.getLogger("observer.rag.store")
 class QdrantStore:
     def __init__(self, settings: RagSettings | None = None) -> None:
         self.settings = settings or get_rag_settings()
+        if not QDRANT_AVAILABLE or QdrantClient is None:
+            raise RuntimeError("qdrant-client package is not installed")
         self.client = QdrantClient(url=self.settings.qdrant_url, timeout=10)
 
     def ping(self) -> bool:

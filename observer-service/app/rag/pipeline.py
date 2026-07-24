@@ -107,10 +107,10 @@ class RagPipeline:
         memory_hits = 0
         fact_count = 0
 
-        # 1) Факты (всегда) — durable-знания
+        # 1) Факты (только релевантные запросу) — durable-знания
         if self.facts is not None:
             fact_count = self.facts.count()
-            fact_block = self.facts.as_prompt_block()
+            fact_block = self.facts.as_prompt_block(query=query)
             if fact_block:
                 parts.append(fact_block)
 

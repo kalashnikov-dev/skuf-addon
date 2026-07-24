@@ -1,0 +1,28 @@
+{
+  "online_players": ["tester", "arsen"],
+  "steps": [
+    {
+      "player": "tester",
+      "type": "join"
+    },
+    {
+      "player": "tester",
+      "chat": "Бог А ты тут?"
+    },
+    {
+      "player": "tester",
+      "chat": "запомни арсен любит нормис"
+    },
+    {
+      "player": "arsen",
+      "type": "death",
+      "payload": {
+        "death_message": "arsen was blown up by Creeper"
+      }
+    },
+    {
+      "player": "tester",
+      "chat": "Бог А, напомни, что арсен любит?"
+    }
+  ]
+}

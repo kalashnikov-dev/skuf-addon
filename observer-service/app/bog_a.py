@@ -160,25 +160,7 @@ class BogA:
         system_base, self.fewshots, self.style, raw_chat = _load_persona(cag_lines)
         self.system = system_base
 
-        # 1. Append style_guide.json rules to system prompt
-        if self.style:
-            sections = []
-            for key, label in (("message_form", "ФОРМА СООБЩЕНИЙ"),
-                               ("lexicon", "ЛЕКСИКОН"),
-                               ("orthography", "ОРФОГРАФИЯ"),
-                               ("humor", "ЮМОР"),
-                               ("reactions", "РЕАКЦИИ"),
-                               ("topics", "ТЕМЫ"),
-                               ("donts", "НЕЛЬЗЯ")):
-                items = self.style.get(key)
-                if items:
-                    sections.append(f"--- {label} ---")
-                    for i, item in enumerate(items, 1):
-                        sections.append(f"{i}. {item}")
-            if sections:
-                self.system += "\n\n# СТИЛЬ АРТУРА:\n" + "\n".join(sections)
-
-        # 2. Load facts.txt if it exists (CAG optimized database)
+        # 1. Load facts.txt if it exists (CAG optimized database)
         facts_path = PERSONA_DIR / "facts.txt"
         if facts_path.exists():
             print(f"[CAG] Loading pre-compiled facts database from {facts_path}")
@@ -189,7 +171,7 @@ class BogA:
                 lines = raw_chat.splitlines()
                 raw_chat = "\n".join(lines[-min(cag_lines, 150):])
 
-        # 3. Append raw chat as a style guide template
+        # 2. Append raw chat as a style guide template
         if raw_chat:
             self.system += (
                 "\n\n# ШАБЛОН СТИЛЯ И ПОСЛЕДНЯЯ ПЕРЕПИСКА (ПИШИ ТОЧНО В ТАКОМ ЖЕ СТИЛЕ И ФОРМАТЕ):\n"
@@ -286,7 +268,10 @@ class BogA:
                         kwargs["top_p"] = 0.95
                         kwargs["max_tokens"] = max_tokens
                     r = self.client.chat.completions.create(**kwargs)
-                    raw_reply = (r.choices[0].message.content or "").strip()
+                    choices = getattr(r, "choices", None)
+                    if not choices:
+                        return ""
+                    raw_reply = (choices[0].message.content or "").strip()
                     return "".join(strip_html_tags_stream([raw_reply]))
                 except Exception as e:  # noqa: BLE001
                     last = e
@@ -359,15 +344,18 @@ class BogA:
             who = e.get("player", "кто-то")
             typ = e.get("type", "?")
             payload = e.get("payload", {})
-            extra = f" ({json.dumps(payload, ensure_ascii=False)})" if payload else ""
-            lines.append(f"{who} -> {typ}{extra}")
+            if typ == "chat" and "message" in payload:
+                lines.append(f"{who}: {payload['message']}")
+            else:
+                extra = f" ({json.dumps(payload, ensure_ascii=False)})" if payload else ""
+                lines.append(f"{who} -> {typ}{extra}")
 
         prompt_parts = []
         if memory_block:
             prompt_parts.append(memory_block.strip())
         prompt_parts.append("события в игре:\n" + "\n".join(lines))
         prompt_parts.append(
-            "кинь реплику в чат как артур (или пусто если не на что реагировать)"
+            "Ответь как Артур: коротко, рвано (1-3 коротких строки стаккато), без эмодзи, без точек в конце, от своего лица (или напиши SKIP если не на что реагировать)."
         )
         prompt = "\n\n".join(prompt_parts)
         reply = self._complete([{"role": "user", "content": prompt}], max_tokens=200)

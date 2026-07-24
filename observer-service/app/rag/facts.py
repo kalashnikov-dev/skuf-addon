@@ -133,9 +133,24 @@ class FactStore:
         with self._lock:
             return len(self._facts)
 
-    def as_prompt_block(self, limit: int | None = None) -> str:
-        """Компактный блок фактов для инъекции в контекст. Пусто, если фактов нет."""
+    def as_prompt_block(self, query: str | None = None, limit: int | None = None) -> str:
+        """Компактный блок фактов для инъекции в контекст. Пусто, если релевантных фактов нет."""
         facts = self.all()
+        if not facts:
+            return ""
+        if query:
+            tokens = set(re.findall(r"\w+", query.lower()))
+            stop_words = {"как", "что", "где", "кто", "или", "это", "ты", "бог", "чем", "мне", "его", "нам", "все", "тут"}
+            keywords = {t for t in tokens if len(t) > 2 and t not in stop_words}
+            if keywords:
+                matched = [
+                    f for f in facts
+                    if any(k in f.text.lower() for k in keywords)
+                    or (f.source_player and f.source_player.lower() in keywords)
+                ]
+                facts = matched
+            else:
+                facts = []
         if not facts:
             return ""
         if limit is not None:
