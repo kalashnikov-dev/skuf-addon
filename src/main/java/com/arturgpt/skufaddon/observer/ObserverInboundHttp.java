@@ -7,7 +7,6 @@ import net.minecraft.server.level.ServerPlayer;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -21,7 +20,7 @@ import java.util.concurrent.Executors;
 /**
  * Входящий HTTP для агентов (Claude/MCP): localhost-only broadcast в игровой чат.
  *
- * POST /broadcast  {"text":"...", "prefix":"Claude", "triggerBoga": true}
+ * POST /broadcast {"text":"...", "prefix":"Claude", "triggerBoga": true}
  * Header: Authorization: Bearer &lt;inboundApiKey&gt; (если ключ задан в конфиге)
  */
 public final class ObserverInboundHttp {
@@ -97,12 +96,10 @@ public final class ObserverInboundHttp {
                 writeJson(exchange, 400, "{\"ok\":false,\"error\":\"empty text\"}");
                 return;
             }
-            String prefix = json.has("prefix") && !json.get("prefix").isJsonNull()
-                    ? json.get("prefix").getAsString()
-                    : "Claude";
-            boolean triggerBoga = !json.has("triggerBoga")
-                    || json.get("triggerBoga").isJsonNull()
-                    || json.get("triggerBoga").getAsBoolean();
+            String prefix = json.has("prefix") && !json.get("prefix").isJsonNull() ? json.get("prefix").getAsString() :
+                    "Claude";
+            boolean triggerBoga = !json.has("triggerBoga") || json.get("triggerBoga").isJsonNull() ||
+                    json.get("triggerBoga").getAsBoolean();
 
             MinecraftServer minecraft = mc;
             if (minecraft == null) {

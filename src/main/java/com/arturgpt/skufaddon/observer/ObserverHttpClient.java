@@ -223,10 +223,10 @@ public final class ObserverHttpClient {
      * playerName — nick in the event (e.g. Claude), carrier — any online ServerPlayer.
      */
     public static void sendExternalChatEvent(
-            MinecraftServer server,
-            ServerPlayer carrier,
-            String playerName,
-            JsonObject payload) {
+                                             MinecraftServer server,
+                                             ServerPlayer carrier,
+                                             String playerName,
+                                             JsonObject payload) {
         if (!ObserverConfig.ENABLED.get()) {
             return;
         }
