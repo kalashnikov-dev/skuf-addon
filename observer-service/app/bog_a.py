@@ -286,7 +286,10 @@ class BogA:
                         kwargs["top_p"] = 0.95
                         kwargs["max_tokens"] = max_tokens
                     r = self.client.chat.completions.create(**kwargs)
-                    raw_reply = (r.choices[0].message.content or "").strip()
+                    choices = getattr(r, "choices", None)
+                    if not choices:
+                        return ""
+                    raw_reply = (choices[0].message.content or "").strip()
                     return "".join(strip_html_tags_stream([raw_reply]))
                 except Exception as e:  # noqa: BLE001
                     last = e
