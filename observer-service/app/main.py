@@ -12,8 +12,12 @@ import asyncio
 import logging
 import os
 import re
+<<<<<<< HEAD
 import time
 import uuid
+=======
+import sys
+>>>>>>> 85357aa (feat(observer): adapt persona prompt and observe formatting for organic responses)
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -50,6 +54,15 @@ bog_arthur = None
 
 # «запомни X», «запомни: X», «запомни, что X» — ci. Группа 1 = что запоминать.
 _REMEMBER_RE = re.compile(r"^\s*запомни\b[\s,:\-—]*(?:что\b[\s,]*)?(.*)$", re.IGNORECASE | re.DOTALL)
+
+
+def _safe_print(*args, **kwargs) -> None:
+    try:
+        print(*args, **kwargs)
+    except UnicodeEncodeError:
+        msg = " ".join(str(a) for a in args)
+        enc = sys.stdout.encoding or "utf-8"
+        print(msg.encode(enc, errors="replace").decode(enc), **kwargs)
 
 
 def parse_memory_command(text: str) -> str | None:
@@ -388,7 +401,7 @@ async def send_chat_http(body: SendChatRequest):
 @app.post("/events", response_model=EventsResponse)
 async def receive_events(body: EventsRequest):
     kinds = ", ".join(f"{e.player}:{e.type}" for e in body.events) or "(empty)"
-    print(f"[observer] /events received: {kinds}", flush=True)
+    _safe_print(f"[observer] /events received: {kinds}", flush=True)
     logger.info("/events received: %s", kinds)
 
     if not body.events:
@@ -397,10 +410,10 @@ async def receive_events(body: EventsRequest):
     if bog_arthur is None:
         first = body.events[0]
         if first.type == "chat":
-            print("[observer] stub chat: SKIP", flush=True)
+            _safe_print("[observer] stub chat: SKIP", flush=True)
             return EventsResponse(comment=None)
         stub = f"[заглушка] Видел: {first.player} -> {first.type}"
-        print(f"[observer] stub: {stub}", flush=True)
+        _safe_print(f"[observer] stub: {stub}", flush=True)
         return EventsResponse(comment=stub)
 
     events_dicts = []
@@ -428,7 +441,7 @@ async def receive_events(body: EventsRequest):
                 remembered = parse_memory_command(msg)
                 if remembered:
                     added = pipe.remember_fact(remembered, player=e.player, origin="explicit")
-                    print(f"[observer] remember_fact('{remembered[:60]}') added={added}", flush=True)
+                    _safe_print(f"[observer] remember_fact('{remembered[:60]}') added={added}", flush=True)
 
     query_text = " ".join(chat_texts) or " ".join(f"{e.player} {e.type}" for e in body.events)
     memory_block = ""

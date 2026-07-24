@@ -94,6 +94,20 @@ def _parse_args() -> argparse.Namespace:
 args = _parse_args()
 os.environ["MEMORY_DIR"] = args.memory_dir
 
+import builtins
+
+
+def safe_print(*args, **kwargs) -> None:
+    try:
+        builtins.print(*args, **kwargs)
+    except UnicodeEncodeError:
+        msg = " ".join(str(a) for a in args)
+        enc = sys.stdout.encoding or "utf-8"
+        builtins.print(msg.encode(enc, errors="replace").decode(enc), **kwargs)
+
+
+print = safe_print
+
 try:
     from starlette.testclient import TestClient
 except ImportError:
