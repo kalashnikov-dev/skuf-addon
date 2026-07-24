@@ -90,13 +90,23 @@ jobs:
 
   deploy:
     needs: [changes, build-mod]
+    # always(): не блокируем observer/quests, если Java-сборка упала.
+    # Jar на VM кладём только при success у build-mod (см. Decide flags).
     if: |
       always() &&
-      (needs.build-mod.result == 'success' || needs.build-mod.result == 'skipped') &&
+      !cancelled() &&
       (
         (github.event_name == 'workflow_dispatch' && (inputs.deploy_mod || inputs.deploy_observer || inputs.deploy_quests)) ||
         (github.event_name == 'push' && (
           needs.changes.outputs.mod == 'true' ||
+          needs.changes.outputs.observer == 'true' ||
+          needs.changes.outputs.quests == 'true'
+        ))
+      ) &&
+      (
+        needs.build-mod.result != 'failure' ||
+        (github.event_name == 'workflow_dispatch' && (inputs.deploy_observer || inputs.deploy_quests)) ||
+        (github.event_name == 'push' && (
           needs.changes.outputs.observer == 'true' ||
           needs.changes.outputs.quests == 'true'
         ))
@@ -142,13 +152,29 @@ jobs:
         id: flags
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "mod=${{ inputs.deploy_mod }}" >> "$GITHUB_OUTPUT"
-            echo "observer=${{ inputs.deploy_observer }}" >> "$GITHUB_OUTPUT"
-            echo "quests=${{ inputs.deploy_quests }}" >> "$GITHUB_OUTPUT"
+            MOD_WANTED="${{ inputs.deploy_mod }}"
+            OBS_WANTED="${{ inputs.deploy_observer }}"
+            QUEST_WANTED="${{ inputs.deploy_quests }}"
           else
-            echo "mod=${{ needs.changes.outputs.mod }}" >> "$GITHUB_OUTPUT"
-            echo "observer=${{ needs.changes.outputs.observer }}" >> "$GITHUB_OUTPUT"
-            echo "quests=${{ needs.changes.outputs.quests }}" >> "$GITHUB_OUTPUT"
+            MOD_WANTED="${{ needs.changes.outputs.mod }}"
+            OBS_WANTED="${{ needs.changes.outputs.observer }}"
+            QUEST_WANTED="${{ needs.changes.outputs.quests }}"
+          fi
+
+          # Jar только если Gradle реально собрал артефакт
+          if [ "$MOD_WANTED" = "true" ] && [ "${{ needs.build-mod.result }}" = "success" ]; then
+            echo "mod=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "mod=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "observer=$OBS_WANTED" >> "$GITHUB_OUTPUT"
+          echo "quests=$QUEST_WANTED" >> "$GITHUB_OUTPUT"
+
+          if [ "$MOD_WANTED" = "true" ] && [ "${{ needs.build-mod.result }}" = "failure" ]; then
+            echo "mod_build_failed=true" >> "$GITHUB_OUTPUT"
+            echo "WARN: build-mod failed — will still deploy observer/quests if requested, skip jar"
+          else
+            echo "mod_build_failed=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload jar + update script
@@ -209,3 +235,10 @@ jobs:
           [ "${{ steps.flags.outputs.quests }}" = "true" ] && QUEST_FLAG=1
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$DEPLOY_USER@$DEPLOY_HOST" \
             "UPDATE_MOD=$MOD_FLAG UPDATE_OBSERVER=$OBS_FLAG UPDATE_QUESTS=$QUEST_FLAG RESTART_MC=1 bash ~/skuf-ai/deploy/remote-update.sh"
+
+      # После observer/quests: workflow красный, если jar не собрался (сигнал в Actions)
+      - name: Fail if mod build failed
+        if: steps.flags.outputs.mod_build_failed == 'true'
+        run: |
+          echo "build-mod failed — jar not deployed; observer/quests (if any) already updated above."
+          exit 1
