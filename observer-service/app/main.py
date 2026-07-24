@@ -12,12 +12,9 @@ import asyncio
 import logging
 import os
 import re
-<<<<<<< HEAD
+import sys
 import time
 import uuid
-=======
-import sys
->>>>>>> 85357aa (feat(observer): adapt persona prompt and observe formatting for organic responses)
 from contextlib import asynccontextmanager
 from pathlib import Path
 
