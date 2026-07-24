@@ -27,6 +27,15 @@ public final class ObserverConfig {
     /** Префикс в чате, например «Бог А» → сообщение вида «&lt;Бог А&gt; …». */
     public static final ForgeConfigSpec.ConfigValue<String> CHAT_PREFIX;
 
+    /**
+     * Входящий HTTP (Claude/MCP → игровой чат). Только bind localhost.
+     * Python sidecar шлёт сюда при SEND_CHAT_BACKEND=mod.
+     */
+    public static final ForgeConfigSpec.BooleanValue INBOUND_HTTP_ENABLED;
+    public static final ForgeConfigSpec.ConfigValue<String> INBOUND_HTTP_BIND;
+    public static final ForgeConfigSpec.IntValue INBOUND_HTTP_PORT;
+    public static final ForgeConfigSpec.ConfigValue<String> INBOUND_HTTP_API_KEY;
+
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
@@ -59,6 +68,22 @@ public final class ObserverConfig {
         CHAT_PREFIX = builder
                 .comment("Chat name inside <> before the AI comment. Example: <Бог А> …")
                 .define("chatPrefix", "Бог А");
+
+        INBOUND_HTTP_ENABLED = builder
+                .comment("Localhost HTTP for external agents (Claude MCP) to write to game chat.")
+                .define("inboundHttpEnabled", true);
+
+        INBOUND_HTTP_BIND = builder
+                .comment("Bind address for inbound HTTP. Keep 127.0.0.1 — never expose publicly.")
+                .define("inboundHttpBind", "127.0.0.1");
+
+        INBOUND_HTTP_PORT = builder
+                .comment("Port for inbound HTTP (POST /broadcast).")
+                .defineInRange("inboundHttpPort", 8081, 1024, 65535);
+
+        INBOUND_HTTP_API_KEY = builder
+                .comment("Bearer token required by inbound HTTP. Empty = no auth (ok behind localhost).")
+                .define("inboundHttpApiKey", "");
 
         builder.pop();
         SPEC = builder.build();

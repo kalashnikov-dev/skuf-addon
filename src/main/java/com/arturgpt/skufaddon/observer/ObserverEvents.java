@@ -14,6 +14,8 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import com.google.gson.JsonObject;
@@ -34,6 +36,16 @@ public final class ObserverEvents {
         SkufAddon.LOGGER.info(
                 "Observer events registered " +
                         "(join=ordinary; death/advancement/dimension=important; chat=always-analyze)");
+    }
+
+    @SubscribeEvent
+    public void onServerStarted(ServerStartedEvent event) {
+        ObserverInboundHttp.start(event.getServer());
+    }
+
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        ObserverInboundHttp.stop();
     }
 
     @SubscribeEvent

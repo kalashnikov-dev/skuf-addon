@@ -197,12 +197,95 @@ public final class ObserverHttpClient {
         }
         // Модель иногда сама начинает с «Бог А» / «[Бог А]» / «<Бог А>» — убираем дубль
         String text = stripLeadingPrefix(comment.trim(), prefix);
-        Component message = Component.literal("<" + prefix + "> " + text);
+        broadcastExternal(server, text, prefix);
+    }
+
+    /** Публичный broadcast для inbound HTTP / внешних агентов. Вызывать на Server thread. */
+    public static void broadcastExternal(MinecraftServer server, String text, String prefix) {
+        if (prefix == null || prefix.isBlank()) {
+            prefix = "Claude";
+        }
+        String clean = text == null ? "" : text.trim();
+        if (clean.isEmpty()) {
+            return;
+        }
+        Component message = Component.literal("<" + prefix + "> " + clean);
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
         for (ServerPlayer p : players) {
             p.sendSystemMessage(message);
         }
-        SkufAddon.LOGGER.info("[Observer] chat: {}", text);
+        SkufAddon.LOGGER.info("[Observer] external chat <{}>: {}", prefix, clean);
+    }
+
+    /**
+     * Событие чата от внешнего агента (Claude): уходит в Python как обычный chat,
+     * ответ Бог А вернётся через обычный broadcast.
+     * playerName — nick in the event (e.g. Claude), carrier — any online ServerPlayer.
+     */
+    public static void sendExternalChatEvent(
+            MinecraftServer server,
+            ServerPlayer carrier,
+            String playerName,
+            JsonObject payload) {
+        if (!ObserverConfig.ENABLED.get()) {
+            return;
+        }
+        String baseUrl = ObserverConfig.BASE_URL.get();
+        String apiKey = ObserverConfig.API_KEY.get();
+
+        JsonArray online = new JsonArray();
+        for (ServerPlayer p : server.getPlayerList().getPlayers()) {
+            online.add(p.getGameProfile().getName());
+        }
+
+        JsonObject event = new JsonObject();
+        event.addProperty("event_id", UUID.randomUUID().toString());
+        event.addProperty("timestamp", System.currentTimeMillis() / 1000.0);
+        event.addProperty("player", playerName != null && !playerName.isBlank() ? playerName : "Claude");
+        event.addProperty("type", "chat");
+        event.add("payload", payload != null ? payload : new JsonObject());
+        event.addProperty("dimension", carrier.level().dimension().location().toString());
+        event.add("pos", posArray(carrier.getBlockX(), carrier.getBlockY(), carrier.getBlockZ()));
+
+        JsonArray events = new JsonArray();
+        events.add(event);
+
+        JsonObject body = new JsonObject();
+        body.add("events", events);
+        body.add("online_players", online);
+
+        String json = body.toString();
+        byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
+
+        CHAT_WORKER.execute(() -> {
+            try {
+                int timeoutSec = ObserverConfig.REQUEST_TIMEOUT_SECONDS.get();
+                HttpRequest.Builder req = HttpRequest.newBuilder()
+                        .uri(URI.create(trimSlash(baseUrl) + "/events"))
+                        .timeout(Duration.ofSeconds(timeoutSec))
+                        .header("Content-Type", "application/json; charset=utf-8")
+                        .POST(HttpRequest.BodyPublishers.ofByteArray(jsonBytes));
+                if (apiKey != null && !apiKey.isBlank()) {
+                    req.header("Authorization", "Bearer " + apiKey);
+                }
+                HttpResponse<String> response = HTTP.send(req.build(), HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() < 200 || response.statusCode() >= 300) {
+                    SkufAddon.LOGGER.warn(
+                            "[Observer] external chat Python HTTP {}: {}",
+                            response.statusCode(),
+                            response.body());
+                    return;
+                }
+                String comment = parseComment(response.body());
+                if (comment == null || comment.isBlank()) {
+                    return;
+                }
+                final String text = comment;
+                server.execute(() -> broadcast(server, text));
+            } catch (Exception e) {
+                SkufAddon.LOGGER.warn("[Observer] external chat failed: {}", e.toString());
+            }
+        });
     }
 
     /** Срезает ведущий префикс вида «Бог А», «[Бог А]», «<Бог А>», «Бог А:». */
