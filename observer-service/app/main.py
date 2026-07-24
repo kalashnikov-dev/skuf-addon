@@ -248,7 +248,6 @@ def _build_app() -> FastAPI:
                         async with mcp_life(app):
                             yield
 
-)
             logger.info("FastMCP enabled — will mount at /mcp")
         except Exception as exc:
             logger.exception("FastMCP init failed: %s", type(exc).__name__)
