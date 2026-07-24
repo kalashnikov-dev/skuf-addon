@@ -233,22 +233,33 @@ def _build_app() -> FastAPI:
         try:
             from app.mcp_server import mcp
 
-            mcp_app = mcp.http_app(path="/", transport="sse")
+            app_sse = mcp.http_app(path="/", transport="sse")
+            app_http = mcp.http_app(path="/", stateless_http=True)
+
+            async def mcp_dual_app(scope, receive, send):
+                if scope["type"] == "http" and scope.get("method") == "GET":
+                    await app_sse(scope, receive, send)
+                else:
+                    await app_http(scope, receive, send)
+
+            mcp_app = mcp_dual_app
+
             try:
                 from fastmcp.utilities.lifespan import combine_lifespans
 
-                lifespan = combine_lifespans(app_lifespan, mcp_app.lifespan)
+                lifespan = combine_lifespans(app_lifespan, app_sse.lifespan, app_http.lifespan)
             except ImportError:
-                # Старые fastmcp без utilities.lifespan — склеиваем вручную
-                mcp_life = mcp_app.lifespan
+                sse_life = app_sse.lifespan
+                http_life = app_http.lifespan
 
                 @asynccontextmanager
                 async def lifespan(app: FastAPI):
                     async with app_lifespan(app):
-                        async with mcp_life(app):
-                            yield
+                        async with sse_life(app):
+                            async with http_life(app):
+                                yield
 
-            logger.info("FastMCP enabled — will mount at /mcp")
+            logger.info("FastMCP dual-mode (SSE + HTTP) enabled — will mount at /mcp")
         except Exception as exc:
             logger.exception("FastMCP init failed: %s", type(exc).__name__)
             print(f"[observer] FastMCP init failed: {exc}", flush=True)
@@ -258,7 +269,7 @@ def _build_app() -> FastAPI:
     application = FastAPI(title="Skuf Observer", version="0.6.0", lifespan=lifespan)
     if mcp_app is not None:
         application.mount("/mcp", mcp_app)
-        print("[observer] FastMCP mounted at /mcp", flush=True)
+        print("[observer] FastMCP mounted at /mcp (dual SSE/HTTP)", flush=True)
     return application
 
 
