@@ -31,9 +31,20 @@ from app.foundry import strip_quotes  # noqa: E402
 from app.logbuf import get_log_lines, install_log_buffer  # noqa: E402
 from app.rag import auto_extraction_enabled, extract_facts, get_pipeline, rag_status  # noqa: E402
 
+import sys
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("observer")
 install_log_buffer("observer", maxlen=500)
+
+
+def _safe_print(*args, **kwargs) -> None:
+    try:
+        print(*args, **kwargs)
+    except UnicodeEncodeError:
+        msg = " ".join(str(a) for a in args)
+        enc = sys.stdout.encoding or "utf-8"
+        print(msg.encode(enc, errors="replace").decode(enc), **kwargs)
 
 bog_arthur = None
 
@@ -118,12 +129,41 @@ class SendChatRequest(BaseModel):
     text: str
 
 
+def _generic_openai_configured() -> bool:
+    base_url = strip_quotes(os.getenv("OPENAI_BASE_URL") or "")
+    model = strip_quotes(os.getenv("OPENAI_MODEL") or "")
+    return bool(base_url and model)
+
+
 @asynccontextmanager
 async def app_lifespan(app: FastAPI):
     """Startup: инициализируем Бог А и память."""
     global bog_arthur
 
-    if azure_configured():
+    if _generic_openai_configured():
+        base_url = strip_quotes(os.getenv("OPENAI_BASE_URL") or "").rstrip("/")
+        api_key = strip_quotes(os.getenv("OPENAI_API_KEY") or "") or "sk-noauth"
+        model_name = strip_quotes(os.getenv("OPENAI_MODEL") or "")
+        timeout = float(os.getenv("OPENAI_HTTP_TIMEOUT", "45"))
+
+        from openai import OpenAI
+
+        bog_arthur = BogA(
+            model=DEFAULT_MODEL,
+            api_key=api_key,
+            cag_lines=150,
+        )
+        bog_arthur.client = OpenAI(
+            base_url=base_url,
+            api_key=api_key,
+            timeout=timeout,
+            max_retries=0,
+        )
+        bog_arthur.set_model(model_name)
+        logger.info("BogA: Generic OpenAI base_url=%s model=%s", base_url, model_name)
+        print(f"[observer] BogA: Generic OpenAI base_url={base_url} model={model_name}", flush=True)
+
+    elif azure_configured():
         endpoint = strip_quotes(os.getenv("AZURE_OPENAI_ENDPOINT") or "").rstrip("/")
         api_key = strip_quotes(os.getenv("AZURE_OPENAI_API_KEY") or "")
         deployment = strip_quotes(os.getenv("AZURE_OPENAI_DEPLOYMENT") or "")
@@ -151,7 +191,7 @@ async def app_lifespan(app: FastAPI):
         print("[observer] BogA: Configured to use Gemini", flush=True)
 
     else:
-        logger.warning("BogA: NOT configured (no Azure or Gemini) — stub mode")
+        logger.warning("BogA: NOT configured (no generic OpenAI, Azure or Gemini) — stub mode")
         print("[observer] BogA: NOT configured — stub mode", flush=True)
 
     try:
@@ -275,6 +315,7 @@ async def talk_to_boga(
 async def health():
     return {
         "status": "ok",
+        "generic_openai_configured": _generic_openai_configured(),
         "azure_configured": azure_configured(),
         "gemini_configured": bool(os.getenv("GEMINI_API_KEY")),
         "boga_ready": bog_arthur is not None,
@@ -402,7 +443,7 @@ async def receive_events(body: EventsRequest):
         )
     except Exception as exc:
         logger.exception("BogA.observe failed: %s", type(exc).__name__)
-        print(f"[observer] BogA.observe error: {exc}", flush=True)
+        _safe_print(f"[observer] BogA.observe error: {exc}", flush=True)
         return EventsResponse(comment=None)
 
     try:
@@ -423,10 +464,10 @@ async def receive_events(body: EventsRequest):
         except Exception:
             logger.exception("remember_observer_reply failed")
 
-        print(f"[observer] comment ok: {reply[:120]}", flush=True)
+        _safe_print(f"[observer] comment ok: {reply[:120]}", flush=True)
         return EventsResponse(comment=reply)
 
-    print("[observer] BogA returned no comment; staying silent", flush=True)
+    _safe_print("[observer] BogA returned no comment; staying silent", flush=True)
     logger.warning("BogA returned no comment; staying silent")
     return EventsResponse(comment=None)
 
@@ -438,6 +479,6 @@ async def _auto_extract(client, model, text: str) -> None:
         pipe = get_pipeline()
         for fact in facts:
             if pipe.remember_fact(fact, origin="auto"):
-                print(f"[observer] auto-fact: {fact[:60]}", flush=True)
+                _safe_print(f"[observer] auto-fact: {fact[:60]}", flush=True)
     except Exception:
         logger.exception("auto extract task failed")

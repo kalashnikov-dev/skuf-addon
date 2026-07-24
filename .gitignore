@@ -1,3 +1,4 @@
+
 # gradle
 
 .gradle/
@@ -41,8 +42,10 @@ mds/
 observer-service/.venv/
 observer-service/.env
 observer-service/data/
+observer-service/data-local/
 **/__pycache__/
 *.pyc
 
 # IDE / config
 .mcp.json
+.agents/
