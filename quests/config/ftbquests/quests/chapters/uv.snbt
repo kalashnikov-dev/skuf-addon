@@ -2,15 +2,15 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "uv"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:casing_proval_concrete"
-	id: "E4DA654C7EC432FB"
+	id: "64DA654C7EC432FB"
 	images: [ ]
 	order_index: 8
 	title: "9 · Обращение Энтропии (UV)"
 	quest_links: [
 		{
-			id: "85A49D6D15028CDC"
+			id: "05A49D6D15028CDC"
 			linked_quest: "170EA64FF478B040"
 			shape: "hexagon"
 			size: 1.5d
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "D82F7D2A860C101F"
+		id: "582F7D2A860C101F"
 		title: "9.1 · Провальный Бетон"
 		subtitle: "Вход в UV эру"
 		icon: "skufaddon:casing_proval_concrete"
@@ -32,7 +32,7 @@
 		dependencies: ["170EA64FF478B040"]
 		tasks: [
 		{
-			id: "F99D41EEC3330729"
+			id: "799D41EEC3330729"
 			item: "skufaddon:casing_proval_concrete"
 			type: "item"
 		}
@@ -55,17 +55,17 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Построить Каркас Фабрики 15x15x15.", "&7[Крафт]: Провальный бетон + правильная вещь.", "&o«Капстоун UV. Остов величайшего завода!»"]
-		dependencies: ["D82F7D2A860C101F"]
+		dependencies: ["582F7D2A860C101F"]
 		tasks: [
 		{
-			id: "DF2A4C43D6B2F3A8"
+			id: "5F2A4C43D6B2F3A8"
 			item: "skufaddon:casing_proval_concrete"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "EAE795A6E7CA445B"
+			id: "6AE795A6E7CA445B"
 			type: "xp"
 			xp: 1500
 		}

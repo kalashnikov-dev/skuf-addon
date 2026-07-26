@@ -3,13 +3,11 @@
 """
 Generate Monifactory-style FTB Quests datapack (Minecraft 1.20.1 Forge) for ArthurTech / SkufAddon.
 
-Features:
-  - Deterministic MD5-based hex IDs (preserves player progress across updates)
-  - Monifactory chapter groups (Main Progression vs Special Mechanics)
-  - Visual hierarchy: shape (hexagon/gear/square/circle) and size (2.0d/1.8d/1.5d/1.0d)
-  - Cross-chapter quest links (quest_links) connecting capstones to next tier entrances
-  - Structured 3-part descriptions (&b[Цель], &7[Крафт], &o«Лоровый юмор»)
-  - Auto-syncing to run/config/ftbquests/quests and run/saves/*/ftbquests/quests
+Fixes & Best Practices:
+  - Exact registration names verified against Java source (SkufMaterials, SkufBlocks, SkufItems, SkufSingleblockMachines, SkufMultiblockMachines).
+  - Fluid icons set to corresponding GTCEu fluid buckets (skufaddon:<fluid>_bucket).
+  - Signed 64-bit Long hex IDs: clear MSB (& 0x7FFFFFFFFFFFFFFF) so Long.parseLong(id, 16) in FTB Quests never throws NumberFormatException.
+  - Grouping: set group: "" for clean chapter titles in FTB Quests GUI tab bar.
 """
 
 import os, sys, io, hashlib, shutil
@@ -21,9 +19,12 @@ QDIR = os.path.join(OUT, "config", "ftbquests", "quests")
 CDIR = os.path.join(QDIR, "chapters")
 MID = "skufaddon"
 
-# Deterministic ID generation
+def _full(iid):
+    return iid if ":" in iid else f"{MID}:{iid}"
+
 def det_id(seed: str) -> str:
-    return hashlib.md5(seed.encode("utf-8")).hexdigest()[:16].upper()
+    val = int(hashlib.md5(seed.encode("utf-8")).hexdigest()[:16], 16) & 0x7FFFFFFFFFFFFFFF
+    return f"{val:016X}"
 
 def esc(s): return s.replace("\\", "\\\\").replace('"', '\\"')
 def s_str(s): return '"' + esc(s) + '"'
@@ -36,8 +37,6 @@ def t_fluid(fluid_id, mb=1000): return {"k": "fluid", "fluid": fluid_id, "amount
 def t_check():                return {"k": "check"}
 def r_item(item_id, count=1): return {"k": "item", "item": item_id, "count": count}
 def r_xp(x):                  return {"k": "xp",   "xp": x}
-
-def _full(iid): return iid if ":" in iid else f"{MID}:{iid}"
 
 def emit_task(t, quest_key, idx):
     tid = det_id(f"task:{quest_key}:{idx}")
@@ -114,10 +113,10 @@ def emit_quest_link(link_key, linked_quest_id, x, y, shape="hexagon", size=1.5):
         "\t\t}"
     ])
 
-def emit_chapter(filename, title, icon, order, group_id, quests, links=None):
+def emit_chapter(filename, title, icon, order, quests, links=None):
     cid = det_id(f"chapter:{filename}")
     b = ["{", "\tdefault_hide_dependency_lines: false", '\tdefault_quest_shape: ""',
-         f'\tfilename: "{filename}"', f'\tgroup: "{group_id}"',
+         f'\tfilename: "{filename}"', '\tgroup: ""',
          '\ticon: "%s"' % _full(icon), f'\tid: "{cid}"', "\timages: [ ]",
          f'\torder_index: {order}', f'\ttitle: {s_str(title)}']
     
@@ -140,27 +139,24 @@ def q(key, **kw):
     Q[key] = kw
     return kw
 
-GROUP_MAIN = det_id("group:main_progression")
-GROUP_MECH = det_id("group:special_mechanics")
-
 # ============================ CHAPTER 1: Steam ============================
 q("c1_skufit", title="1.1 · Скуфит из Земли", subtitle="Первый металл Урала", icon="skufit_ingot",
   shape="hexagon", size=2.0, x=0, y=0,
   desc=["&b[Цель]: Найти жилу скуфитовой руды.",
         "&7[Крафт]: Копай на глубине в жилах skufit_vein.",
         "&o«Урал не даёт даром. Первые шаги сквозь руду.»"],
-  tasks=[t_tag("forge:ores/skufit", 8)], rewards=[r_xp(20)])
+  tasks=[t_item("skufit_ingot", 8)], rewards=[r_xp(20)])
 
-q("c1_normie", title="1.2 · Пыль Нормиса", subtitle="Органический катализатор", icon="normie_dust",
+q("c1_normie", title="1.2 · Пыль Нормиса", subtitle="Органический катализатор", icon="normie_dust_dust",
   shape="circle", size=1.0, x=-2.5, y=2.0,
   desc=["&b[Цель]: Добыть первую нормисную пыль.",
         "&7[Крафт]: Измельчай плоть или фильтруй отходы.",
         "&o«Из органики выжимаем катализатор заводов.»"],
-  tasks=[t_tag("forge:dusts/normie_dust", 4)], rewards=[r_xp(20)], deps_keys=["c1_skufit"])
+  tasks=[t_item("normie_dust_dust", 4)], rewards=[r_xp(20)], deps_keys=["c1_skufit"])
 
-q("c1_sweat", title="1.3 · Скуфий Пот", subtitle="Жидкий ресурс разработки", icon="sweat",
+q("c1_sweat", title="1.3 · Скуфий Пот", subtitle="Жидкий ресурс разработки", icon="sweat_bucket",
   shape="circle", size=1.0, x=2.5, y=2.0,
-  desc=["&b[Цель]: Собрать первую ведро пота.",
+  desc=["&b[Цель]: Собрать ведро пота.",
         "&7[Крафт]: Выделяется в фильтрах и миксерах.",
         "&o«Пот и труд всё перетрут.»"],
   tasks=[t_fluid("sweat", 1000)], rewards=[r_xp(20)], deps_keys=["c1_skufit"])
@@ -170,14 +166,14 @@ q("c1_skufit_ingot", title="1.4 · Скуфитовый Слиток", subtitle=
   desc=["&b[Цель]: Переплавить руду в чистые слитки.",
         "&7[Крафт]: Печь или плавильня.",
         "&o«Чистый скуфит готовит почву для стали.»"],
-  tasks=[t_tag("forge:ingots/skufit", 2)], rewards=[r_xp(30)], deps_keys=["c1_skufit"])
+  tasks=[t_item("skufit_ingot", 2)], rewards=[r_xp(30)], deps_keys=["c1_skufit"])
 
 q("c1_steel", title="1.5 · Честная Сталь (Steam Capstone)", subtitle="Капстоун паровой эры", icon="honest_steel_ingot",
   shape="hexagon", size=1.8, x=0, y=5.5,
   desc=["&b[Цель]: Получить Честную Сталь.",
         "&7[Крафт]: Скуфит + нормисная пыль в сплавильне.",
         "&o«Капстоун паровой эры. Пропуск в LV!»"],
-  tasks=[t_tag("forge:ingots/honest_steel", 4)], rewards=[r_xp(50)], deps_keys=["c1_skufit_ingot", "c1_normie"])
+  tasks=[t_item("honest_steel_ingot", 4)], rewards=[r_xp(50)], deps_keys=["c1_skufit_ingot", "c1_normie"])
 
 # ============================ CHAPTER 2: LV ============================
 q("c2_hull", title="2.1 · Обугленный Корпус LV", subtitle="Вход в эру электричества", icon="lv_smoldering_pukan",
@@ -187,12 +183,12 @@ q("c2_hull", title="2.1 · Обугленный Корпус LV", subtitle="Вх
         "&o«Корпус дымит, но держит напряжение LV.»"],
   tasks=[t_item("lv_smoldering_pukan", 1)], rewards=[r_xp(50)], deps_keys=["c1_steel"])
 
-q("c2_cnc", title="2.2 · LV ЧПУ Станок", subtitle="Точная обработка деталей", icon="lv_cnc",
+q("c2_cnc", title="2.2 · LV ЧПУ Станок", subtitle="Точная обработка деталей", icon="lv_cnc_machine",
   shape="gear", size=1.5, x=-2.5, y=2.5,
   desc=["&b[Цель]: Собрать ЧПУ станок.",
         "&7[Крафт]: Корпус + схема + фреза.",
         "&o«Автоматизирует фрезеровку спиц и резцов.»"],
-  tasks=[t_item("lv_cnc", 1)], rewards=[r_xp(60)], deps_keys=["c2_hull"])
+  tasks=[t_item("lv_cnc_machine", 1)], rewards=[r_xp(60)], deps_keys=["c2_hull"])
 
 q("c2_bit", title="2.3 · ЧПУ Резец & Фреза", subtitle="Расходник станков", icon="cnc_cutter",
   shape="circle", size=1.0, x=-4.5, y=2.5,
@@ -201,33 +197,33 @@ q("c2_bit", title="2.3 · ЧПУ Резец & Фреза", subtitle="Расхо�
         "&o«Лезвие режет заготовки без пощады.»"],
   tasks=[t_item("cnc_cutter", 1)], rewards=[r_xp(40)], deps_keys=["c2_cnc"])
 
-q("c2_filter", title="2.4 · LV Фильтр Нормиса", subtitle="Очистка компонентов", icon="lv_filtration",
+q("c2_filter", title="2.4 · LV Фильтр Нормиса", subtitle="Очистка компонентов", icon="lv_normis_filtration_machine",
   shape="gear", size=1.5, x=2.5, y=2.5,
-  desc=["&b[Цель]: Собрать элекро-фильтр.",
+  desc=["&b[Цель]: Собрать электро-фильтр.",
         "&7[Крафт]: Корпус + фильтр сетка.",
         "&o«Фильтрует тонкую фракцию пылей.»"],
-  tasks=[t_item("lv_filtration", 1)], rewards=[r_xp(60)], deps_keys=["c2_hull"])
+  tasks=[t_item("lv_normis_filtration_machine", 1)], rewards=[r_xp(60)], deps_keys=["c2_hull"])
 
-q("c2_distill", title="2.5 · LV Дистиллятор Пота", subtitle="Фракционирование", icon="lv_distillery",
+q("c2_distill", title="2.5 · LV Дистиллятор Пота", subtitle="Фракционирование", icon="lv_pot_distillery",
   shape="gear", size=1.5, x=2.5, y=5.0,
   desc=["&b[Цель]: Перегонка жижняка.",
         "&7[Крафт]: Корпус + труба + нагреватель.",
         "&o«Выделяет материю из жижи.»"],
-  tasks=[t_item("lv_distillery", 1)], rewards=[r_xp(60)], deps_keys=["c2_filter"])
+  tasks=[t_item("lv_pot_distillery", 1)], rewards=[r_xp(60)], deps_keys=["c2_filter"])
 
-q("c2_jizhnyak", title="2.6 · Жижняк", subtitle="Жидкий полупродукт", icon="zhizhnyak",
+q("c2_jizhnyak", title="2.6 · Жижняк", subtitle="Жидкий полупродукт", icon="jizhnyak_bucket",
   shape="square", size=1.2, x=0, y=3.5,
   desc=["&b[Цель]: Замиксить Жижняк.",
         "&7[Крафт]: Нормисная пыль + пот + дым.",
         "&o«Густая субстанция для химических реакций.»"],
-  tasks=[t_fluid("zhizhnyak", 1000)], rewards=[r_xp(50)], deps_keys=["c2_hull"])
+  tasks=[t_fluid("jizhnyak", 1000)], rewards=[r_xp(50)], deps_keys=["c2_hull"])
 
 q("c2_matter", title="2.7 · Правильная Материя", subtitle="Эссенция правильности", icon="correct_matter_gem",
   shape="circle", size=1.2, x=0, y=6.0,
   desc=["&b[Цель]: Выкристаллизовать правильную материю.",
         "&7[Крафт]: Дистилляция жижняка ➔ Автоклав.",
         "&o«Чистейший кристаллоид правильности.»"],
-  tasks=[t_tag("forge:gems/correct_matter", 2)], rewards=[r_xp(80)], deps_keys=["c2_jizhnyak", "c2_distill"])
+  tasks=[t_item("correct_matter_gem", 2)], rewards=[r_xp(80)], deps_keys=["c2_jizhnyak", "c2_distill"])
 
 q("c2_dodik1", title="2.8 · Схема Додика I (LV Capstone)", subtitle="Капстоун LV-эры", icon="dodik_circuit_1",
   shape="hexagon", size=1.8, x=0, y=8.5,
@@ -256,7 +252,7 @@ q("c3_pokhuit", title="3.3 · Рафинированный Похуит", subtit
   desc=["&b[Цель]: Получить слиток Похуита.",
         "&7[Крафт]: Скуфитор: слиток скуфита + пот.",
         "&o«Абсолютно инертный материал.»"],
-  tasks=[t_tag("forge:ingots/pokhuit", 4)], rewards=[r_xp(100)], deps_keys=["c3_skufizator"])
+  tasks=[t_item("pokhuit_ingot", 4)], rewards=[r_xp(100)], deps_keys=["c3_skufizator"])
 
 q("c3_stab", title="3.4 · Стабилизатор Вайба", subtitle="Гармонизатор", icon="mv_vibe_stabilizer",
   shape="gear", size=1.5, x=2.5, y=2.5,
@@ -267,10 +263,10 @@ q("c3_stab", title="3.4 · Стабилизатор Вайба", subtitle="Га�
 
 q("c3_isotope", title="3.5 · Уральский Изотоп", subtitle="Тяжёлый концентрат", icon="ural_isotope_dust",
   shape="circle", size=1.0, x=2.5, y=5.0,
-  desc=["&b[Цель]: Выделит Уральский Изотоп.",
+  desc=["&b[Цель]: Выделить Уральский Изотоп.",
         "&7[Крафт]: Центрифугирование жижняка.",
         "&o«Высокоэнергетический компонент эндгейма.»"],
-  tasks=[t_tag("forge:dusts/ural_isotope", 4)], rewards=[r_xp(100)], deps_keys=["c3_stab"])
+  tasks=[t_item("ural_isotope_dust", 4)], rewards=[r_xp(100)], deps_keys=["c3_stab"])
 
 q("c3_myposhko", title="3.6 · Скрипт Мыпошко", subtitle="Программный алгоритм", icon="myposhko_script",
   shape="circle", size=1.2, x=-1.0, y=7.0,
@@ -301,12 +297,12 @@ q("c4_cap", title="4.2 · Высоковольтный Конденсатор", 
         "&o«Накапливает разряд. При перегрузке горит.»"],
   tasks=[t_item("capacitor", 1)], rewards=[r_xp(100)], deps_keys=["c4_dodik3"])
 
-q("c4_monitor", title="4.3 · Разбитый Монитор", subtitle="Разгневанный разработчик", icon="broken_monitor_block",
+q("c4_monitor", title="4.3 · Разбитый Монитор", subtitle="Разгневанный разработчик", icon="block_broken_monitor",
   shape="gear", size=1.5, x=-2.5, y=5.0,
   desc=["&b[Цель]: Сокрушить монитор.",
         "&7[Крафт]: Сожги конденсатор в печи ➔ Блок монитора.",
         "&o«Следствие сожжённого дедлайна.»"],
-  tasks=[t_item("broken_monitor_block", 1)], rewards=[r_xp(150)], deps_keys=["c4_cap"])
+  tasks=[t_item("block_broken_monitor", 1)], rewards=[r_xp(150)], deps_keys=["c4_cap"])
 
 q("c4_charred", title="4.4 · Обугленная Схема", subtitle="Остатки дедлайна", icon="charred_developer_circuit",
   shape="circle", size=1.0, x=2.5, y=2.5,
@@ -334,7 +330,7 @@ q("c4_tears", title="4.7 · Технические Слёзы (HV Capstone)", su
   desc=["&b[Цель]: Выделить Технические Слёзы.",
         "&7[Крафт]: Прогони нормисную сингулярность через Разбор.",
         "&o«Капстоун HV. Открывает Сауну Егора!»"],
-  tasks=[t_tag("forge:dusts/technical_tears", 1)], rewards=[r_xp(350)], deps_keys=["c4_razbor"])
+  tasks=[t_item("technical_tears_dust", 1)], rewards=[r_xp(350)], deps_keys=["c4_razbor"])
 
 # ============================ CHAPTER 5: Sauna ============================
 q("c5_sauna", title="5.1 · Ядро Сауны Егора", subtitle="Сердце теплообменника", icon="egor_core",
@@ -351,23 +347,23 @@ q("c5_egor", title="5.2 · Сауна Егора (Мультиблок)", subtit
         "&o«Жаркая парилка для загородных жидкостей.»"],
   tasks=[t_item("sauna_egora", 1)], rewards=[r_xp(400)], deps_keys=["c5_sauna"])
 
-q("c5_dense", title="5.3 · Плотный Жижняк", subtitle="Сверхгустой концентрат", icon="dense_jizhnyak_dust",
+q("c5_dense", title="5.3 · Плотный Жижняк", subtitle="Сверхгустой концентрат", icon="dense_jizhnyak_bucket",
   shape="circle", size=1.0, x=2.5, y=2.5,
   desc=["&b[Цель]: Получить плотный жижняк.",
         "&7[Крафт]: Сепарация жижняка (2000) в центрифуге.",
         "&o«Густота достигает предела.»"],
-  tasks=[t_tag("forge:dusts/dense_jizhnyak", 2)], rewards=[r_xp(200)], deps_keys=["c5_sauna"])
+  tasks=[t_fluid("dense_jizhnyak", 1000)], rewards=[r_xp(200)], deps_keys=["c5_sauna"])
 
 q("c5_shale", title="5.4 · Челябинский Сланец", subtitle="Минерал рафинирования", icon="chelyabinsk_shale_dust",
   shape="circle", size=1.0, x=2.5, y=5.0,
   desc=["&b[Цель]: Добыть Челябинский Сланец.",
         "&7[Крафт]: Копай суровые челябинские жилы.",
         "&o«Каменный компонент для сжатия бетона.»"],
-  tasks=[t_tag("forge:ores/chelyabinsk_shale", 4)], rewards=[r_xp(200)], deps_keys=["c5_dense"])
+  tasks=[t_item("chelyabinsk_shale_dust", 4)], rewards=[r_xp(200)], deps_keys=["c5_dense"])
 
-q("c5_coolant", title="5.5 · Запрещённый Хладагент (Sauna Capstone)", subtitle="Капстоун EV-эры", icon="coolant_of_denial_fluid",
+q("c5_coolant", title="5.5 · Запрещённый Хладагент (Sauna Capstone)", subtitle="Капстоун EV-эры", icon="coolant_of_denial_bucket",
   shape="hexagon", size=1.8, x=0, y=6.0,
-  desc=["&b[Цель]: Свартить Хладагент Отрицания.",
+  desc=["&b[Цель]: Сварить Хладагент Отрицания.",
         "&7[Крафт]: Химия: слёзы + похуит + вода.",
         "&o«Охлаждает самые горячие пуканы эндгейма.»"],
   tasks=[t_fluid("coolant_of_denial", 1000)], rewards=[r_xp(500)], deps_keys=["c5_egor", "c5_shale"])
@@ -565,17 +561,14 @@ with open(os.path.join(QDIR, "data.snbt"), "w", encoding="utf-8") as f:
 
 # Write chapter_groups.snbt
 with open(os.path.join(QDIR, "chapter_groups.snbt"), "w", encoding="utf-8") as f:
-    f.write(f"""{{
-	chapter_groups: [
-		{{ id: "{GROUP_MAIN}", title: "Основная Прогрессия (Main Progression)" }}
-		{{ id: "{GROUP_MECH}", title: "Спец-структуры и Механики (Special Mechanics)" }}
-	]
-}}
+    f.write("""{
+	chapter_groups: [ ]
+}
 """)
 
 # Write chapters
 for order, (fn, title, icon, keys, links) in enumerate(CHAPTERS):
-    text = emit_chapter(fn, title, icon, order, GROUP_MAIN, keys, links)
+    text = emit_chapter(fn, title, icon, order, keys, links)
     with open(os.path.join(CDIR, fn + ".snbt"), "w", encoding="utf-8") as f:
         f.write(text + "\n")
 
@@ -599,7 +592,6 @@ if os.path.exists(SAVES_DIR):
             if os.path.exists(target_q):
                 shutil.rmtree(target_q)
             shutil.copytree(QDIR, target_q)
-            # Remove stale player progress SNBT files to avoid old quest ID mismatch exceptions
             for item in os.listdir(ftb_dir):
                 if item.endswith(".snbt") and item != "data.snbt":
                     try:

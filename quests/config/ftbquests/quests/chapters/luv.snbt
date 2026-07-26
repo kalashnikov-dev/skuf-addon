@@ -2,16 +2,16 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "luv"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:casing_pohuit_reinforced"
-	id: "A9C330695C31AAB9"
+	id: "29C330695C31AAB9"
 	images: [ ]
 	order_index: 6
 	title: "7 · Распадение Смысла (LuV)"
 	quest_links: [
 		{
 			id: "63559722D1E082EB"
-			linked_quest: "A41688A1B1CF8C46"
+			linked_quest: "241688A1B1CF8C46"
 			shape: "hexagon"
 			size: 1.5d
 			x: 0.0d
@@ -29,7 +29,7 @@
 		shape: "hexagon"
 		size: 2.0d
 		description: ["&b[Цель]: Собрать усиленный корпус.", "&7[Крафт]: 6 плит похуита + фрейм + Людская плата.", "&o«Выдерживает колоссальные меметические нагрузки.»"]
-		dependencies: ["A41688A1B1CF8C46"]
+		dependencies: ["241688A1B1CF8C46"]
 		tasks: [
 		{
 			id: "7D28FF60F83E5775"
@@ -39,14 +39,14 @@
 		]
 		rewards: [
 		{
-			id: "A481CB499BC44535"
+			id: "2481CB499BC44535"
 			type: "xp"
 			xp: 600
 		}
 		]
 	},
 	{
-		id: "9827EB64F97DAA79"
+		id: "1827EB64F97DAA79"
 		title: "7.2 · Меметический Нейтрон"
 		subtitle: "Субатомный смысл"
 		icon: "skufaddon:memetic_neutron_dust"
@@ -72,7 +72,7 @@
 		]
 	},
 	{
-		id: "F26D9EE6D44512C7"
+		id: "726D9EE6D44512C7"
 		title: "7.3 · Дефектный Смысл"
 		subtitle: "Побочный продукт распада"
 		icon: "skufaddon:defective_meaning_dust"
@@ -98,7 +98,7 @@
 		]
 	},
 	{
-		id: "F36185B14439C664"
+		id: "736185B14439C664"
 		title: "7.4 · Стабилизатор Смысла (LuV Capstone)"
 		subtitle: "Капстоун LuV-эры"
 		icon: "skufaddon:absolute_pohuit"
@@ -107,10 +107,10 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Собрать Стабилизатор Смысла.", "&7[Крафт]: ABSOLUTE_POHUIT + memetic_neutron + NORMIS_SINGULARITY.", "&o«Капстоун LuV. Смысл зафиксирован навечно!»"]
-		dependencies: ["9827EB64F97DAA79" "F26D9EE6D44512C7"]
+		dependencies: ["1827EB64F97DAA79" "726D9EE6D44512C7"]
 		tasks: [
 		{
-			id: "EBFDF3185B06CCC7"
+			id: "6BFDF3185B06CCC7"
 			item: "skufaddon:absolute_pohuit"
 			type: "item"
 		}

@@ -2,7 +2,7 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "mv"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:dodik_circuit_2"
 	id: "70511E6F3F9AE75B"
 	images: [ ]
@@ -10,8 +10,8 @@
 	title: "3 · Разрабская неоднозначность (MV)"
 	quest_links: [
 		{
-			id: "D0952F1D6DB08DA7"
-			linked_quest: "E5B6084F47DF0A09"
+			id: "50952F1D6DB08DA7"
+			linked_quest: "65B6084F47DF0A09"
 			shape: "hexagon"
 			size: 1.5d
 			x: 0.0d
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "80867FB74E28DC98"
+		id: "00867FB74E28DC98"
 		title: "3.1 · Схема Додика II"
 		subtitle: "Сердце MV вычислений"
 		icon: "skufaddon:dodik_circuit_2"
@@ -29,7 +29,7 @@
 		shape: "hexagon"
 		size: 2.0d
 		description: ["&b[Цель]: Собрать плату Додика II.", "&7[Крафт]: 2x dodik_1 + плиты похуита.", "&o«Удваивает вычислительный похуизм в MV.»"]
-		dependencies: ["E5B6084F47DF0A09"]
+		dependencies: ["65B6084F47DF0A09"]
 		tasks: [
 		{
 			id: "49DF60663E3EB978"
@@ -39,14 +39,14 @@
 		]
 		rewards: [
 		{
-			id: "DA25537253AD7606"
+			id: "5A25537253AD7606"
 			type: "xp"
 			xp: 120
 		}
 		]
 	},
 	{
-		id: "DD3F2A111A11D6D6"
+		id: "5D3F2A111A11D6D6"
 		title: "3.2 · Скуфизатор (Мультиблок)"
 		subtitle: "Каталитический конвертер"
 		icon: "skufaddon:skufizator"
@@ -55,7 +55,7 @@
 		shape: "gear"
 		size: 1.5d
 		description: ["&b[Цель]: Построить мультиблок Скуфизатор.", "&7[Крафт]: Ассемблер: скрипт Мыпошко + правильные вещи.", "&o«Удваивает выход похуита из скуфита.»"]
-		dependencies: ["80867FB74E28DC98"]
+		dependencies: ["00867FB74E28DC98"]
 		tasks: [
 		{
 			id: "5E963B805C9E15CC"
@@ -65,14 +65,14 @@
 		]
 		rewards: [
 		{
-			id: "D9049C6136D82735"
+			id: "59049C6136D82735"
 			type: "xp"
 			xp: 150
 		}
 		]
 	},
 	{
-		id: "887EC074FA395C07"
+		id: "087EC074FA395C07"
 		title: "3.3 · Рафинированный Похуит"
 		subtitle: "Инертный эндгейм сплав"
 		icon: "skufaddon:pokhuit_ingot"
@@ -81,18 +81,18 @@
 		shape: "square"
 		size: 1.2d
 		description: ["&b[Цель]: Получить слиток Похуита.", "&7[Крафт]: Скуфитор: слиток скуфита + пот.", "&o«Абсолютно инертный материал.»"]
-		dependencies: ["DD3F2A111A11D6D6"]
+		dependencies: ["5D3F2A111A11D6D6"]
 		tasks: [
 		{
-			id: "F94140FB42274BBD"
+			id: "794140FB42274BBD"
 			count: 4L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/pokhuit" } }
+			item: { Count: 1, id: "skufaddon:pokhuit_ingot" }
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "C5B3F579CBAE0962"
+			id: "45B3F579CBAE0962"
 			type: "xp"
 			xp: 100
 		}
@@ -108,24 +108,24 @@
 		shape: "gear"
 		size: 1.5d
 		description: ["&b[Цель]: Собрать Стабилизатор Вайба.", "&7[Крафт]: MV корпус + схема Додика II.", "&o«Удерживает колебания вайба под контролем.»"]
-		dependencies: ["80867FB74E28DC98"]
+		dependencies: ["00867FB74E28DC98"]
 		tasks: [
 		{
-			id: "A3B7B839EF69063E"
+			id: "23B7B839EF69063E"
 			item: "skufaddon:mv_vibe_stabilizer"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "B9347F48EF6E54D2"
+			id: "39347F48EF6E54D2"
 			type: "xp"
 			xp: 150
 		}
 		]
 	},
 	{
-		id: "83457DB057BC89BF"
+		id: "03457DB057BC89BF"
 		title: "3.5 · Уральский Изотоп"
 		subtitle: "Тяжёлый концентрат"
 		icon: "skufaddon:ural_isotope_dust"
@@ -133,13 +133,13 @@
 		y: 5.0d
 		shape: "circle"
 		size: 1.0d
-		description: ["&b[Цель]: Выделит Уральский Изотоп.", "&7[Крафт]: Центрифугирование жижняка.", "&o«Высокоэнергетический компонент эндгейма.»"]
+		description: ["&b[Цель]: Выделить Уральский Изотоп.", "&7[Крафт]: Центрифугирование жижняка.", "&o«Высокоэнергетический компонент эндгейма.»"]
 		dependencies: ["1601089008B5B382"]
 		tasks: [
 		{
 			id: "288FD6410594B160"
 			count: 4L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/ural_isotope" } }
+			item: { Count: 1, id: "skufaddon:ural_isotope_dust" }
 			type: "item"
 		}
 		]
@@ -161,7 +161,7 @@
 		shape: "circle"
 		size: 1.2d
 		description: ["&b[Цель]: Написать скрипт Мыпошко.", "&7[Крафт]: Ассемблер: нормисная пыль + вайб.", "&o«Скрипт оптимизирует производственный цикл.»"]
-		dependencies: ["887EC074FA395C07"]
+		dependencies: ["087EC074FA395C07"]
 		tasks: [
 		{
 			id: "733AAF08442EF451"
@@ -171,7 +171,7 @@
 		]
 		rewards: [
 		{
-			id: "AB76063D3F65B6BD"
+			id: "2B76063D3F65B6BD"
 			type: "xp"
 			xp: 100
 		}
@@ -187,7 +187,7 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Создать Правильную Вещь.", "&7[Крафт]: Ассемблер: gem + плиты + вайб + dodik_2.", "&o«Символ эталона MV. Открывает путь в HV!»"]
-		dependencies: ["511AB278B933C188" "83457DB057BC89BF"]
+		dependencies: ["511AB278B933C188" "03457DB057BC89BF"]
 		tasks: [
 		{
 			id: "3B11C92B24F3D4A7"
@@ -197,7 +197,7 @@
 		]
 		rewards: [
 		{
-			id: "A2A927A98207005F"
+			id: "22A927A98207005F"
 			type: "xp"
 			xp: 200
 		}

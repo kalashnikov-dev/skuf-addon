@@ -2,15 +2,15 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "hv"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:dodik_circuit_3"
-	id: "89E8960521C3158E"
+	id: "09E8960521C3158E"
 	images: [ ]
 	order_index: 3
 	title: "4 · Разбор Геймплея (HV)"
 	quest_links: [
 		{
-			id: "829A6CFDAA06F461"
+			id: "029A6CFDAA06F461"
 			linked_quest: "6879F9BC196E4CFB"
 			shape: "hexagon"
 			size: 1.5d
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "BA5D3B892992072C"
+		id: "3A5D3B892992072C"
 		title: "4.1 · Схема Додика III"
 		subtitle: "Процессор высокой плотности"
 		icon: "skufaddon:dodik_circuit_3"
@@ -32,7 +32,7 @@
 		dependencies: ["6879F9BC196E4CFB"]
 		tasks: [
 		{
-			id: "D65AFF50AA50EB0D"
+			id: "565AFF50AA50EB0D"
 			item: "skufaddon:dodik_circuit_3"
 			type: "item"
 		}
@@ -46,7 +46,7 @@
 		]
 	},
 	{
-		id: "B72D4B54D47551E1"
+		id: "372D4B54D47551E1"
 		title: "4.2 · Высоковольтный Конденсатор"
 		subtitle: "Накопитель энергии"
 		icon: "skufaddon:capacitor"
@@ -55,10 +55,10 @@
 		shape: "circle"
 		size: 1.0d
 		description: ["&b[Цель]: Собрать конденсатор.", "&7[Крафт]: Плиты стали + похуит.", "&o«Накапливает разряд. При перегрузке горит.»"]
-		dependencies: ["BA5D3B892992072C"]
+		dependencies: ["3A5D3B892992072C"]
 		tasks: [
 		{
-			id: "879AAABA41D9C273"
+			id: "079AAABA41D9C273"
 			item: "skufaddon:capacitor"
 			type: "item"
 		}
@@ -72,20 +72,20 @@
 		]
 	},
 	{
-		id: "8E86E249F60CCD4D"
+		id: "0E86E249F60CCD4D"
 		title: "4.3 · Разбитый Монитор"
 		subtitle: "Разгневанный разработчик"
-		icon: "skufaddon:broken_monitor_block"
+		icon: "skufaddon:block_broken_monitor"
 		x: -2.5d
 		y: 5.0d
 		shape: "gear"
 		size: 1.5d
 		description: ["&b[Цель]: Сокрушить монитор.", "&7[Крафт]: Сожги конденсатор в печи ➔ Блок монитора.", "&o«Следствие сожжённого дедлайна.»"]
-		dependencies: ["B72D4B54D47551E1"]
+		dependencies: ["372D4B54D47551E1"]
 		tasks: [
 		{
 			id: "77E5BDDB494B066D"
-			item: "skufaddon:broken_monitor_block"
+			item: "skufaddon:block_broken_monitor"
 			type: "item"
 		}
 		]
@@ -107,7 +107,7 @@
 		shape: "circle"
 		size: 1.0d
 		description: ["&b[Цель]: Спасти обугленную схему.", "&7[Крафт]: Ассемблер: dodik_2 + шлак-игнор.", "&o«Схема подгорела, но всё ещё работает.»"]
-		dependencies: ["BA5D3B892992072C"]
+		dependencies: ["3A5D3B892992072C"]
 		tasks: [
 		{
 			id: "44FC9FBD1D1F2F2C"
@@ -117,7 +117,7 @@
 		]
 		rewards: [
 		{
-			id: "EF5FF8EA8DB1584C"
+			id: "6F5FF8EA8DB1584C"
 			type: "xp"
 			xp: 150
 		}
@@ -136,21 +136,21 @@
 		dependencies: ["7A52C309D1EEED91"]
 		tasks: [
 		{
-			id: "DBA21C3DAB15B6B9"
+			id: "5BA21C3DAB15B6B9"
 			item: "skufaddon:demo"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "9CFEEB9CDFFF3C25"
+			id: "1CFEEB9CDFFF3C25"
 			type: "xp"
 			xp: 200
 		}
 		]
 	},
 	{
-		id: "EC7298894CF1F6C3"
+		id: "6C7298894CF1F6C3"
 		title: "4.6 · Разбор Геймплея (Мультиблок)"
 		subtitle: "Аналитический комплекс"
 		icon: "skufaddon:razbor_geympleya"
@@ -159,7 +159,7 @@
 		shape: "gear"
 		size: 1.5d
 		description: ["&b[Цель]: Собрать Разбор Геймплея.", "&7[Крафт]: Ассемблер: DEMO + скрипт Мыпошко.", "&o«Разбирает геймплей на технические слёзы.»"]
-		dependencies: ["8E86E249F60CCD4D" "4867E76C4925BEF9"]
+		dependencies: ["0E86E249F60CCD4D" "4867E76C4925BEF9"]
 		tasks: [
 		{
 			id: "22F96DC0E2F227BB"
@@ -176,7 +176,7 @@
 		]
 	},
 	{
-		id: "CEF3DC1D61E7E914"
+		id: "4EF3DC1D61E7E914"
 		title: "4.7 · Технические Слёзы (HV Capstone)"
 		subtitle: "Капстоун HV-эры"
 		icon: "skufaddon:technical_tears_dust"
@@ -185,18 +185,17 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Выделить Технические Слёзы.", "&7[Крафт]: Прогони нормисную сингулярность через Разбор.", "&o«Капстоун HV. Открывает Сауну Егора!»"]
-		dependencies: ["EC7298894CF1F6C3"]
+		dependencies: ["6C7298894CF1F6C3"]
 		tasks: [
 		{
 			id: "03DFEC12252F0456"
-			count: 1L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/technical_tears" } }
+			item: "skufaddon:technical_tears_dust"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "D6233CE855DC5F6E"
+			id: "56233CE855DC5F6E"
 			type: "xp"
 			xp: 350
 		}

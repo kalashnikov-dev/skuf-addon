@@ -2,16 +2,16 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "zpm"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:vibe_singularity"
-	id: "E79B9D6F24079B47"
+	id: "679B9D6F24079B47"
 	images: [ ]
 	order_index: 7
 	title: "8 · Сингулярный Порядок (ZPM)"
 	quest_links: [
 		{
 			id: "775536AF902DD0C2"
-			linked_quest: "F36185B14439C664"
+			linked_quest: "736185B14439C664"
 			shape: "hexagon"
 			size: 1.5d
 			x: 0.0d
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "8B4BA88EEB9D346C"
+		id: "0B4BA88EEB9D346C"
 		title: "8.1 · Сингулярный Втыкатель"
 		subtitle: "Вход в ZPM эру"
 		icon: "skufaddon:vibe_singularity"
@@ -29,7 +29,7 @@
 		shape: "hexagon"
 		size: 2.0d
 		description: ["&b[Цель]: Построить Сингулярный Втыкатель.", "&7[Крафт]: Мультиблок сжатия вайба ZPM класса.", "&o«Гасит тильт и прессует вайб в точку.»"]
-		dependencies: ["F36185B14439C664"]
+		dependencies: ["736185B14439C664"]
 		tasks: [
 		{
 			id: "66E3B57EFDB7E970"
@@ -46,7 +46,7 @@
 		]
 	},
 	{
-		id: "B2CF3A022C9B9580"
+		id: "32CF3A022C9B9580"
 		title: "8.2 · Сингулярность Вайба"
 		subtitle: "Астральный сгусток"
 		icon: "skufaddon:vibe_singularity"
@@ -55,7 +55,7 @@
 		shape: "gear"
 		size: 1.5d
 		description: ["&b[Цель]: Сжать Сингулярность Вайба.", "&7[Крафт]: Автоклав: 16B вайба + 4B пота + 2x correct_matter.", "&o«Сияющий астральный шар чистейшего настроения.»"]
-		dependencies: ["8B4BA88EEB9D346C"]
+		dependencies: ["0B4BA88EEB9D346C"]
 		tasks: [
 		{
 			id: "6F609C9F4D9D8846"
@@ -81,17 +81,17 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Собрать Ядро Заводского Порядка.", "&7[Крафт]: Ассемблер: vibe_singularity + correct_matter + dodik_3.", "&o«Капстоун ZPM. Идеальный фабричный порядок!»"]
-		dependencies: ["B2CF3A022C9B9580"]
+		dependencies: ["32CF3A022C9B9580"]
 		tasks: [
 		{
-			id: "821226F7B6E5226A"
+			id: "021226F7B6E5226A"
 			item: "skufaddon:factory_order_core"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "DD665668A252BC60"
+			id: "5D665668A252BC60"
 			type: "xp"
 			xp: 1200
 		}

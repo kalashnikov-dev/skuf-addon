@@ -2,7 +2,7 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "endgame"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:arturian_mainframe"
 	id: "43AF5A6C91030254"
 	images: [ ]
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "AEB8136D7BD9CDB3"
+		id: "2EB8136D7BD9CDB3"
 		title: "6.1 · Главный Фрейм Артура"
 		subtitle: "Вычислитель Похуизма"
 		icon: "skufaddon:arturian_mainframe"
@@ -32,14 +32,14 @@
 		dependencies: ["7CC16F39DD4A3854"]
 		tasks: [
 		{
-			id: "8BDD5AF1D1A644E7"
+			id: "0BDD5AF1D1A644E7"
 			item: "skufaddon:arturian_mainframe"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "C41DEE83D828F2E7"
+			id: "441DEE83D828F2E7"
 			type: "xp"
 			xp: 600
 		}
@@ -55,24 +55,24 @@
 		shape: "square"
 		size: 1.2d
 		description: ["&b[Цель]: Сплавить Absolute Pohuit.", "&7[Крафт]: Правильная вещь + изотоп + антизумер-ядро.", "&o«Полное равнодушие к законам физики.»"]
-		dependencies: ["AEB8136D7BD9CDB3"]
+		dependencies: ["2EB8136D7BD9CDB3"]
 		tasks: [
 		{
-			id: "8399874816AB3712"
+			id: "0399874816AB3712"
 			item: "skufaddon:absolute_pohuit"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "BC8D59EDD3A8876E"
+			id: "3C8D59EDD3A8876E"
 			type: "xp"
 			xp: 700
 		}
 		]
 	},
 	{
-		id: "BE9A997E1EC5ACAB"
+		id: "3E9A997E1EC5ACAB"
 		title: "6.3 · Микрокапсула Материи"
 		subtitle: "Герметичный контейнер"
 		icon: "skufaddon:correct_matter_microcapsule"
@@ -81,10 +81,10 @@
 		shape: "circle"
 		size: 1.0d
 		description: ["&b[Цель]: Запечатать капсулу.", "&7[Крафт]: Gem + плотная жижа + благородный газ.", "&o«Хранит стабильную материю.»"]
-		dependencies: ["AEB8136D7BD9CDB3"]
+		dependencies: ["2EB8136D7BD9CDB3"]
 		tasks: [
 		{
-			id: "93F0B9F60578BC04"
+			id: "13F0B9F60578BC04"
 			item: "skufaddon:correct_matter_microcapsule"
 			type: "item"
 		}
@@ -98,7 +98,7 @@
 		]
 	},
 	{
-		id: "D4033911D882AEC1"
+		id: "54033911D882AEC1"
 		title: "6.4 · Антизумерное Ядро"
 		subtitle: "Защитный модуль"
 		icon: "skufaddon:antizoomer_core"
@@ -117,7 +117,7 @@
 		]
 		rewards: [
 		{
-			id: "C6A33DECF935858A"
+			id: "46A33DECF935858A"
 			type: "xp"
 			xp: 600
 		}
@@ -133,7 +133,7 @@
 		shape: "circle"
 		size: 1.0d
 		description: ["&b[Цель]: Начертить правильную схему.", "&7[Крафт]: Обугленная схема + gem + вайб.", "&o«Идеальный чертёж без багов.»"]
-		dependencies: ["BE9A997E1EC5ACAB"]
+		dependencies: ["3E9A997E1EC5ACAB"]
 		tasks: [
 		{
 			id: "77EF49F5896F773C"
@@ -150,7 +150,7 @@
 		]
 	},
 	{
-		id: "A41688A1B1CF8C46"
+		id: "241688A1B1CF8C46"
 		title: "6.6 · Сингулярность Нормиса (Endgame Capstone)"
 		subtitle: "Капстоун Абсолютного Похуизма"
 		icon: "skufaddon:normis_singularity"
@@ -159,7 +159,7 @@
 		shape: "hexagon"
 		size: 1.8d
 		description: ["&b[Цель]: Сжать Сингулярность Нормиса.", "&7[Крафт]: 16 нормисной пыли + 4 шлак-игнора.", "&o«Капстоун эндгейма. Открывает LuV!»"]
-		dependencies: ["D4033911D882AEC1" "32DD521CD60EBB86"]
+		dependencies: ["54033911D882AEC1" "32DD521CD60EBB86"]
 		tasks: [
 		{
 			id: "6C01112BCB742183"
@@ -169,7 +169,7 @@
 		]
 		rewards: [
 		{
-			id: "C85FBB9EDA15DD90"
+			id: "485FBB9EDA15DD90"
 			type: "xp"
 			xp: 800
 		}

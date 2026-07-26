@@ -92,3 +92,11 @@ Recipes are defined in `SkufRecipes.init(Consumer<FinishedRecipe>)` called from 
 
 - **`src/generated/` has duplicates of `src/main/resources/`** — `processResources` can fail. Delete `src/generated/` if you see resource conflicts.
 - `SkufMachines.java` in root package is legacy; the canonical registration moved to `common.data.SkufSingleblockMachines` and `common.data.SkufMultiblockMachines`.
+
+## Andrej Karpathy LLM Coding Guidelines
+
+1. **Think Before Coding**: State assumptions explicitly. Surface tradeoffs. Don't pick silently when multiple interpretations exist. Push back when warranted. Stop when confused.
+2. **Simplicity First**: Minimum code that solves the problem. Nothing speculative. No features beyond what was asked. No abstractions for single-use code. If you write 200 lines and it could be 50, rewrite it.
+3. **Surgical Changes**: Touch only what you must. Clean up only your own mess. Match existing style. Remove imports/variables/functions that your changes made unused.
+4. **Goal-Driven Execution**: Define success criteria. Loop until verified. For multi-step tasks, state a brief plan with verification checks.
+

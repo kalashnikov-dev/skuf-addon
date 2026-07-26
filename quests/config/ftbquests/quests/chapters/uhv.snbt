@@ -2,7 +2,7 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "uhv"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:normis_singularity"
 	id: "2FABAD7B6B63D349"
 	images: [ ]
@@ -20,7 +20,7 @@
 	]
 	quests: [
 	{
-		id: "A3B5E5CEF852C29C"
+		id: "23B5E5CEF852C29C"
 		title: "10.1 · Врата Деревенского Покоя"
 		subtitle: "Вход в финал UHV"
 		icon: "skufaddon:arturian_mainframe"
@@ -39,14 +39,14 @@
 		]
 		rewards: [
 		{
-			id: "CAD3FDDEEC2B9643"
+			id: "4AD3FDDEEC2B9643"
 			type: "xp"
 			xp: 2000
 		}
 		]
 	},
 	{
-		id: "F4C8F1FCABE9A189"
+		id: "74C8F1FCABE9A189"
 		title: "10.2 · Деревенский Покой (ФИНАЛ)"
 		subtitle: "Финишный капстоун ArthurTech"
 		icon: "skufaddon:normis_singularity"
@@ -55,17 +55,17 @@
 		shape: "hexagon"
 		size: 2.5d
 		description: ["&b[Цель]: Достичь Деревенского Покоя.", "&7[Крафт]: Врата Покоя ➔ Сингулярность Нормиса.", "&o«Победа! Вы полностью прошли ArthurTech: Правильные Вещи!»"]
-		dependencies: ["A3B5E5CEF852C29C"]
+		dependencies: ["23B5E5CEF852C29C"]
 		tasks: [
 		{
-			id: "E76BD6F4E3845D52"
+			id: "676BD6F4E3845D52"
 			item: "skufaddon:normis_singularity"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "C691C799EEE7D81F"
+			id: "4691C799EEE7D81F"
 			type: "xp"
 			xp: 5000
 		}

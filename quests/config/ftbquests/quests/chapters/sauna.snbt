@@ -2,7 +2,7 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "sauna"
-	group: "739A474C8C2B30A0"
+	group: ""
 	icon: "skufaddon:egor_core"
 	id: "2D1AD669BD41F729"
 	images: [ ]
@@ -10,8 +10,8 @@
 	title: "5 · Сауна и Челябинск (HV/EV)"
 	quest_links: [
 		{
-			id: "E48BE7A8F555A86B"
-			linked_quest: "CEF3DC1D61E7E914"
+			id: "648BE7A8F555A86B"
+			linked_quest: "4EF3DC1D61E7E914"
 			shape: "hexagon"
 			size: 1.5d
 			x: 0.0d
@@ -29,17 +29,17 @@
 		shape: "hexagon"
 		size: 2.0d
 		description: ["&b[Цель]: Собрать Ядро Егора.", "&7[Крафт]: Ассемблер: 2 gem + 4 плиты стали + вайб.", "&o«Управляет мощными тепловыми потоками.»"]
-		dependencies: ["CEF3DC1D61E7E914"]
+		dependencies: ["4EF3DC1D61E7E914"]
 		tasks: [
 		{
-			id: "CBB0D920BAF81881"
+			id: "4BB0D920BAF81881"
 			item: "skufaddon:egor_core"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "DC8B269082164DE7"
+			id: "5C8B269082164DE7"
 			type: "xp"
 			xp: 300
 		}
@@ -75,7 +75,7 @@
 		id: "250BBC055B9F3B53"
 		title: "5.3 · Плотный Жижняк"
 		subtitle: "Сверхгустой концентрат"
-		icon: "skufaddon:dense_jizhnyak_dust"
+		icon: "skufaddon:dense_jizhnyak_bucket"
 		x: 2.5d
 		y: 2.5d
 		shape: "circle"
@@ -84,10 +84,10 @@
 		dependencies: ["00DECA6EF01B736F"]
 		tasks: [
 		{
-			id: "F7EDBAC19F3D845C"
-			count: 2L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/dense_jizhnyak" } }
-			type: "item"
+			id: "77EDBAC19F3D845C"
+			amount: 1000L
+			fluid: "skufaddon:dense_jizhnyak"
+			type: "fluid"
 		}
 		]
 		rewards: [
@@ -113,7 +113,7 @@
 		{
 			id: "3CA121DD00ADFAB5"
 			count: 4L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ores/chelyabinsk_shale" } }
+			item: { Count: 1, id: "skufaddon:chelyabinsk_shale_dust" }
 			type: "item"
 		}
 		]
@@ -129,16 +129,16 @@
 		id: "7CC16F39DD4A3854"
 		title: "5.5 · Запрещённый Хладагент (Sauna Capstone)"
 		subtitle: "Капстоун EV-эры"
-		icon: "skufaddon:coolant_of_denial_fluid"
+		icon: "skufaddon:coolant_of_denial_bucket"
 		x: 0.0d
 		y: 6.0d
 		shape: "hexagon"
 		size: 1.8d
-		description: ["&b[Цель]: Свартить Хладагент Отрицания.", "&7[Крафт]: Химия: слёзы + похуит + вода.", "&o«Охлаждает самые горячие пуканы эндгейма.»"]
+		description: ["&b[Цель]: Сварить Хладагент Отрицания.", "&7[Крафт]: Химия: слёзы + похуит + вода.", "&o«Охлаждает самые горячие пуканы эндгейма.»"]
 		dependencies: ["3220CD7516A48BB7" "2F5A2CE56ED82988"]
 		tasks: [
 		{
-			id: "B21BA0690DB62A9F"
+			id: "321BA0690DB62A9F"
 			amount: 1000L
 			fluid: "skufaddon:coolant_of_denial"
 			type: "fluid"
@@ -146,7 +146,7 @@
 		]
 		rewards: [
 		{
-			id: "B3DF41D1F7780D04"
+			id: "33DF41D1F7780D04"
 			type: "xp"
 			xp: 500
 		}
