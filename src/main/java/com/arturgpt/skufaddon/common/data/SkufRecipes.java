@@ -392,6 +392,15 @@ public class SkufRecipes {
                 .duration(180)
                 .EUt(48)
                 .save(provider);
+
+        // SKU-69: defective_meaning recycling
+        GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("recycle_defective_meaning")
+                .inputItems(dust, SkufMaterials.defectiveMeaning, 2)
+                .outputItems(dust, SkufMaterials.normieDust, 1)
+                .outputItems(dust, SkufMaterials.slagIgnore, 1)
+                .duration(120)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
     }
 
     private static void myposhkoChain(Consumer<FinishedRecipe> provider) {
@@ -611,6 +620,27 @@ public class SkufRecipes {
                 .outputItems(SkufItems.ARTURIAN_MAINFRAME)
                 .duration(800)
                 .EUt(8192)
+                .save(provider);
+
+        // SKU-74: compress_vibe_singularity
+        GTRecipeTypes.AUTOCLAVE_RECIPES.recipeBuilder("compress_vibe_singularity")
+                .inputItems(gem, SkufMaterials.correctMatter, 2)
+                .inputFluids(SkufMaterials.stabilizedVibe.getFluid(16000))
+                .inputFluids(SkufMaterials.condensedSweat.getFluid(4000))
+                .outputItems(SkufItems.VIBE_SINGULARITY)
+                .duration(800)
+                .EUt(GTValues.V[GTValues.ZPM])
+                .save(provider);
+
+        // SKU-74: craft_factory_order_core
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_factory_order_core")
+                .inputItems(SkufItems.VIBE_SINGULARITY, 1)
+                .inputItems(gem, SkufMaterials.correctMatter, 4)
+                .inputItems(plate, SkufMaterials.honestSteel, 8)
+                .inputItems(SkufItems.DODIK_CIRCUIT_EXTREME, 1)
+                .outputItems(SkufItems.FACTORY_ORDER_CORE)
+                .duration(600)
+                .EUt(GTValues.V[GTValues.ZPM])
                 .save(provider);
     }
 
