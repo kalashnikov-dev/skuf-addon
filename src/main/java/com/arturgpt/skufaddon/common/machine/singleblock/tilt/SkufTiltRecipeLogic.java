@@ -147,23 +147,25 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
     private void tiltServerTick() {
         MetaMachine metaMachine = getMachine();
         int previousTiltLevel = tiltLevel;
+        int growInterval = SkufTiltUtils.getTiltGrowInterval();
+        int maxTilt = SkufTiltUtils.getMaxTiltLevel();
 
         if (isInActiveSauna()) {
             // An active sauna relaxes the machine: tilt cools down even while working.
-            if (tiltLevel > 0 && metaMachine.getOffsetTimer() % SkufTiltUtils.TILT_GROW_INTERVAL == 0) {
+            if (tiltLevel > 0 && metaMachine.getOffsetTimer() % growInterval == 0) {
                 tiltLevel--;
             }
             ticksAtMaxTilt = 0;
         } else if (SkufTiltUtils.shouldGrowTilt(isWorking(), isWorkingEnabled())) {
-            if (tiltLevel < SkufTiltUtils.MAX_TILT_LEVEL) {
-                if (metaMachine.getOffsetTimer() % SkufTiltUtils.TILT_GROW_INTERVAL == 0) {
+            if (tiltLevel < maxTilt) {
+                if (metaMachine.getOffsetTimer() % growInterval == 0) {
                     tiltLevel++;
                 }
             } else {
                 ticksAtMaxTilt++;
             }
         } else if (SkufTiltUtils.shouldDecayTilt(tiltLevel, isWorking(), isWaiting())) {
-            if (metaMachine.getOffsetTimer() % SkufTiltUtils.TILT_GROW_INTERVAL == 0) {
+            if (metaMachine.getOffsetTimer() % growInterval == 0) {
                 tiltLevel--;
             }
             ticksAtMaxTilt = 0;

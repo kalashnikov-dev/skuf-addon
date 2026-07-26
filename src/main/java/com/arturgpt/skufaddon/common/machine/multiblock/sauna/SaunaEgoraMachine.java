@@ -199,9 +199,18 @@ public class SaunaEgoraMachine extends WorkableElectricMultiblockMachine impleme
 
     /** mB of warm vibe steam per production cycle while the sauna is hot. */
     public int getWarmVibeSteamAmountPerCycle() {
-        int tierBonus = Math.max(0, getTier() - GTValues.EV) * STEAM_MB_PER_TIER;
-        int tiltBonus = getSaunaReceiverCount() * STEAM_MB_PER_TILT;
-        return STEAM_BASE_MB + tierBonus + tiltBonus;
+        int baseSteam = com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_BASE_STEAM_PRODUCE_MB != null ?
+                com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_BASE_STEAM_PRODUCE_MB.get() :
+                STEAM_BASE_MB;
+        int tierBonusMB = com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_STEAM_BONUS_PER_TIER_MB != null ?
+                com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_STEAM_BONUS_PER_TIER_MB.get() :
+                STEAM_MB_PER_TIER;
+        int tiltBonusMB = com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_STEAM_BONUS_PER_TILT_MACHINE_MB !=
+                null ? com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SAUNA_STEAM_BONUS_PER_TILT_MACHINE_MB.get() : STEAM_MB_PER_TILT;
+
+        int tierBonus = Math.max(0, getTier() - GTValues.EV) * tierBonusMB;
+        int tiltBonus = getSaunaReceiverCount() * tiltBonusMB;
+        return baseSteam + tierBonus + tiltBonus;
     }
 
     /** mB per second at 20-tick production interval. */

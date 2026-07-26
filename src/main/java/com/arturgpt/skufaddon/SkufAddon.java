@@ -44,6 +44,10 @@ public class SkufAddon {
                 ModConfig.Type.COMMON,
                 ObserverConfig.SPEC,
                 "skufaddon-observer.toml");
+        ModLoadingContext.get().registerConfig(
+                ModConfig.Type.COMMON,
+                com.arturgpt.skufaddon.common.config.SkufBalanceConfig.SPEC,
+                "skufaddon-balance.toml");
 
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);

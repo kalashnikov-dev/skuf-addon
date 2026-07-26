@@ -1,5 +1,7 @@
 package com.arturgpt.skufaddon.common.machine.singleblock.tilt;
 
+import com.arturgpt.skufaddon.common.config.SkufBalanceConfig;
+
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
@@ -14,11 +16,30 @@ public final class SkufTiltUtils {
 
     private SkufTiltUtils() {}
 
+    public static int getMaxTiltLevel() {
+        return SkufBalanceConfig.MAX_TILT_LEVEL != null ? SkufBalanceConfig.MAX_TILT_LEVEL.get() : 100;
+    }
+
+    public static int getTiltGrowInterval() {
+        return SkufBalanceConfig.TILT_GROW_INTERVAL_TICKS != null ? SkufBalanceConfig.TILT_GROW_INTERVAL_TICKS.get() :
+                40;
+    }
+
+    public static double getTiltMultiplierMax() {
+        return SkufBalanceConfig.TILT_MULTIPLIER_MAX != null ? SkufBalanceConfig.TILT_MULTIPLIER_MAX.get() : 4.0;
+    }
+
+    public static int getOverheatRampTicks() {
+        return SkufBalanceConfig.OVERHEAT_RAMP_TICKS != null ? SkufBalanceConfig.OVERHEAT_RAMP_TICKS.get() : 600;
+    }
+
+    public static int getHiddenModeDelayTicks() {
+        return SkufBalanceConfig.HIDDEN_MODE_DELAY_TICKS != null ? SkufBalanceConfig.HIDDEN_MODE_DELAY_TICKS.get() : 20;
+    }
+
     public static final int TILT_GROW_INTERVAL = 40;
     public static final int MAX_TILT_LEVEL = 100;
-    /** Ticks at max tilt before the level is hidden in tooltips (1 second). */
     public static final int HIDDEN_MODE_DELAY_TICKS = 20;
-    /** Ticks spent at peak tilt ("Ваще похуй") before the overheat visuals reach full intensity (~30s). */
     public static final int OVERHEAT_RAMP_TICKS = 600;
 
     /**
@@ -26,10 +47,11 @@ public final class SkufTiltUtils {
      * then ramps up the longer it stays there. Used client-side to drive the red glow and smoke.
      */
     public static float getOverheatProgress(int tiltLevel, int ticksAtMaxTilt) {
-        if (tiltLevel < MAX_TILT_LEVEL) {
+        int maxLevel = getMaxTiltLevel();
+        if (tiltLevel < maxLevel) {
             return 0.0f;
         }
-        float progress = ticksAtMaxTilt / (float) OVERHEAT_RAMP_TICKS;
+        float progress = ticksAtMaxTilt / (float) getOverheatRampTicks();
         if (progress < 0.0f) {
             return 0.0f;
         }
@@ -37,7 +59,8 @@ public final class SkufTiltUtils {
     }
 
     public static double getTiltMultiplier(int tiltLevel) {
-        return 1.0 + (tiltLevel / (double) MAX_TILT_LEVEL) * 3.0;
+        double maxMult = getTiltMultiplierMax();
+        return 1.0 + (tiltLevel / (double) getMaxTiltLevel()) * (maxMult - 1.0);
     }
 
     /**
@@ -87,11 +110,12 @@ public final class SkufTiltUtils {
     }
 
     public static Component getModeComponent(int tiltLevel, int ticksAtMaxTilt) {
-        if (tiltLevel >= MAX_TILT_LEVEL && ticksAtMaxTilt >= HIDDEN_MODE_DELAY_TICKS) {
+        int maxLevel = getMaxTiltLevel();
+        if (tiltLevel >= maxLevel && ticksAtMaxTilt >= getHiddenModeDelayTicks()) {
             return Component.translatable("skufaddon.tilt.mode.hidden")
                     .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD);
         }
-        if (tiltLevel >= MAX_TILT_LEVEL) {
+        if (tiltLevel >= maxLevel) {
             return Component.translatable("skufaddon.tilt.mode.peak", tiltLevel)
                     .withStyle(ChatFormatting.RED);
         }
