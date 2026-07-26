@@ -1,0 +1,110 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "luv"
+	group: ""
+	icon: "skufaddon:casing_pohuit_reinforced"
+	id: "5000000000000007"
+	images: [ ]
+	order_index: 6
+	title: "7 · Распадение Смысла (LuV)"
+	quest_links: [ ]
+	quests: [
+	{
+		id: "A000000000000028"
+		title: "Усиленный Похуитовый Корпус"
+		icon: "skufaddon:casing_pohuit_reinforced"
+		x: 0.0d
+		y: 6.0d
+		shape: "circle"
+		description: ["&7Ассемблер: 6 плит похуита + фрейм похуита + Людская плата → &fУсиленный Похуитовый Корпус&7.", "«Корпус для Меметического Коллайдера и верхних эндгейм-структур.»"]
+		dependencies: ["A000000000000027"]
+		tasks: [
+		{
+			id: "7000000000000029"
+			item: "skufaddon:casing_pohuit_reinforced"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002A"
+			type: "xp"
+			xp: 600
+		}
+		]
+	}
+	{
+		id: "A000000000000029"
+		title: "Меметический Нейтрон"
+		icon: "skufaddon:memetic_neutron_dust"
+		x: -1.5d
+		y: 7.5d
+		shape: "circle"
+		description: ["&7Меметический Коллайдер: столкновение смыслов → &fmemetic_neutron&7.", "«Ключевой материал LuV-эры.»"]
+		dependencies: ["A000000000000028"]
+		tasks: [
+		{
+			id: "700000000000002A"
+			item: "skufaddon:memetic_neutron_dust"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002B"
+			type: "xp"
+			xp: 700
+		}
+		]
+	}
+	{
+		id: "A00000000000002A"
+		title: "Дефектный Смысл и Центрифуга"
+		icon: "skufaddon:defective_meaning_dust"
+		x: 1.5d
+		y: 7.5d
+		shape: "circle"
+		description: ["&7Центрифуга: 2x defective_meaning → &fnormie_dust + slag_ignore&7.", "«Побочка распада смысла сепарируется на нормис-пыль и шлак игнора.»"]
+		dependencies: ["A000000000000029"]
+		tasks: [
+		{
+			id: "700000000000002B"
+			item: "skufaddon:defective_meaning_dust"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002C"
+			type: "xp"
+			xp: 700
+		}
+		]
+	}
+	{
+		id: "A00000000000002B"
+		title: "Стабилизатор Смысла (LuV Capstone)"
+		icon: "skufaddon:absolute_pohuit"
+		x: 0.0d
+		y: 9.0d
+		shape: "circle"
+		description: ["&7Ассемблер: ABSOLUTE_POHUIT + memetic_neutron + NORMIS_SINGULARITY → &fMEANING_STABILIZER&7.", "«Капстоун LuV-эры. Смысл зафиксирован.»"]
+		dependencies: ["A00000000000002A"]
+		tasks: [
+		{
+			id: "700000000000002C"
+			item: "skufaddon:absolute_pohuit"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002D"
+			type: "xp"
+			xp: 1000
+		}
+		]
+	}
+	]
+}

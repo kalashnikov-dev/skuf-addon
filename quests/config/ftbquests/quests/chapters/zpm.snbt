@@ -1,0 +1,86 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "zpm"
+	group: ""
+	icon: "skufaddon:vibe_singularity"
+	id: "5000000000000008"
+	images: [ ]
+	order_index: 7
+	title: "8 · Сингулярный Порядок (ZPM)"
+	quest_links: [ ]
+	quests: [
+	{
+		id: "A00000000000002C"
+		title: "Сингулярный Втыкатель"
+		icon: "skufaddon:casing_pohuit_reinforced"
+		x: 0.0d
+		y: 10.5d
+		shape: "circle"
+		description: ["&7ZPM Мультиблок сжатия вайба и гашения тильта.", "«Втыкание достигает плотности звезды.»"]
+		dependencies: ["A00000000000002B"]
+		tasks: [
+		{
+			id: "700000000000002D"
+			item: "skufaddon:casing_pohuit_reinforced"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002E"
+			type: "xp"
+			xp: 1200
+		}
+		]
+	}
+	{
+		id: "A00000000000002D"
+		title: "Сингулярность Вайба"
+		icon: "skufaddon:vibe_singularity"
+		x: 0.0d
+		y: 12.0d
+		shape: "circle"
+		description: ["&7Автоклав: 16B вайба + 4B пота + 2x correct_matter → &fvibe_singularity&7.", "«Сверхплотное кристаллическое топливо ZPM.»"]
+		dependencies: ["A00000000000002C"]
+		tasks: [
+		{
+			id: "700000000000002E"
+			item: "skufaddon:vibe_singularity"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "200000000000002F"
+			type: "xp"
+			xp: 1500
+		}
+		]
+	}
+	{
+		id: "A00000000000002E"
+		title: "Ядро Заводского Порядка (ZPM Capstone)"
+		icon: "skufaddon:factory_order_core"
+		x: 0.0d
+		y: 13.5d
+		shape: "circle"
+		description: ["&7Ассемблер: vibe_singularity + correct_matter + honest_steel + dodik_circuit_3 → &fFACTORY_ORDER_CORE&7.", "«Капстоун ZPM-эры. Порядок установлен.»"]
+		dependencies: ["A00000000000002D"]
+		tasks: [
+		{
+			id: "700000000000002F"
+			item: "skufaddon:factory_order_core"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000030"
+			type: "xp"
+			xp: 2000
+		}
+		]
+	}
+	]
+}

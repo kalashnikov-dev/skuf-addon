@@ -1,0 +1,62 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "uv"
+	group: ""
+	icon: "skufaddon:casing_proval_concrete"
+	id: "5000000000000009"
+	images: [ ]
+	order_index: 8
+	title: "9 · Обращение Энтропии (UV)"
+	quest_links: [ ]
+	quests: [
+	{
+		id: "A00000000000002F"
+		title: "Провальный Бетон"
+		icon: "skufaddon:casing_proval_concrete"
+		x: 0.0d
+		y: 15.0d
+		shape: "circle"
+		description: ["&7Миксер: 4x челябинский сланец + honest_steel + бетон → &fcasing_proval_concrete&7.", "«Суровый уральский бетон для 15x15x15 построек.»"]
+		dependencies: ["A00000000000002E"]
+		tasks: [
+		{
+			id: "7000000000000030"
+			item: "skufaddon:casing_proval_concrete"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000031"
+			type: "xp"
+			xp: 2500
+		}
+		]
+	}
+	{
+		id: "A000000000000030"
+		title: "Каркас Финальной Фабрики (UV Capstone)"
+		icon: "skufaddon:pravilnaya_vesh"
+		x: 0.0d
+		y: 16.5d
+		shape: "circle"
+		description: ["&7Фабрика 15x15x15: обращение энтропии и превращение нормис-пыли в правильную материю.", "«Капстоун UV-эры.»"]
+		dependencies: ["A00000000000002F"]
+		tasks: [
+		{
+			id: "7000000000000031"
+			item: "skufaddon:pravilnaya_vesh"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000032"
+			type: "xp"
+			xp: 3000
+		}
+		]
+	}
+	]
+}

@@ -304,20 +304,58 @@ q("e_main", title="Arthurian Mainframe", icon="arturian_mainframe", x=0, y=4.5,
   desc=["&78 плит стали + 4 gem correct_matter + скрипт Мыпошко + вайб → &fARTURIAN MAINFRAME&7.",
         "«Теперь Артур говорит через твои машины. Готов ли ты его слушать?»"],
   tasks=[t_item("arturian_mainframe", 1)], rewards=[r_xp(500)], deps_keys=["e_pohuit"])
-# --- locked (not in code yet) ---
-q("e_singularity", title="&c[🔒] Сингулярность «Деревенский Покой»", icon="absolute_pohuit", x=0, y=6,
-  desc=["&7Собрать всё в одну Сингулярность — право уйти.",
-        "&c[НЕ В КОДЕ] Финальный предмет + рецепт ещё не реализованы (Фаза 3).",
-        "&8Держать заблокированным до сборки финала (roadmap §10)."],
-  tasks=[t_check()], rewards=[r_xp(1000)], deps_keys=["e_main"])
-q("e_gate", title="&c[🔒] Врата ПГТ", icon="arturian_mainframe", x=0, y=7.5,
+
+# ============================ CHAPTER 6: Распадение Смысла (LuV) =================
+q("luv_collider", title="Усиленный Похуитовый Корпус", icon="casing_pohuit_reinforced", x=0, y=6.0,
+  desc=["&7Ассемблер: 6 плит похуита + фрейм похуита + Людская плата → &fУсиленный Похуитовый Корпус&7.",
+        "«Корпус для Меметического Коллайдера и верхних эндгейм-структур.»"],
+  tasks=[t_item("casing_pohuit_reinforced", 1)], rewards=[r_xp(600)], deps_keys=["e_main"])
+q("luv_neutron", title="Меметический Нейтрон", icon="memetic_neutron_dust", x=-1.5, y=7.5,
+  desc=["&7Меметический Коллайдер: столкновение смыслов → &fmemetic_neutron&7.",
+        "«Ключевой материал LuV-эры.»"],
+  tasks=[t_item("memetic_neutron_dust", 1)], rewards=[r_xp(700)], deps_keys=["luv_collider"])
+q("luv_defective", title="Дефектный Смысл и Центрифуга", icon="defective_meaning_dust", x=1.5, y=7.5,
+  desc=["&7Центрифуга: 2x defective_meaning → &fnormie_dust + slag_ignore&7.",
+        "«Побочка распада смысла сепарируется на нормис-пыль и шлак игнора.»"],
+  tasks=[t_item("defective_meaning_dust", 1)], rewards=[r_xp(700)], deps_keys=["luv_neutron"])
+q("luv_stabilizer", title="Стабилизатор Смысла (LuV Capstone)", icon="absolute_pohuit", x=0, y=9.0,
+  desc=["&7Ассемблер: ABSOLUTE_POHUIT + memetic_neutron + NORMIS_SINGULARITY → &fMEANING_STABILIZER&7.",
+        "«Капстоун LuV-эры. Смысл зафиксирован.»"],
+  tasks=[t_item("absolute_pohuit", 1)], rewards=[r_xp(1000)], deps_keys=["luv_defective"])
+
+# ============================ CHAPTER 7: Сингулярный Порядок (ZPM) ===============
+q("zpm_vtykatel", title="Сингулярный Втыкатель", icon="casing_pohuit_reinforced", x=0, y=10.5,
+  desc=["&7ZPM Мультиблок сжатия вайба и гашения тильта.",
+        "«Втыкание достигает плотности звезды.»"],
+  tasks=[t_item("casing_pohuit_reinforced", 1)], rewards=[r_xp(1200)], deps_keys=["luv_stabilizer"])
+q("zpm_singularity", title="Сингулярность Вайба", icon="vibe_singularity", x=0, y=12.0,
+  desc=["&7Автоклав: 16B вайба + 4B пота + 2x correct_matter → &fvibe_singularity&7.",
+        "«Сверхплотное кристаллическое топливо ZPM.»"],
+  tasks=[t_item("vibe_singularity", 1)], rewards=[r_xp(1500)], deps_keys=["zpm_vtykatel"])
+q("zpm_core", title="Ядро Заводского Порядка (ZPM Capstone)", icon="factory_order_core", x=0, y=13.5,
+  desc=["&7Ассемблер: vibe_singularity + correct_matter + honest_steel + dodik_circuit_3 → &fFACTORY_ORDER_CORE&7.",
+        "«Капстоун ZPM-эры. Порядок установлен.»"],
+  tasks=[t_item("factory_order_core", 1)], rewards=[r_xp(2000)], deps_keys=["zpm_singularity"])
+
+# ============================ CHAPTER 8: Обращение Энтропии (UV) =================
+q("uv_concrete", title="Провальный Бетон", icon="casing_proval_concrete", x=0, y=15.0,
+  desc=["&7Миксер: 4x челябинский сланец + honest_steel + бетон → &fcasing_proval_concrete&7.",
+        "«Суровый уральский бетон для 15x15x15 построек.»"],
+  tasks=[t_item("casing_proval_concrete", 1)], rewards=[r_xp(2500)], deps_keys=["zpm_core"])
+q("uv_frame", title="Каркас Финальной Фабрики (UV Capstone)", icon="pravilnaya_vesh", x=0, y=16.5,
+  desc=["&7Фабрика 15x15x15: обращение энтропии и превращение нормис-пыли в правильную материю.",
+        "«Капстоун UV-эры.»"],
+  tasks=[t_item("pravilnaya_vesh", 1)], rewards=[r_xp(3000)], deps_keys=["uv_concrete"])
+
+# ============================ CHAPTER 9: Деревенский Покой (UHV) =================
+q("uhv_gate", title="Врата Деревенского Покоя", icon="arturian_mainframe", x=0, y=18.0,
   desc=["&7«Ты построил завод, который мог всё. Теперь докажи, что можешь его выключить.»",
-        "&c[НЕ В КОДЕ] Мультиблок pgt_gate ещё не реализован."],
-  tasks=[t_check()], rewards=[r_xp(1000)], deps_keys=["e_singularity"])
-q("e_pgt", title="&c[🔒] Деревенский Покой (финал)", icon="normis_singularity", x=0, y=9,
+        "Требует стабильной Сауны, чистый Провал и 0% тильта."],
+  tasks=[t_item("arturian_mainframe", 1)], rewards=[r_xp(4000)], deps_keys=["uv_frame"])
+q("uhv_final", title="Деревенский Покой (Финал)", icon="normis_singularity", x=0, y=19.5,
   desc=["&7GregTech довёл тебя до предела. ArthurTech разрешает уйти.",
-        "&c[НЕ В КОДЕ] Измерение ПГТ = датапак модпака."],
-  tasks=[t_check()], rewards=[r_xp(2000)], deps_keys=["e_gate"])
+        "«Завод остановлен. Добро пожаловать домой.»"],
+  tasks=[t_item("normis_singularity", 1)], rewards=[r_xp(5000)], deps_keys=["uhv_gate"])
 
 # resolve deps_keys -> id lists ---------------------------------------------
 for key, quest in Q.items():
@@ -337,8 +375,15 @@ CHAPTERS = [
     ("sauna",   "5 · Сауна и Челябинск (HV/EV)",        "egor_core",
      ["c5_dense", "c5_shale", "c5_egor", "c5_sauna", "c5_coolant"]),
     ("endgame", "6 · Абсолютный Похуизм (эндгейм)",     "arturian_mainframe",
-     ["e_singfrag", "e_anti", "e_schem", "e_pohuit", "e_micro", "e_main",
-      "e_singularity", "e_gate", "e_pgt"]),
+     ["e_singfrag", "e_anti", "e_schem", "e_pohuit", "e_micro", "e_main"]),
+    ("luv",     "7 · Распадение Смысла (LuV)",         "casing_pohuit_reinforced",
+     ["luv_collider", "luv_neutron", "luv_defective", "luv_stabilizer"]),
+    ("zpm",     "8 · Сингулярный Порядок (ZPM)",       "vibe_singularity",
+     ["zpm_vtykatel", "zpm_singularity", "zpm_core"]),
+    ("uv",      "9 · Обращение Энтропии (UV)",          "casing_proval_concrete",
+     ["uv_concrete", "uv_frame"]),
+    ("uhv",     "10 · Деревенский Покой (UHV)",        "normis_singularity",
+     ["uhv_gate", "uhv_final"]),
 ]
 
 # write ----------------------------------------------------------------------
@@ -372,6 +417,29 @@ for order, (fn, title, icon, keys) in enumerate(CHAPTERS):
     text = emit_chapter(fn, title, icon, order, [Q[k] for k in keys])
     with open(os.path.join(CDIR, fn + ".snbt"), "w", encoding="utf-8") as f:
         f.write(text + "\n")
+
+# Also sync to run/config/ftbquests/quests for local testing client
+RUN_QDIR = os.path.join(os.path.dirname(__file__), "..", "run", "config", "ftbquests", "quests")
+if os.path.exists(os.path.dirname(RUN_QDIR)):
+    import shutil
+    if os.path.exists(RUN_QDIR):
+        shutil.rmtree(RUN_QDIR)
+    shutil.copytree(QDIR, RUN_QDIR)
+    print("Synced to run dir:", os.path.abspath(RUN_QDIR))
+
+# Sync to any existing world save folders under run/saves/
+SAVES_DIR = os.path.join(os.path.dirname(__file__), "..", "run", "saves")
+if os.path.exists(SAVES_DIR):
+    import shutil
+    for w in os.listdir(SAVES_DIR):
+        w_path = os.path.join(SAVES_DIR, w)
+        if os.path.isdir(w_path):
+            ftb_dir = os.path.join(w_path, "ftbquests")
+            target_q = os.path.join(ftb_dir, "quests")
+            os.makedirs(ftb_dir, exist_ok=True)
+            if os.path.exists(target_q):
+                shutil.rmtree(target_q)
+            shutil.copytree(QDIR, target_q)
 
 print("Generated:", os.path.abspath(QDIR))
 print("Chapters:", ", ".join(c[0] for c in CHAPTERS))

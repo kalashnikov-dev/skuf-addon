@@ -1,0 +1,62 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "uhv"
+	group: ""
+	icon: "skufaddon:normis_singularity"
+	id: "500000000000000A"
+	images: [ ]
+	order_index: 9
+	title: "10 · Деревенский Покой (UHV)"
+	quest_links: [ ]
+	quests: [
+	{
+		id: "A000000000000031"
+		title: "Врата Деревенского Покоя"
+		icon: "skufaddon:arturian_mainframe"
+		x: 0.0d
+		y: 18.0d
+		shape: "circle"
+		description: ["&7«Ты построил завод, который мог всё. Теперь докажи, что можешь его выключить.»", "Требует стабильной Сауны, чистый Провал и 0% тильта."]
+		dependencies: ["A000000000000030"]
+		tasks: [
+		{
+			id: "7000000000000032"
+			item: "skufaddon:arturian_mainframe"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000033"
+			type: "xp"
+			xp: 4000
+		}
+		]
+	}
+	{
+		id: "A000000000000032"
+		title: "Деревенский Покой (Финал)"
+		icon: "skufaddon:normis_singularity"
+		x: 0.0d
+		y: 19.5d
+		shape: "circle"
+		description: ["&7GregTech довёл тебя до предела. ArthurTech разрешает уйти.", "«Завод остановлен. Добро пожаловать домой.»"]
+		dependencies: ["A000000000000031"]
+		tasks: [
+		{
+			id: "7000000000000033"
+			item: "skufaddon:normis_singularity"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2000000000000034"
+			type: "xp"
+			xp: 5000
+		}
+		]
+	}
+	]
+}
