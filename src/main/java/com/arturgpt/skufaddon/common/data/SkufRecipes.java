@@ -220,6 +220,26 @@ public class SkufRecipes {
                 .duration(300)
                 .EUt(960)
                 .save(provider);
+
+        // SKU-68: craft_casing_pohuit_reinforced
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_casing_pohuit_reinforced")
+                .inputItems(plate, SkufMaterials.pokhuit, 6)
+                .inputItems(frameGt, SkufMaterials.pokhuit, 1)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED, 1)
+                .outputItems(SkufBlocks.CASING_POHUIT_REINFORCED, 2)
+                .duration(100)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
+
+        // SKU-75: craft_proval_concrete
+        GTRecipeTypes.MIXER_RECIPES.recipeBuilder("craft_proval_concrete")
+                .inputItems(dust, SkufMaterials.chelyabinskShale, 4)
+                .inputItems(dust, SkufMaterials.honestSteel, 1)
+                .inputItems(com.gregtechceu.gtceu.common.data.GTBlocks.CASING_STEEL_SOLID.asItem(), 1)
+                .outputItems(SkufBlocks.CASING_PROVAL_CONCRETE, 2)
+                .duration(100)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
     }
 
     private static void productionChain(Consumer<FinishedRecipe> provider) {

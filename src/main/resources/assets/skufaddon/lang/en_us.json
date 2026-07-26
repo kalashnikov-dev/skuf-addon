@@ -208,7 +208,13 @@
   "skufaddon.tooltip.voltage": "Voltage: %s EU/t (%s)",
 
   "material.skufaddon.crystallized_dodik_sweat": "Crystallized Dodik Sweat",
+  "material.skufaddon.memetic_neutron": "Memetic Neutron",
+  "material.skufaddon.defective_meaning": "Defective Meaning",
   "item.skufaddon.dodik_circuit_1": "Dodik Board",
   "item.skufaddon.dodik_circuit_2": "Lyudskaya Board",
-  "item.skufaddon.dodik_circuit_3": "Zapizdosh Mainframe"
+  "item.skufaddon.dodik_circuit_3": "Zapizdosh Mainframe",
+  "item.skufaddon.vibe_singularity": "Vibe Singularity",
+  "item.skufaddon.factory_order_core": "Factory Order Core",
+  "block.skufaddon.casing_pohuit_reinforced": "Reinforced Pokhuit Casing",
+  "block.skufaddon.casing_proval_concrete": "Proval Concrete Casing"
 }

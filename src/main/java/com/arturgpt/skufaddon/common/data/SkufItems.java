@@ -36,6 +36,8 @@ public class SkufItems {
     public static ItemEntry<Item> NORMIS_SINGULARITY;
     public static ItemEntry<Item> ABSOLUTE_POHUIT;
     public static ItemEntry<Item> ARTURIAN_MAINFRAME;
+    public static ItemEntry<Item> VIBE_SINGULARITY;
+    public static ItemEntry<Item> FACTORY_ORDER_CORE;
 
     public static ItemEntry<Item> DEMO;
 
@@ -110,6 +112,14 @@ public class SkufItems {
 
         ARTURIAN_MAINFRAME = SkufAddon.REGISTRATE
                 .item("arturian_mainframe", Item::new)
+                .register();
+
+        VIBE_SINGULARITY = SkufAddon.REGISTRATE
+                .item("vibe_singularity", Item::new)
+                .register();
+
+        FACTORY_ORDER_CORE = SkufAddon.REGISTRATE
+                .item("factory_order_core", Item::new)
                 .register();
 
         DEMO = SkufAddon.REGISTRATE

@@ -40,6 +40,8 @@ public class SkufMaterials {
 
     public static Material padikNobleGas;
     public static Material denseJizhnyak;
+    public static Material memeticNeutron;
+    public static Material defectiveMeaning;
 
     public static void init() {
         skufit = new Material.Builder(SkufAddon.id("skufit"))
@@ -212,6 +214,21 @@ public class SkufMaterials {
         denseJizhnyak = new Material.Builder(SkufAddon.id("dense_jizhnyak"))
                 .liquid(new FluidBuilder().temperature(330))
                 .color(0x3E5A2A)
+                .buildAndRegister();
+
+        memeticNeutron = new Material.Builder(SkufAddon.id("memetic_neutron"))
+                .dust()
+                .gem()
+                .color(0x9933FF)
+                .iconSet(MaterialIconSet.DIAMOND)
+                .flags(DISABLE_DECOMPOSITION)
+                .buildAndRegister();
+
+        defectiveMeaning = new Material.Builder(SkufAddon.id("defective_meaning"))
+                .dust()
+                .color(0x444444)
+                .iconSet(MaterialIconSet.DULL)
+                .flags(DISABLE_DECOMPOSITION)
                 .buildAndRegister();
     }
 }

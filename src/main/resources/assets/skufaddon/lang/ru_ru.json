@@ -208,7 +208,13 @@
   "skufaddon.tooltip.voltage": "Напряжение: %s EU/t (%s)",
 
   "material.skufaddon.crystallized_dodik_sweat": "Кристаллизованный Пот Додика",
+  "material.skufaddon.memetic_neutron": "Меметический Нейтрон",
+  "material.skufaddon.defective_meaning": "Дефектный Смысл",
   "item.skufaddon.dodik_circuit_1": "Плата Додика",
   "item.skufaddon.dodik_circuit_2": "Людская Плата",
-  "item.skufaddon.dodik_circuit_3": "Запиздош-мейнфрейм"
+  "item.skufaddon.dodik_circuit_3": "Запиздош-мейнфрейм",
+  "item.skufaddon.vibe_singularity": "Сингулярность Вайба",
+  "item.skufaddon.factory_order_core": "Ядро Заводского Порядка",
+  "block.skufaddon.casing_pohuit_reinforced": "Усиленный Похуитовый Корпус",
+  "block.skufaddon.casing_proval_concrete": "Провальный Бетон"
 }

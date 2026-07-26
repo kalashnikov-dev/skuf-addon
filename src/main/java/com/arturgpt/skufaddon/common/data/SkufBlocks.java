@@ -17,6 +17,8 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 public final class SkufBlocks {
 
     public static BlockEntry<Block> BROKEN_MONITOR_BLOCK;
+    public static BlockEntry<Block> CASING_POHUIT_REINFORCED;
+    public static BlockEntry<Block> CASING_PROVAL_CONCRETE;
 
     private SkufBlocks() {}
 
@@ -27,6 +29,26 @@ public final class SkufBlocks {
                         .mapColor(MapColor.COLOR_PURPLE)
                         .sound(SoundType.GLASS)
                         .strength(0.8f, 0.8f)
+                        .requiresCorrectToolForDrops())
+                .simpleItem()
+                .register();
+
+        CASING_POHUIT_REINFORCED = SkufAddon.REGISTRATE
+                .block("casing_pohuit_reinforced", Block::new)
+                .properties(props -> props
+                        .mapColor(MapColor.COLOR_GRAY)
+                        .sound(SoundType.METAL)
+                        .strength(5.0f, 6.0f)
+                        .requiresCorrectToolForDrops())
+                .simpleItem()
+                .register();
+
+        CASING_PROVAL_CONCRETE = SkufAddon.REGISTRATE
+                .block("casing_proval_concrete", Block::new)
+                .properties(props -> props
+                        .mapColor(MapColor.STONE)
+                        .sound(SoundType.STONE)
+                        .strength(4.0f, 5.0f)
                         .requiresCorrectToolForDrops())
                 .simpleItem()
                 .register();
