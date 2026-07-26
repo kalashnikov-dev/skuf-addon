@@ -2,25 +2,27 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "steam"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:skufit_ingot"
-	id: "5000000000000001"
+	id: "0B2D9C477EA74775"
 	images: [ ]
 	order_index: 0
 	title: "1 · Грязный двор (Steam)"
 	quest_links: [ ]
 	quests: [
 	{
-		id: "A000000000000001"
-		title: "Скуфит из земли"
+		id: "A4998D6C22595BD8"
+		title: "1.1 · Скуфит из Земли"
+		subtitle: "Первый металл Урала"
 		icon: "skufaddon:skufit_ingot"
 		x: 0.0d
 		y: 0.0d
-		shape: "circle"
-		description: ["&7Урал не даёт даром. Найди жилу скуфита и накопай руды.", "&8(жилы skufit_vein / pokhuit_vein на глубине)"]
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Найти жилу скуфитовой руды.", "&7[Крафт]: Копай на глубине в жилах skufit_vein.", "&o«Урал не даёт даром. Первые шаги сквозь руду.»"]
 		tasks: [
 		{
-			id: "7000000000000001"
+			id: "A70FF2986703C5F0"
 			count: 8L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ores/skufit" } }
 			type: "item"
@@ -28,48 +30,26 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000001"
+			id: "5D82A4C597E4DE61"
 			type: "xp"
 			xp: 20
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000002"
-		title: "Мусор — это ресурс"
-		icon: "minecraft:rotten_flesh"
-		x: 1.5d
-		y: 0.0d
+		id: "E64BF6490CB41688"
+		title: "1.2 · Пыль Нормиса"
+		subtitle: "Органический катализатор"
+		icon: "skufaddon:normie_dust"
+		x: -2.5d
+		y: 2.0d
 		shape: "circle"
-		description: ["&7Гнилая плоть — сырьё для нормисной пыли.", "&aBootstrap починен: мацератор даёт первую пыль без завода."]
+		size: 1.0d
+		description: ["&b[Цель]: Добыть первую нормисную пыль.", "&7[Крафт]: Измельчай плоть или фильтруй отходы.", "&o«Из органики выжимаем катализатор заводов.»"]
+		dependencies: ["A4998D6C22595BD8"]
 		tasks: [
 		{
-			id: "7000000000000002"
-			count: 8L
-			item: { Count: 1, id: "minecraft:rotten_flesh" }
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000002"
-			type: "xp"
-			xp: 10
-		}
-		]
-	}
-	{
-		id: "A000000000000003"
-		title: "Отдели нормисное"
-		icon: "skufaddon:normie_dust_dust"
-		x: 1.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Прогони плоть через мацератор (или фильтр) → нормисная пыль.", "«Очисти мысли от лишнего. Даже если сам пока не чистый.»"]
-		dependencies: ["A000000000000002"]
-		tasks: [
-		{
-			id: "7000000000000003"
+			id: "F65015427F06C019"
 			count: 4L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/normie_dust" } }
 			type: "item"
@@ -77,74 +57,26 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000003"
+			id: "B3DCCFDC3105D716"
 			type: "xp"
 			xp: 20
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000004"
-		title: "Первый слиток"
-		icon: "skufaddon:skufit_ingot"
-		x: 0.0d
-		y: 1.5d
+		id: "663196DB6811AEF5"
+		title: "1.3 · Скуфий Пот"
+		subtitle: "Жидкий ресурс разработки"
+		icon: "skufaddon:sweat"
+		x: 2.5d
+		y: 2.0d
 		shape: "circle"
-		description: ["&7Переплавь скуфит в слиток — основа всего металла."]
-		dependencies: ["A000000000000001"]
+		size: 1.0d
+		description: ["&b[Цель]: Собрать первую ведро пота.", "&7[Крафт]: Выделяется в фильтрах и миксерах.", "&o«Пот и труд всё перетрут.»"]
+		dependencies: ["A4998D6C22595BD8"]
 		tasks: [
 		{
-			id: "7000000000000004"
-			count: 2L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/skufit" } }
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000004"
-			type: "xp"
-			xp: 20
-		}
-		]
-	}
-	{
-		id: "A000000000000005"
-		title: "Честная сталь"
-		icon: "skufaddon:honest_steel_ingot"
-		x: 0.8d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Скуфит + нормисная пыль в сплавильне → &fчестная сталь&7.", "«Не бывает чистого металла из грязных рук. Но твоя — честная.»"]
-		dependencies: ["A000000000000003" "A000000000000004"]
-		tasks: [
-		{
-			id: "7000000000000005"
-			count: 4L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/honest_steel" } }
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000005"
-			type: "xp"
-			xp: 40
-		}
-		]
-	}
-	{
-		id: "A000000000000006"
-		title: "Пот не льётся сам"
-		icon: "skufaddon:sweat_bucket"
-		x: 3.0d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Фильтр Нормиса: вода → пот (медленно). Или плоть → пыль + пот.", "«Постой, потей, жди.»"]
-		dependencies: ["A000000000000003"]
-		tasks: [
-		{
-			id: "7000000000000006"
+			id: "903EB56C6A560B11"
 			amount: 1000L
 			fluid: "skufaddon:sweat"
 			type: "fluid"
@@ -152,9 +84,63 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000006"
+			id: "A6C829B9A19E3A1D"
 			type: "xp"
 			xp: 20
+		}
+		]
+	},
+	{
+		id: "CB5F2702876AE320"
+		title: "1.4 · Скуфитовый Слиток"
+		subtitle: "Основа сплавов"
+		icon: "skufaddon:skufit_ingot"
+		x: 0.0d
+		y: 3.0d
+		shape: "square"
+		size: 1.2d
+		description: ["&b[Цель]: Переплавить руду в чистые слитки.", "&7[Крафт]: Печь или плавильня.", "&o«Чистый скуфит готовит почву для стали.»"]
+		dependencies: ["A4998D6C22595BD8"]
+		tasks: [
+		{
+			id: "F7F1FA265F124DF7"
+			count: 2L
+			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/skufit" } }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "6DD493D0D2E78440"
+			type: "xp"
+			xp: 30
+		}
+		]
+	},
+	{
+		id: "C9C5E0626E9485DA"
+		title: "1.5 · Честная Сталь (Steam Capstone)"
+		subtitle: "Капстоун паровой эры"
+		icon: "skufaddon:honest_steel_ingot"
+		x: 0.0d
+		y: 5.5d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Получить Честную Сталь.", "&7[Крафт]: Скуфит + нормисная пыль в сплавильне.", "&o«Капстоун паровой эры. Пропуск в LV!»"]
+		dependencies: ["CB5F2702876AE320" "E64BF6490CB41688"]
+		tasks: [
+		{
+			id: "208C425C79DCF889"
+			count: 4L
+			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/honest_steel" } }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "8C4E9D926BA789A2"
+			type: "xp"
+			xp: 50
 		}
 		]
 	}

@@ -2,172 +2,193 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "hv"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:dodik_circuit_3"
-	id: "5000000000000004"
+	id: "89E8960521C3158E"
 	images: [ ]
 	order_index: 3
 	title: "4 · Разбор Геймплея (HV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "829A6CFDAA06F461"
+			linked_quest: "6879F9BC196E4CFB"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A000000000000016"
-		title: "Запиздош-мейнфрейм (HV)"
+		id: "BA5D3B892992072C"
+		title: "4.1 · Схема Додика III"
+		subtitle: "Процессор высокой плотности"
 		icon: "skufaddon:dodik_circuit_3"
 		x: 0.0d
 		y: 0.0d
-		shape: "circle"
-		description: ["&72x dodik_2 + 2 плиты кристаллизованного дожик-пота + схема(3) → dodik_circuit_3."]
-		dependencies: ["A00000000000000F"]
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Собрать процессор Додика III.", "&7[Крафт]: 2x dodik_2 + плиты кристаллизованного пота.", "&o«Флагманский процессор HV-эры.»"]
+		dependencies: ["6879F9BC196E4CFB"]
 		tasks: [
 		{
-			id: "7000000000000017"
-			count: 2L
-			item: { Count: 1, id: "skufaddon:dodik_circuit_3" }
+			id: "D65AFF50AA50EB0D"
+			item: "skufaddon:dodik_circuit_3"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000018"
+			id: "72C4034BC41617E0"
 			type: "xp"
-			xp: 100
+			xp: 250
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000017"
-		title: "Конденсатор"
+		id: "B72D4B54D47551E1"
+		title: "4.2 · Высоковольтный Конденсатор"
+		subtitle: "Накопитель энергии"
 		icon: "skufaddon:capacitor"
-		x: 1.5d
-		y: 0.0d
+		x: -2.5d
+		y: 2.5d
 		shape: "circle"
-		description: ["&7Ассемблер: плиты стали + похуит → &fcapacitor&7. Сгорит — будет burnt_capacitor."]
-		dependencies: ["A000000000000011"]
+		size: 1.0d
+		description: ["&b[Цель]: Собрать конденсатор.", "&7[Крафт]: Плиты стали + похуит.", "&o«Накапливает разряд. При перегрузке горит.»"]
+		dependencies: ["BA5D3B892992072C"]
 		tasks: [
 		{
-			id: "7000000000000018"
+			id: "879AAABA41D9C273"
 			item: "skufaddon:capacitor"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000019"
+			id: "58B6DEFD37CA217C"
 			type: "xp"
-			xp: 60
+			xp: 100
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000018"
-		title: "Разбитый монитор"
-		icon: "skufaddon:block_broken_monitor"
-		x: 1.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Сожги конденсатор в дуговой печи → burnt_capacitor → собери &fблок разбитого монитора&7.", "«12 таких — и получится терминал правды.»"]
-		dependencies: ["A000000000000017"]
+		id: "8E86E249F60CCD4D"
+		title: "4.3 · Разбитый Монитор"
+		subtitle: "Разгневанный разработчик"
+		icon: "skufaddon:broken_monitor_block"
+		x: -2.5d
+		y: 5.0d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Сокрушить монитор.", "&7[Крафт]: Сожги конденсатор в печи ➔ Блок монитора.", "&o«Следствие сожжённого дедлайна.»"]
+		dependencies: ["B72D4B54D47551E1"]
 		tasks: [
 		{
-			id: "7000000000000019"
-			count: 4L
-			item: { Count: 1, id: "skufaddon:block_broken_monitor" }
+			id: "77E5BDDB494B066D"
+			item: "skufaddon:broken_monitor_block"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000001A"
+			id: "5E03C5634B8780E9"
 			type: "xp"
-			xp: 80
+			xp: 150
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000019"
-		title: "Обугленная схема"
+		id: "7A52C309D1EEED91"
+		title: "4.4 · Обугленная Схема"
+		subtitle: "Остатки дедлайна"
 		icon: "skufaddon:charred_developer_circuit"
-		x: 0.0d
-		y: 1.5d
+		x: 2.5d
+		y: 2.5d
 		shape: "circle"
-		description: ["&7Ассемблер: dodik_2 + шлак-игнор + вайб → &fcharred_developer_circuit&7."]
-		dependencies: ["A000000000000016"]
+		size: 1.0d
+		description: ["&b[Цель]: Спасти обугленную схему.", "&7[Крафт]: Ассемблер: dodik_2 + шлак-игнор.", "&o«Схема подгорела, но всё ещё работает.»"]
+		dependencies: ["BA5D3B892992072C"]
 		tasks: [
 		{
-			id: "700000000000001A"
+			id: "44FC9FBD1D1F2F2C"
 			item: "skufaddon:charred_developer_circuit"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000001B"
+			id: "EF5FF8EA8DB1584C"
 			type: "xp"
-			xp: 80
+			xp: 150
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000001A"
-		title: "Демка"
+		id: "4867E76C4925BEF9"
+		title: "4.5 · Рабочее ДЕМО"
+		subtitle: "Продукт к релизу"
 		icon: "skufaddon:demo"
-		x: 0.8d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Обугленная схема + скрипт Мыпошко + пыль + вайб → &fDEMO&7.", "«То, что ты показываешь. Не то, что работает.»"]
-		dependencies: ["A000000000000019" "A000000000000015"]
+		x: 2.5d
+		y: 5.0d
+		shape: "square"
+		size: 1.2d
+		description: ["&b[Цель]: Собрать ДЕМО версию.", "&7[Крафт]: Обугленная схема + скрипт + пыль.", "&o«Готово к депрекации на прод.»"]
+		dependencies: ["7A52C309D1EEED91"]
 		tasks: [
 		{
-			id: "700000000000001B"
+			id: "DBA21C3DAB15B6B9"
 			item: "skufaddon:demo"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000001C"
+			id: "9CFEEB9CDFFF3C25"
 			type: "xp"
-			xp: 100
+			xp: 200
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000001B"
-		title: "Разбор Геймплея"
+		id: "EC7298894CF1F6C3"
+		title: "4.6 · Разбор Геймплея (Мультиблок)"
+		subtitle: "Аналитический комплекс"
 		icon: "skufaddon:razbor_geympleya"
-		x: 0.8d
+		x: 0.0d
 		y: 4.5d
-		shape: "circle"
-		description: ["&7Собери мультиблок &fРазбор Геймплея&7 (ассемблер: DEMO + скрипт Мыпошко +", "2× обугленная схема + 4× обгоревший кабель + пых-дым 2000).", "«Для просмотра демок и девочек в Twitch. Мониторы уже разбиты заранее — экономит время.»"]
-		dependencies: ["A000000000000018" "A00000000000001A"]
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Собрать Разбор Геймплея.", "&7[Крафт]: Ассемблер: DEMO + скрипт Мыпошко.", "&o«Разбирает геймплей на технические слёзы.»"]
+		dependencies: ["8E86E249F60CCD4D" "4867E76C4925BEF9"]
 		tasks: [
 		{
-			id: "700000000000001C"
+			id: "22F96DC0E2F227BB"
 			item: "skufaddon:razbor_geympleya"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000001D"
+			id: "176653292658E3CF"
 			type: "xp"
-			xp: 200
+			xp: 300
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000001C"
-		title: "Технические слёзы"
+		id: "CEF3DC1D61E7E914"
+		title: "4.7 · Технические Слёзы (HV Capstone)"
+		subtitle: "Капстоун HV-эры"
 		icon: "skufaddon:technical_tears_dust"
-		x: 2.5d
-		y: 4.5d
-		shape: "circle"
-		description: ["&7Прогони &f2× нормисную сингулярность&7 через Разбор → technical_tears 1000 (fluid),", "высуши в центрифуге → dust.", "«Тут ты и понял, сколько было спрятано.»"]
-		dependencies: ["A00000000000001B"]
+		x: 0.0d
+		y: 7.5d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Выделить Технические Слёзы.", "&7[Крафт]: Прогони нормисную сингулярность через Разбор.", "&o«Капстоун HV. Открывает Сауну Егора!»"]
+		dependencies: ["EC7298894CF1F6C3"]
 		tasks: [
 		{
-			id: "700000000000001D"
+			id: "03DFEC12252F0456"
 			count: 1L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/technical_tears" } }
 			type: "item"
@@ -175,9 +196,9 @@
 		]
 		rewards: [
 		{
-			id: "200000000000001E"
+			id: "D6233CE855DC5F6E"
 			type: "xp"
-			xp: 120
+			xp: 350
 		}
 		]
 	}

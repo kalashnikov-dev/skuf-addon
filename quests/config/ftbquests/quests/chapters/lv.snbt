@@ -2,213 +2,194 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "lv"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:dodik_circuit_1"
-	id: "5000000000000002"
+	id: "276F2086A41D63FA"
 	images: [ ]
 	order_index: 1
 	title: "2 · ЧПУ-станкчанин (LV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "1F2A4B5FAE6EAC5F"
+			linked_quest: "C9C5E0626E9485DA"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A000000000000007"
-		title: "Тлеющий пукан (корпус LV)"
+		id: "22C40CF98FAE31A0"
+		title: "2.1 · Обугленный Корпус LV"
+		subtitle: "Вход в эру электричества"
 		icon: "skufaddon:lv_smoldering_pukan"
 		x: 0.0d
 		y: 0.0d
-		shape: "circle"
-		description: ["&7Корпус всех машин: 8 плит честной стали + кабель, крафт в сетке.", "«Он уже тлеет. Как и ты.»"]
-		dependencies: ["A000000000000005"]
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Собрать первый LV корпус.", "&7[Крафт]: 8 плит стали + кабель.", "&o«Корпус дымит, но держит напряжение LV.»"]
+		dependencies: ["C9C5E0626E9485DA"]
 		tasks: [
 		{
-			id: "7000000000000007"
+			id: "F448C60648109795"
 			item: "skufaddon:lv_smoldering_pukan"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000007"
+			id: "3FA45F5CF3887E4B"
 			type: "xp"
-			xp: 30
+			xp: 50
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000008"
-		title: "Плата дятла (LV)"
-		icon: "skufaddon:dodik_circuit_1"
-		x: 1.5d
-		y: 0.0d
-		shape: "circle"
-		description: ["&7Химреактор: 2 плиты стали + пот + схема(1) → dodik_circuit_1.", "«Схема кривая, как её сборщик. Но ток проводит.»"]
-		dependencies: ["A000000000000007"]
+		id: "BA24387077BC9E58"
+		title: "2.2 · LV ЧПУ Станок"
+		subtitle: "Точная обработка деталей"
+		icon: "skufaddon:lv_cnc"
+		x: -2.5d
+		y: 2.5d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Собрать ЧПУ станок.", "&7[Крафт]: Корпус + схема + фреза.", "&o«Автоматизирует фрезеровку спиц и резцов.»"]
+		dependencies: ["22C40CF98FAE31A0"]
 		tasks: [
 		{
-			id: "7000000000000008"
-			count: 2L
-			item: { Count: 1, id: "skufaddon:dodik_circuit_1" }
+			id: "E9A6A3F12354CFD5"
+			item: "skufaddon:lv_cnc"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000008"
-			item: "skufaddon:dodik_circuit_1"
-			type: "item"
-		}
-		{
-			id: "2000000000000009"
+			id: "D6F564A808EF763C"
 			type: "xp"
-			xp: 30
+			xp: 60
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000009"
-		title: "Первый станок"
-		icon: "skufaddon:cnc_bit"
-		x: 0.8d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Собери &fLV ЧПУ-станок&7 (корпус + схема + кабель + фреза).", "«Настоящий человек делает станок, чтобы станок страдал вместо него.»"]
-		dependencies: ["A000000000000008"]
-		tasks: [
-		{
-			id: "7000000000000009"
-			item: "skufaddon:lv_cnc_machine"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "200000000000000A"
-			count: 2
-			item: { Count: 1, id: "skufaddon:cnc_bit" }
-			type: "item"
-		}
-		{
-			id: "200000000000000B"
-			type: "xp"
-			xp: 40
-		}
-		]
-	}
-	{
-		id: "A00000000000000A"
-		title: "Фильтр под напряжением"
-		icon: "skufaddon:lv_normis_filtration_machine"
-		x: 2.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Собери &fLV Фильтр Нормиса&7 — электрическая очистка пыли."]
-		dependencies: ["A000000000000008"]
-		tasks: [
-		{
-			id: "700000000000000A"
-			item: "skufaddon:lv_normis_filtration_machine"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "200000000000000C"
-			type: "xp"
-			xp: 40
-		}
-		]
-	}
-	{
-		id: "A00000000000000B"
-		title: "Фрезы и резцы"
+		id: "A902B7DEDFFF4531"
+		title: "2.3 · ЧПУ Резец & Фреза"
+		subtitle: "Расходник станков"
 		icon: "skufaddon:cnc_cutter"
-		x: 0.8d
-		y: 3.0d
+		x: -4.5d
+		y: 2.5d
 		shape: "circle"
-		description: ["&7На ЧПУ точи &fcnc_bit&7 из прутка, затем собирай &fcnc_cutter&7."]
-		dependencies: ["A000000000000009"]
+		size: 1.0d
+		description: ["&b[Цель]: Выточить фрезу на ЧПУ.", "&7[Крафт]: Пруток стали на ЧПУ станке.", "&o«Лезвие режет заготовки без пощады.»"]
+		dependencies: ["BA24387077BC9E58"]
 		tasks: [
 		{
-			id: "700000000000000B"
-			count: 4L
-			item: { Count: 1, id: "skufaddon:cnc_bit" }
-			type: "item"
-		}
-		{
-			id: "700000000000000C"
+			id: "90132C8F5D05366D"
 			item: "skufaddon:cnc_cutter"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000000D"
+			id: "A6530E784D929B56"
 			type: "xp"
 			xp: 40
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000000C"
-		title: "Дистилляция пота"
-		icon: "skufaddon:lv_pot_distillery"
-		x: 4.0d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Собери &fLV Дистиллятор пота&7. Жижняк → правильная материя."]
-		dependencies: ["A000000000000008"]
+		id: "66F8B403BFDBD395"
+		title: "2.4 · LV Фильтр Нормиса"
+		subtitle: "Очистка компонентов"
+		icon: "skufaddon:lv_filtration"
+		x: 2.5d
+		y: 2.5d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Собрать элекро-фильтр.", "&7[Крафт]: Корпус + фильтр сетка.", "&o«Фильтрует тонкую фракцию пылей.»"]
+		dependencies: ["22C40CF98FAE31A0"]
 		tasks: [
 		{
-			id: "700000000000000D"
-			item: "skufaddon:lv_pot_distillery"
+			id: "E9C8FFB84BDD5B74"
+			item: "skufaddon:lv_filtration"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000000E"
+			id: "F147EFFBF9B74769"
 			type: "xp"
-			xp: 40
+			xp: 60
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000000D"
-		title: "Первая жижа"
-		icon: "skufaddon:jizhnyak_bucket"
-		x: 4.0d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Миксер: нормисная пыль + пот + пых-дым → &fжижняк&7.", "«Мир не обязан быть удобным.»"]
-		dependencies: ["A00000000000000C"]
+		id: "D6AECEC3B7BD357E"
+		title: "2.5 · LV Дистиллятор Пота"
+		subtitle: "Фракционирование"
+		icon: "skufaddon:lv_distillery"
+		x: 2.5d
+		y: 5.0d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Перегонка жижняка.", "&7[Крафт]: Корпус + труба + нагреватель.", "&o«Выделяет материю из жижи.»"]
+		dependencies: ["66F8B403BFDBD395"]
 		tasks: [
 		{
-			id: "700000000000000E"
+			id: "D156FFAD98E8A8AE"
+			item: "skufaddon:lv_distillery"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "585B84DB18FB823E"
+			type: "xp"
+			xp: 60
+		}
+		]
+	},
+	{
+		id: "9BD92A9308B238F8"
+		title: "2.6 · Жижняк"
+		subtitle: "Жидкий полупродукт"
+		icon: "skufaddon:zhizhnyak"
+		x: 0.0d
+		y: 3.5d
+		shape: "square"
+		size: 1.2d
+		description: ["&b[Цель]: Замиксить Жижняк.", "&7[Крафт]: Нормисная пыль + пот + дым.", "&o«Густая субстанция для химических реакций.»"]
+		dependencies: ["22C40CF98FAE31A0"]
+		tasks: [
+		{
+			id: "E18CFD335C189619"
 			amount: 1000L
-			fluid: "skufaddon:jizhnyak"
+			fluid: "skufaddon:zhizhnyak"
 			type: "fluid"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000000F"
+			id: "CF71E80802006043"
 			type: "xp"
-			xp: 30
+			xp: 50
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000000E"
-		title: "Правильная материя"
+		id: "93BECFAA81CE7B01"
+		title: "2.7 · Правильная Материя"
+		subtitle: "Эссенция правильности"
 		icon: "skufaddon:correct_matter_gem"
-		x: 4.0d
-		y: 4.5d
+		x: 0.0d
+		y: 6.0d
 		shape: "circle"
-		description: ["&7Дистиллируй жижняк → &fcorrect_matter&7 (dust), затем автоклав → gem.", "«Концентрированная мудрость.»"]
-		dependencies: ["A00000000000000D"]
+		size: 1.2d
+		description: ["&b[Цель]: Выкристаллизовать правильную материю.", "&7[Крафт]: Дистилляция жижняка ➔ Автоклав.", "&o«Чистейший кристаллоид правильности.»"]
+		dependencies: ["9BD92A9308B238F8" "D6AECEC3B7BD357E"]
 		tasks: [
 		{
-			id: "700000000000000F"
+			id: "C68366A76D3D23DC"
 			count: 2L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:gems/correct_matter" } }
 			type: "item"
@@ -216,9 +197,35 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000010"
+			id: "BB87365417C9DE9B"
 			type: "xp"
-			xp: 60
+			xp: 80
+		}
+		]
+	},
+	{
+		id: "E5B6084F47DF0A09"
+		title: "2.8 · Схема Додика I (LV Capstone)"
+		subtitle: "Капстоун LV-эры"
+		icon: "skufaddon:dodik_circuit_1"
+		x: 0.0d
+		y: 8.5d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Собрать микросхему Додика I.", "&7[Крафт]: Химреактор: плиты + пот + схема.", "&o«Первый полноценный процессор. Открывает MV!»"]
+		dependencies: ["93BECFAA81CE7B01" "A902B7DEDFFF4531"]
+		tasks: [
+		{
+			id: "F733E796A6679182"
+			item: "skufaddon:dodik_circuit_1"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "5B392729740A36C7"
+			type: "xp"
+			xp: 100
 		}
 		]
 	}

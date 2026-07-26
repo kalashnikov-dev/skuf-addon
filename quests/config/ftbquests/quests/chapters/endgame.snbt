@@ -2,155 +2,176 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "endgame"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:arturian_mainframe"
-	id: "5000000000000006"
+	id: "43AF5A6C91030254"
 	images: [ ]
 	order_index: 5
 	title: "6 · Абсолютный Похуизм (эндгейм)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "4ADD5627B91E5350"
+			linked_quest: "7CC16F39DD4A3854"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A000000000000022"
-		title: "Нормисная Сингулярность"
-		icon: "skufaddon:normis_singularity"
-		x: -1.5d
-		y: 0.0d
-		shape: "circle"
-		description: ["&7Ассемблер: 16 нормисной пыли + 4 шлак-игнора → &fnormis_singularity&7.", "«Сгусток всего, что ты игнорировал.»"]
-		dependencies: ["A000000000000020"]
-		tasks: [
-		{
-			id: "7000000000000023"
-			item: "skufaddon:normis_singularity"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000024"
-			type: "xp"
-			xp: 200
-		}
-		]
-	}
-	{
-		id: "A000000000000023"
-		title: "Антизумерное ядро"
-		icon: "skufaddon:antizoomer_core"
-		x: 1.5d
-		y: 0.0d
-		shape: "circle"
-		description: ["&7Ассемблер: gem correct_matter + плиты + изотоп → &fantizoomer_core&7.", "«Боялся зумеров? Теперь они боятся тебя.»"]
-		dependencies: ["A00000000000001E"]
-		tasks: [
-		{
-			id: "7000000000000024"
-			item: "skufaddon:antizoomer_core"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000025"
-			type: "xp"
-			xp: 200
-		}
-		]
-	}
-	{
-		id: "A000000000000024"
-		title: "Правильная схема разраба"
-		icon: "skufaddon:correct_developer_schematic"
-		x: 0.0d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Обугленная схема + gem correct_matter + вайб → &fcorrect_developer_schematic&7."]
-		dependencies: ["A000000000000023"]
-		tasks: [
-		{
-			id: "7000000000000025"
-			item: "skufaddon:correct_developer_schematic"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000026"
-			type: "xp"
-			xp: 200
-		}
-		]
-	}
-	{
-		id: "A000000000000025"
-		title: "Абсолютный Похуит"
-		icon: "skufaddon:absolute_pohuit"
-		x: 0.0d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Правильная вещь + изотоп + антизумер-ядро + схема разраба + вайб → &fABSOLUTE POHUIT&7.", "«Высший индустриальный дзен.»"]
-		dependencies: ["A000000000000024" "A000000000000022"]
-		tasks: [
-		{
-			id: "7000000000000026"
-			item: "skufaddon:absolute_pohuit"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000027"
-			type: "xp"
-			xp: 400
-		}
-		]
-	}
-	{
-		id: "A000000000000026"
-		title: "Микрокапсула правильной материи"
-		icon: "skufaddon:correct_matter_microcapsule"
-		x: 2.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Химия: gem + плотная жижа + padik_noble_gas → &fmicrocapsule&7."]
-		dependencies: ["A000000000000023"]
-		tasks: [
-		{
-			id: "7000000000000027"
-			item: "skufaddon:correct_matter_microcapsule"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000028"
-			type: "xp"
-			xp: 200
-		}
-		]
-	}
-	{
-		id: "A000000000000027"
-		title: "Arthurian Mainframe"
+		id: "AEB8136D7BD9CDB3"
+		title: "6.1 · Главный Фрейм Артура"
+		subtitle: "Вычислитель Похуизма"
 		icon: "skufaddon:arturian_mainframe"
 		x: 0.0d
-		y: 4.5d
-		shape: "circle"
-		description: ["&78 плит стали + 4 gem correct_matter + скрипт Мыпошко + вайб → &fARTURIAN MAINFRAME&7.", "«Теперь Артур говорит через твои машины. Готов ли ты его слушать?»"]
-		dependencies: ["A000000000000025"]
+		y: 0.0d
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Собрать Mainframe Артура.", "&7[Крафт]: 8 плит стали + 4 gem + скрипт + вайб.", "&o«Главный мозг эндгейм автоматики.»"]
+		dependencies: ["7CC16F39DD4A3854"]
 		tasks: [
 		{
-			id: "7000000000000028"
+			id: "8BDD5AF1D1A644E7"
 			item: "skufaddon:arturian_mainframe"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000029"
+			id: "C41DEE83D828F2E7"
+			type: "xp"
+			xp: 600
+		}
+		]
+	},
+	{
+		id: "177500648274811D"
+		title: "6.2 · Абсолютный Похуизм"
+		subtitle: "Высшая инертность"
+		icon: "skufaddon:absolute_pohuit"
+		x: -2.5d
+		y: 2.5d
+		shape: "square"
+		size: 1.2d
+		description: ["&b[Цель]: Сплавить Absolute Pohuit.", "&7[Крафт]: Правильная вещь + изотоп + антизумер-ядро.", "&o«Полное равнодушие к законам физики.»"]
+		dependencies: ["AEB8136D7BD9CDB3"]
+		tasks: [
+		{
+			id: "8399874816AB3712"
+			item: "skufaddon:absolute_pohuit"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "BC8D59EDD3A8876E"
+			type: "xp"
+			xp: 700
+		}
+		]
+	},
+	{
+		id: "BE9A997E1EC5ACAB"
+		title: "6.3 · Микрокапсула Материи"
+		subtitle: "Герметичный контейнер"
+		icon: "skufaddon:correct_matter_microcapsule"
+		x: 2.5d
+		y: 2.5d
+		shape: "circle"
+		size: 1.0d
+		description: ["&b[Цель]: Запечатать капсулу.", "&7[Крафт]: Gem + плотная жижа + благородный газ.", "&o«Хранит стабильную материю.»"]
+		dependencies: ["AEB8136D7BD9CDB3"]
+		tasks: [
+		{
+			id: "93F0B9F60578BC04"
+			item: "skufaddon:correct_matter_microcapsule"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "50480E3D8BFC3635"
 			type: "xp"
 			xp: 500
+		}
+		]
+	},
+	{
+		id: "D4033911D882AEC1"
+		title: "6.4 · Антизумерное Ядро"
+		subtitle: "Защитный модуль"
+		icon: "skufaddon:antizoomer_core"
+		x: -2.5d
+		y: 5.0d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Собрать антизумерное ядро.", "&7[Крафт]: Gem + плиты + изотоп.", "&o«Блокирует клиповое мышление.»"]
+		dependencies: ["177500648274811D"]
+		tasks: [
+		{
+			id: "02CB0803520E5883"
+			item: "skufaddon:antizoomer_core"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "C6A33DECF935858A"
+			type: "xp"
+			xp: 600
+		}
+		]
+	},
+	{
+		id: "32DD521CD60EBB86"
+		title: "6.5 · Схема Разработчика"
+		subtitle: "Архитектурный чертёж"
+		icon: "skufaddon:correct_developer_schematic"
+		x: 2.5d
+		y: 5.0d
+		shape: "circle"
+		size: 1.0d
+		description: ["&b[Цель]: Начертить правильную схему.", "&7[Крафт]: Обугленная схема + gem + вайб.", "&o«Идеальный чертёж без багов.»"]
+		dependencies: ["BE9A997E1EC5ACAB"]
+		tasks: [
+		{
+			id: "77EF49F5896F773C"
+			item: "skufaddon:correct_developer_schematic"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "634C68DEF72C516F"
+			type: "xp"
+			xp: 600
+		}
+		]
+	},
+	{
+		id: "A41688A1B1CF8C46"
+		title: "6.6 · Сингулярность Нормиса (Endgame Capstone)"
+		subtitle: "Капстоун Абсолютного Похуизма"
+		icon: "skufaddon:normis_singularity"
+		x: 0.0d
+		y: 6.0d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Сжать Сингулярность Нормиса.", "&7[Крафт]: 16 нормисной пыли + 4 шлак-игнора.", "&o«Капстоун эндгейма. Открывает LuV!»"]
+		dependencies: ["D4033911D882AEC1" "32DD521CD60EBB86"]
+		tasks: [
+		{
+			id: "6C01112BCB742183"
+			item: "skufaddon:normis_singularity"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "C85FBB9EDA15DD90"
+			type: "xp"
+			xp: 800
 		}
 		]
 	}

@@ -1,3 +1,6 @@
 {
-	chapter_groups: [ ]
+	chapter_groups: [
+		{ id: "739A474C8C2B30A0", title: "Основная Прогрессия (Main Progression)" }
+		{ id: "39F454A746F88A3F", title: "Спец-структуры и Механики (Special Mechanics)" }
+	]
 }

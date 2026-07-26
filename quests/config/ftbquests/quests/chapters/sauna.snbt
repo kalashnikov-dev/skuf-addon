@@ -2,51 +2,116 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "sauna"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:egor_core"
-	id: "5000000000000005"
+	id: "2D1AD669BD41F729"
 	images: [ ]
 	order_index: 4
 	title: "5 · Сауна и Челябинск (HV/EV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "E48BE7A8F555A86B"
+			linked_quest: "CEF3DC1D61E7E914"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A00000000000001D"
-		title: "Плотная жижа"
-		icon: "skufaddon:jizhnyak_bucket"
+		id: "00DECA6EF01B736F"
+		title: "5.1 · Ядро Сауны Егора"
+		subtitle: "Сердце теплообменника"
+		icon: "skufaddon:egor_core"
 		x: 0.0d
 		y: 0.0d
-		shape: "circle"
-		description: ["&7Центрифуга: жижняк(2000) → &fdense_jizhnyak&7 + zhizhnyak_loss.", "«Густая правда оседает на дне.»"]
-		dependencies: ["A000000000000016"]
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Собрать Ядро Егора.", "&7[Крафт]: Ассемблер: 2 gem + 4 плиты стали + вайб.", "&o«Управляет мощными тепловыми потоками.»"]
+		dependencies: ["CEF3DC1D61E7E914"]
 		tasks: [
 		{
-			id: "700000000000001E"
-			amount: 1000L
-			fluid: "skufaddon:dense_jizhnyak"
-			type: "fluid"
+			id: "CBB0D920BAF81881"
+			item: "skufaddon:egor_core"
+			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "200000000000001F"
+			id: "DC8B269082164DE7"
 			type: "xp"
-			xp: 80
+			xp: 300
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000001E"
-		title: "Челябинский сланец"
-		icon: "skufaddon:chelyabinsk_shale_dust"
-		x: 1.5d
-		y: 0.0d
-		shape: "circle"
-		description: ["&7Накопай &fchelyabinsk_shale&7 — нужен для рафинирования похуита."]
-		dependencies: ["A000000000000013"]
+		id: "3220CD7516A48BB7"
+		title: "5.2 · Сауна Егора (Мультиблок)"
+		subtitle: "Термальный гигант"
+		icon: "skufaddon:sauna_egora"
+		x: -2.5d
+		y: 2.5d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Возвести Сауну Егора.", "&7[Крафт]: Ядро + 2 правильные вещи + рамы похуита.", "&o«Жаркая парилка для загородных жидкостей.»"]
+		dependencies: ["00DECA6EF01B736F"]
 		tasks: [
 		{
-			id: "700000000000001F"
+			id: "6D70A0FDC31145A5"
+			item: "skufaddon:sauna_egora"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2E3D17491187FEEE"
+			type: "xp"
+			xp: 400
+		}
+		]
+	},
+	{
+		id: "250BBC055B9F3B53"
+		title: "5.3 · Плотный Жижняк"
+		subtitle: "Сверхгустой концентрат"
+		icon: "skufaddon:dense_jizhnyak_dust"
+		x: 2.5d
+		y: 2.5d
+		shape: "circle"
+		size: 1.0d
+		description: ["&b[Цель]: Получить плотный жижняк.", "&7[Крафт]: Сепарация жижняка (2000) в центрифуге.", "&o«Густота достигает предела.»"]
+		dependencies: ["00DECA6EF01B736F"]
+		tasks: [
+		{
+			id: "F7EDBAC19F3D845C"
+			count: 2L
+			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/dense_jizhnyak" } }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "10B5ED0901BF8D07"
+			type: "xp"
+			xp: 200
+		}
+		]
+	},
+	{
+		id: "2F5A2CE56ED82988"
+		title: "5.4 · Челябинский Сланец"
+		subtitle: "Минерал рафинирования"
+		icon: "skufaddon:chelyabinsk_shale_dust"
+		x: 2.5d
+		y: 5.0d
+		shape: "circle"
+		size: 1.0d
+		description: ["&b[Цель]: Добыть Челябинский Сланец.", "&7[Крафт]: Копай суровые челябинские жилы.", "&o«Каменный компонент для сжатия бетона.»"]
+		dependencies: ["250BBC055B9F3B53"]
+		tasks: [
+		{
+			id: "3CA121DD00ADFAB5"
 			count: 4L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ores/chelyabinsk_shale" } }
 			type: "item"
@@ -54,72 +119,26 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000020"
+			id: "47770BAA514667AA"
 			type: "xp"
-			xp: 60
+			xp: 200
 		}
 		]
-	}
+	},
 	{
-		id: "A00000000000001F"
-		title: "Ядро Егора"
-		icon: "skufaddon:egor_core"
-		x: 0.8d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Ассемблер: 2 gem correct_matter + 4 плиты стали + вайб → &fegor_core&7."]
-		dependencies: ["A00000000000001D"]
+		id: "7CC16F39DD4A3854"
+		title: "5.5 · Запрещённый Хладагент (Sauna Capstone)"
+		subtitle: "Капстоун EV-эры"
+		icon: "skufaddon:coolant_of_denial_fluid"
+		x: 0.0d
+		y: 6.0d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Свартить Хладагент Отрицания.", "&7[Крафт]: Химия: слёзы + похуит + вода.", "&o«Охлаждает самые горячие пуканы эндгейма.»"]
+		dependencies: ["3220CD7516A48BB7" "2F5A2CE56ED82988"]
 		tasks: [
 		{
-			id: "7000000000000020"
-			item: "skufaddon:egor_core"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000021"
-			type: "xp"
-			xp: 150
-		}
-		]
-	}
-	{
-		id: "A000000000000020"
-		title: "Сауна Егора"
-		icon: "skufaddon:sauna_egora"
-		x: 0.8d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Собери мультиблок &fСауна Егора&7 (ядро + 2 правильные вещи + рамы похуита).", "«Большим машинам нужен отдых. Егор попарит — тильт спадёт.»"]
-		dependencies: ["A00000000000001F"]
-		tasks: [
-		{
-			id: "7000000000000021"
-			item: "skufaddon:sauna_egora"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000022"
-			type: "xp"
-			xp: 300
-		}
-		]
-	}
-	{
-		id: "A000000000000021"
-		title: "Хладагент отрицания"
-		icon: "skufaddon:stabilized_vibe_bucket"
-		x: 2.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Химия: technical_tears + похуит + вода → &fcoolant_of_denial&7.", "«Остужает не проблему, а разговор о ней.»"]
-		dependencies: ["A00000000000001D"]
-		tasks: [
-		{
-			id: "7000000000000022"
+			id: "B21BA0690DB62A9F"
 			amount: 1000L
 			fluid: "skufaddon:coolant_of_denial"
 			type: "fluid"
@@ -127,9 +146,9 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000023"
+			id: "B3DF41D1F7780D04"
 			type: "xp"
-			xp: 120
+			xp: 500
 		}
 		]
 	}

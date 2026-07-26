@@ -2,172 +2,89 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "mv"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:dodik_circuit_2"
-	id: "5000000000000003"
+	id: "70511E6F3F9AE75B"
 	images: [ ]
 	order_index: 2
 	title: "3 · Разрабская неоднозначность (MV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "D0952F1D6DB08DA7"
+			linked_quest: "E5B6084F47DF0A09"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A00000000000000F"
-		title: "Людская плата (MV)"
+		id: "80867FB74E28DC98"
+		title: "3.1 · Схема Додика II"
+		subtitle: "Сердце MV вычислений"
 		icon: "skufaddon:dodik_circuit_2"
 		x: 0.0d
 		y: 0.0d
-		shape: "circle"
-		description: ["&72x dodik_1 + 2 плиты похуита + схема(2) → dodik_circuit_2."]
-		dependencies: ["A000000000000008"]
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Собрать плату Додика II.", "&7[Крафт]: 2x dodik_1 + плиты похуита.", "&o«Удваивает вычислительный похуизм в MV.»"]
+		dependencies: ["E5B6084F47DF0A09"]
 		tasks: [
 		{
-			id: "7000000000000010"
-			count: 2L
-			item: { Count: 1, id: "skufaddon:dodik_circuit_2" }
+			id: "49DF60663E3EB978"
+			item: "skufaddon:dodik_circuit_2"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000011"
-			type: "xp"
-			xp: 60
-		}
-		]
-	}
-	{
-		id: "A000000000000012"
-		title: "Стабилизируй вайб"
-		icon: "skufaddon:mv_vibe_stabilizer"
-		x: 0.8d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Собери &fMV Стабилизатор вайба&7. correct_matter + пот → stabilized_vibe.", "«Хаос вокруг? Просто стабилизируй вайб.»"]
-		dependencies: ["A00000000000000F"]
-		tasks: [
-		{
-			id: "7000000000000011"
-			item: "skufaddon:mv_vibe_stabilizer"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000012"
-			type: "xp"
-			xp: 60
-		}
-		]
-	}
-	{
-		id: "A000000000000013"
-		title: "Уральский изотоп"
-		icon: "skufaddon:ural_isotope_dust"
-		x: 2.5d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Центрифуга: жижняк → &fural_isotope&7 (+ пот).", "«Радиация не прощает, но платит за смелость.»"]
-		dependencies: ["A00000000000000F"]
-		tasks: [
-		{
-			id: "7000000000000012"
-			count: 4L
-			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/ural_isotope" } }
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000013"
-			type: "xp"
-			xp: 80
-		}
-		]
-	}
-	{
-		id: "A000000000000014"
-		title: "Правильная Вещь"
-		icon: "skufaddon:pravilnaya_vesh"
-		x: 0.8d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Ассемблер: 2 gem correct_matter + плиты + резец + вайб + dodik_2 → &fPRAVILNAYA VESH&7.", "«Ты не знаешь, зачем она. Но чувствуешь: без неё дальше нельзя.»"]
-		dependencies: ["A000000000000012" "A00000000000000E"]
-		tasks: [
-		{
-			id: "7000000000000013"
-			item: "skufaddon:pravilnaya_vesh"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000014"
+			id: "DA25537253AD7606"
 			type: "xp"
 			xp: 120
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000015"
-		title: "Скрипт Мыпошко"
-		icon: "skufaddon:myposhko_script"
-		x: 2.5d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Ассемблер: нормисная пыль + gem + вайб + dodik_2 → &fmyposhko_script&7."]
-		dependencies: ["A000000000000012"]
-		tasks: [
-		{
-			id: "7000000000000014"
-			item: "skufaddon:myposhko_script"
-			type: "item"
-		}
-		]
-		rewards: [
-		{
-			id: "2000000000000015"
-			type: "xp"
-			xp: 80
-		}
-		]
-	}
-	{
-		id: "A000000000000010"
-		title: "Скуфизатор"
+		id: "DD3F2A111A11D6D6"
+		title: "3.2 · Скуфизатор (Мультиблок)"
+		subtitle: "Каталитический конвертер"
 		icon: "skufaddon:skufizator"
-		x: 4.0d
-		y: 1.5d
-		shape: "circle"
-		description: ["&7Собери мультиблок &fСкуфизатор&7 (ассемблер: скрипт Мыпошко + 2 правильные вещи + жижняк-лосс 2000).", "«Скуфизация — это когда ты наконец перестал делать вид, что скуфита достаточно.»"]
-		dependencies: ["A000000000000014" "A000000000000015"]
+		x: -2.5d
+		y: 2.5d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Построить мультиблок Скуфизатор.", "&7[Крафт]: Ассемблер: скрипт Мыпошко + правильные вещи.", "&o«Удваивает выход похуита из скуфита.»"]
+		dependencies: ["80867FB74E28DC98"]
 		tasks: [
 		{
-			id: "7000000000000015"
+			id: "5E963B805C9E15CC"
 			item: "skufaddon:skufizator"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000016"
+			id: "D9049C6136D82735"
 			type: "xp"
-			xp: 120
+			xp: 150
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000011"
-		title: "Похуит из скуфита"
+		id: "887EC074FA395C07"
+		title: "3.3 · Рафинированный Похуит"
+		subtitle: "Инертный эндгейм сплав"
 		icon: "skufaddon:pokhuit_ingot"
-		x: 4.0d
-		y: 3.0d
-		shape: "circle"
-		description: ["&7Скуфизатор (SKUFIZATION): слиток скуфита + пот 250 → &f2× похуит&7.", "«Дешёвая ферма похуита прямо из скуфита. Философия в промышленных масштабах.»"]
-		dependencies: ["A000000000000010"]
+		x: -2.5d
+		y: 5.0d
+		shape: "square"
+		size: 1.2d
+		description: ["&b[Цель]: Получить слиток Похуита.", "&7[Крафт]: Скуфитор: слиток скуфита + пот.", "&o«Абсолютно инертный материал.»"]
+		dependencies: ["DD3F2A111A11D6D6"]
 		tasks: [
 		{
-			id: "7000000000000016"
+			id: "F94140FB42274BBD"
 			count: 4L
 			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:ingots/pokhuit" } }
 			type: "item"
@@ -175,9 +92,114 @@
 		]
 		rewards: [
 		{
-			id: "2000000000000017"
+			id: "C5B3F579CBAE0962"
 			type: "xp"
-			xp: 60
+			xp: 100
+		}
+		]
+	},
+	{
+		id: "1601089008B5B382"
+		title: "3.4 · Стабилизатор Вайба"
+		subtitle: "Гармонизатор"
+		icon: "skufaddon:mv_vibe_stabilizer"
+		x: 2.5d
+		y: 2.5d
+		shape: "gear"
+		size: 1.5d
+		description: ["&b[Цель]: Собрать Стабилизатор Вайба.", "&7[Крафт]: MV корпус + схема Додика II.", "&o«Удерживает колебания вайба под контролем.»"]
+		dependencies: ["80867FB74E28DC98"]
+		tasks: [
+		{
+			id: "A3B7B839EF69063E"
+			item: "skufaddon:mv_vibe_stabilizer"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "B9347F48EF6E54D2"
+			type: "xp"
+			xp: 150
+		}
+		]
+	},
+	{
+		id: "83457DB057BC89BF"
+		title: "3.5 · Уральский Изотоп"
+		subtitle: "Тяжёлый концентрат"
+		icon: "skufaddon:ural_isotope_dust"
+		x: 2.5d
+		y: 5.0d
+		shape: "circle"
+		size: 1.0d
+		description: ["&b[Цель]: Выделит Уральский Изотоп.", "&7[Крафт]: Центрифугирование жижняка.", "&o«Высокоэнергетический компонент эндгейма.»"]
+		dependencies: ["1601089008B5B382"]
+		tasks: [
+		{
+			id: "288FD6410594B160"
+			count: 4L
+			item: { Count: 1, id: "itemfilters:tag", tag: { value: "forge:dusts/ural_isotope" } }
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "2E4E61268CC43B0F"
+			type: "xp"
+			xp: 100
+		}
+		]
+	},
+	{
+		id: "511AB278B933C188"
+		title: "3.6 · Скрипт Мыпошко"
+		subtitle: "Программный алгоритм"
+		icon: "skufaddon:myposhko_script"
+		x: -1.0d
+		y: 7.0d
+		shape: "circle"
+		size: 1.2d
+		description: ["&b[Цель]: Написать скрипт Мыпошко.", "&7[Крафт]: Ассемблер: нормисная пыль + вайб.", "&o«Скрипт оптимизирует производственный цикл.»"]
+		dependencies: ["887EC074FA395C07"]
+		tasks: [
+		{
+			id: "733AAF08442EF451"
+			item: "skufaddon:myposhko_script"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "AB76063D3F65B6BD"
+			type: "xp"
+			xp: 100
+		}
+		]
+	},
+	{
+		id: "6879F9BC196E4CFB"
+		title: "3.7 · Правильная Вещь (MV Capstone)"
+		subtitle: "Капстоун MV-эры"
+		icon: "skufaddon:pravilnaya_vesh"
+		x: 0.0d
+		y: 9.0d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Создать Правильную Вещь.", "&7[Крафт]: Ассемблер: gem + плиты + вайб + dodik_2.", "&o«Символ эталона MV. Открывает путь в HV!»"]
+		dependencies: ["511AB278B933C188" "83457DB057BC89BF"]
+		tasks: [
+		{
+			id: "3B11C92B24F3D4A7"
+			item: "skufaddon:pravilnaya_vesh"
+			type: "item"
+		}
+		]
+		rewards: [
+		{
+			id: "A2A927A98207005F"
+			type: "xp"
+			xp: 200
 		}
 		]
 	}

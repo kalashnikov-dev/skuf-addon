@@ -2,59 +2,72 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "uv"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:casing_proval_concrete"
-	id: "5000000000000009"
+	id: "E4DA654C7EC432FB"
 	images: [ ]
 	order_index: 8
 	title: "9 · Обращение Энтропии (UV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "85A49D6D15028CDC"
+			linked_quest: "170EA64FF478B040"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A00000000000002F"
-		title: "Провальный Бетон"
+		id: "D82F7D2A860C101F"
+		title: "9.1 · Провальный Бетон"
+		subtitle: "Вход в UV эру"
 		icon: "skufaddon:casing_proval_concrete"
 		x: 0.0d
-		y: 15.0d
-		shape: "circle"
-		description: ["&7Миксер: 4x челябинский сланец + honest_steel + бетон → &fcasing_proval_concrete&7.", "«Суровый уральский бетон для 15x15x15 построек.»"]
-		dependencies: ["A00000000000002E"]
+		y: 0.0d
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Замешать Провальный Бетон.", "&7[Крафт]: Миксер: челябинский сланец + сталь + бетон.", "&o«Сверхпрочный блочный каркас для мегафабрик.»"]
+		dependencies: ["170EA64FF478B040"]
 		tasks: [
 		{
-			id: "7000000000000030"
+			id: "F99D41EEC3330729"
 			item: "skufaddon:casing_proval_concrete"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000031"
+			id: "4CF00313D0DE9A0A"
 			type: "xp"
-			xp: 2500
+			xp: 1000
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000030"
-		title: "Каркас Финальной Фабрики (UV Capstone)"
-		icon: "skufaddon:pravilnaya_vesh"
+		id: "714F9BF067AAC3B9"
+		title: "9.2 · Каркас Финальной Фабрики (UV Capstone)"
+		subtitle: "Капстоун UV-эры"
+		icon: "skufaddon:casing_proval_concrete"
 		x: 0.0d
-		y: 16.5d
-		shape: "circle"
-		description: ["&7Фабрика 15x15x15: обращение энтропии и превращение нормис-пыли в правильную материю.", "«Капстоун UV-эры.»"]
-		dependencies: ["A00000000000002F"]
+		y: 4.5d
+		shape: "hexagon"
+		size: 1.8d
+		description: ["&b[Цель]: Построить Каркас Фабрики 15x15x15.", "&7[Крафт]: Провальный бетон + правильная вещь.", "&o«Капстоун UV. Остов величайшего завода!»"]
+		dependencies: ["D82F7D2A860C101F"]
 		tasks: [
 		{
-			id: "7000000000000031"
-			item: "skufaddon:pravilnaya_vesh"
+			id: "DF2A4C43D6B2F3A8"
+			item: "skufaddon:casing_proval_concrete"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000032"
+			id: "EAE795A6E7CA445B"
 			type: "xp"
-			xp: 3000
+			xp: 1500
 		}
 		]
 	}

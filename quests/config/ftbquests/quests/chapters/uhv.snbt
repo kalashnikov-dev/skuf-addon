@@ -2,57 +2,70 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "uhv"
-	group: ""
+	group: "739A474C8C2B30A0"
 	icon: "skufaddon:normis_singularity"
-	id: "500000000000000A"
+	id: "2FABAD7B6B63D349"
 	images: [ ]
 	order_index: 9
 	title: "10 · Деревенский Покой (UHV)"
-	quest_links: [ ]
+	quest_links: [
+		{
+			id: "03173908ABB01BE3"
+			linked_quest: "714F9BF067AAC3B9"
+			shape: "hexagon"
+			size: 1.5d
+			x: 0.0d
+			y: -2.5d
+		}
+	]
 	quests: [
 	{
-		id: "A000000000000031"
-		title: "Врата Деревенского Покоя"
+		id: "A3B5E5CEF852C29C"
+		title: "10.1 · Врата Деревенского Покоя"
+		subtitle: "Вход в финал UHV"
 		icon: "skufaddon:arturian_mainframe"
 		x: 0.0d
-		y: 18.0d
-		shape: "circle"
-		description: ["&7«Ты построил завод, который мог всё. Теперь докажи, что можешь его выключить.»", "Требует стабильной Сауны, чистый Провал и 0% тильта."]
-		dependencies: ["A000000000000030"]
+		y: 0.0d
+		shape: "hexagon"
+		size: 2.0d
+		description: ["&b[Цель]: Открыть Врата Деревенского Покоя.", "&7[Крафт]: Главный Фрейм Артура + Ядро Порядка.", "&o«Портал в мирную жизнь без багов и тильта.»"]
+		dependencies: ["714F9BF067AAC3B9"]
 		tasks: [
 		{
-			id: "7000000000000032"
+			id: "6CA43B882DE77FCD"
 			item: "skufaddon:arturian_mainframe"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000033"
+			id: "CAD3FDDEEC2B9643"
 			type: "xp"
-			xp: 4000
+			xp: 2000
 		}
 		]
-	}
+	},
 	{
-		id: "A000000000000032"
-		title: "Деревенский Покой (Финал)"
+		id: "F4C8F1FCABE9A189"
+		title: "10.2 · Деревенский Покой (ФИНАЛ)"
+		subtitle: "Финишный капстоун ArthurTech"
 		icon: "skufaddon:normis_singularity"
 		x: 0.0d
-		y: 19.5d
-		shape: "circle"
-		description: ["&7GregTech довёл тебя до предела. ArthurTech разрешает уйти.", "«Завод остановлен. Добро пожаловать домой.»"]
-		dependencies: ["A000000000000031"]
+		y: 5.0d
+		shape: "hexagon"
+		size: 2.5d
+		description: ["&b[Цель]: Достичь Деревенского Покоя.", "&7[Крафт]: Врата Покоя ➔ Сингулярность Нормиса.", "&o«Победа! Вы полностью прошли ArthurTech: Правильные Вещи!»"]
+		dependencies: ["A3B5E5CEF852C29C"]
 		tasks: [
 		{
-			id: "7000000000000033"
+			id: "E76BD6F4E3845D52"
 			item: "skufaddon:normis_singularity"
 			type: "item"
 		}
 		]
 		rewards: [
 		{
-			id: "2000000000000034"
+			id: "C691C799EEE7D81F"
 			type: "xp"
 			xp: 5000
 		}
