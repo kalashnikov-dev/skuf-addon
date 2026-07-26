@@ -12,6 +12,7 @@ import com.gregtechceu.gtceu.api.transfer.fluid.FluidHandlerList;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.utils.GTTransferUtils;
 
+import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
@@ -49,6 +50,7 @@ public class SaunaEgoraLogic extends RecipeLogic implements IWorkable {
     private FluidHandlerList outputFluidHandler;
 
     @Persisted
+    @DescSynced
     private int heatAmount;
 
     public SaunaEgoraLogic(SaunaEgoraMachine machine) {
