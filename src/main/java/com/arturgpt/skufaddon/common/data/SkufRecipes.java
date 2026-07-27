@@ -96,7 +96,89 @@ public class SkufRecipes {
     }
 
     private static void machineCrafting(Consumer<FinishedRecipe> provider) {
-        // ── LV: dodik_circuit_basic + honestSteel cable ─────────────────────────
+        // ── Hulls: SMOLDERING_PUKAN in Assembler (LV -> UHV) ───────────────────
+        // LV Smoldering Pukan (Assembler bonus: yields 2x compared to 1x on workbench)
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_lv")
+                .inputItems(plate, SkufMaterials.honestSteel, 8)
+                .inputItems(cableGtSingle, SkufMaterials.honestSteel, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(2))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.LV])
+                .save(provider);
+
+        // MV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_mv")
+                .inputItems(plate, SkufMaterials.pokhuit, 8)
+                .inputItems(cableGtSingle, SkufMaterials.pokhuit, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.MV])
+                .save(provider);
+
+        // HV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_hv")
+                .inputItems(plate, SkufMaterials.crystallizedDodikSweat, 8)
+                .inputItems(cableGtSingle, SkufMaterials.crystallizedDodikSweat, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.HV])
+                .save(provider);
+
+        // EV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_ev")
+                .inputItems(plate, GTMaterials.Titanium, 8)
+                .inputItems(cableGtSingle, GTMaterials.Aluminium, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.EV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.EV])
+                .save(provider);
+
+        // IV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_iv")
+                .inputItems(plate, GTMaterials.TungstenSteel, 8)
+                .inputItems(cableGtSingle, GTMaterials.Tungsten, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.IV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.IV])
+                .save(provider);
+
+        // LuV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_luv")
+                .inputItems(plate, GTMaterials.RhodiumPlatedPalladium, 8)
+                .inputItems(cableGtSingle, GTMaterials.NiobiumTitanium, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LuV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.LuV])
+                .save(provider);
+
+        // ZPM Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_zpm")
+                .inputItems(plate, GTMaterials.Naquadah, 8)
+                .inputItems(cableGtSingle, GTMaterials.VanadiumGallium, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.ZPM].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.ZPM])
+                .save(provider);
+
+        // UV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_uv")
+                .inputItems(plate, GTMaterials.NaquadahAlloy, 8)
+                .inputItems(cableGtSingle, GTMaterials.YttriumBariumCuprate, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.UV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.UV])
+                .save(provider);
+
+        // UHV Smoldering Pukan
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_smoldering_pukan_hull_uhv")
+                .inputItems(plate, GTMaterials.Neutronium, 8)
+                .inputItems(cableGtSingle, GTMaterials.Europium, 1)
+                .outputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.UHV].asStack(1))
+                .duration(100)
+                .EUt(GTValues.VA[GTValues.UHV])
+                .save(provider);
+
+        // ── LV Machines: dodik_circuit_basic + honestSteel cable ──────────────
         GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_normis_filtration_machine")
                 .inputItems(SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack())
                 .inputItems(dust, SkufMaterials.normieDust, 2)
@@ -685,29 +767,14 @@ public class SkufRecipes {
     }
 
     private static void vanillaCrafting(Consumer<FinishedRecipe> provider) {
-        // ── Hulls: smoldering_pukan ───────────────────────────────────────────
-        // LV Smoldering Pukan
+        // ── Hulls: smoldering_pukan (LV bootstrap only) ──────────────────────
         VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_lv",
                 SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
                 "PPP", "PCP", "PPP",
                 'P', ChemicalHelper.get(plate, SkufMaterials.honestSteel),
                 'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel));
 
-        // MV Smoldering Pukan
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_mv",
-                SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
-                "PPP", "PCP", "PPP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.pokhuit),
-                'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit));
-
-        // HV Smoldering Pukan
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "hull_smoldering_pukan_hv",
-                SkufComponentMachines.SMOLDERING_PUKAN[GTValues.HV].asStack(),
-                "PPP", "PCP", "PPP",
-                'P', ChemicalHelper.get(plate, SkufMaterials.crystallizedDodikSweat),
-                'C', ChemicalHelper.get(cableGtSingle, SkufMaterials.crystallizedDodikSweat));
-
-        // ── LV Machines ───────────────────────────────────────────────────────
+        // ── LV Machines (Bootstrap only) ──────────────────────────────────────
         // LV CNC Machine
         VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_lv",
                 SkufSingleblockMachines.CNC_MACHINE[GTValues.LV].asStack(),
@@ -742,43 +809,6 @@ public class SkufRecipes {
                 'C', SkufItems.DODIK_CIRCUIT_BASIC.asStack(),
                 'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.honestSteel),
                 'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.LV].asStack(),
-                'S', ChemicalHelper.get(frameGt, SkufMaterials.pokhuit));
-
-        // ── MV Machines ───────────────────────────────────────────────────────
-        // MV CNC Machine
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_cnc_mv",
-                SkufSingleblockMachines.CNC_MACHINE[GTValues.MV].asStack(),
-                " C ", "BHB", " S ",
-                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
-                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
-                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
-                'S', SkufItems.CNC_BIT.asStack());
-
-        // MV Normis Filtration
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_normis_filtration_mv",
-                SkufSingleblockMachines.NORMIS_FILTRATION_MACHINE[GTValues.MV].asStack(),
-                " C ", "BHB", " S ",
-                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
-                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
-                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
-                'S', ChemicalHelper.get(dust, SkufMaterials.normieDust));
-
-        // MV Pot Distillery
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_pot_distillery_mv",
-                SkufSingleblockMachines.POT_DISTILLERY[GTValues.MV].asStack(),
-                " C ", "BHB", " S ",
-                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
-                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
-                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
-                'S', ChemicalHelper.get(frameGt, SkufMaterials.skufit));
-
-        // MV Vibe Stabilizer
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "machine_vibe_stabilizer_mv",
-                SkufSingleblockMachines.VIBE_STABILIZER[GTValues.MV].asStack(),
-                " C ", "BHB", " S ",
-                'C', SkufItems.DODIK_CIRCUIT_ADVANCED.asStack(),
-                'B', ChemicalHelper.get(cableGtSingle, SkufMaterials.pokhuit),
-                'H', SkufComponentMachines.SMOLDERING_PUKAN[GTValues.MV].asStack(),
                 'S', ChemicalHelper.get(frameGt, SkufMaterials.pokhuit));
     }
 
