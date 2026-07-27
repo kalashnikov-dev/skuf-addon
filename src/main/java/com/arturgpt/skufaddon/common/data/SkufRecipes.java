@@ -764,6 +764,33 @@ public class SkufRecipes {
                 .duration(240)
                 .EUt(GTValues.V[GTValues.HV])
                 .save(provider);
+
+        // SKU-18: hidden_sweat consumer -> purified into stabilized_vibe + slag_ignore
+        SkufRecipeTypes.VIBE_STABILIZER_RECIPES.recipeBuilder("process_hidden_sweat")
+                .inputFluids(SkufMaterials.hiddenSweat.getFluid(1000))
+                .inputItems(dust, SkufMaterials.normieDust, 2)
+                .outputFluids(SkufMaterials.stabilizedVibe.getFluid(500))
+                .outputItems(dust, SkufMaterials.slagIgnore, 1)
+                .duration(200)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
+
+        // SKU-18: ugar_gas source from macerating burnt cable debris
+        GTRecipeTypes.MACERATOR_RECIPES.recipeBuilder("macerate_burnt_cable_debris")
+                .inputItems(SkufItems.BURNT_CABLE_DEBRIS, 3)
+                .outputItems(dust, SkufMaterials.normieDust, 2)
+                .outputFluids(SkufMaterials.ugarGas.getFluid(250))
+                .duration(120)
+                .EUt(GTValues.V[GTValues.LV])
+                .save(provider);
+
+        // SKU-18: ugar_gas source from distilling puff_smoke in Pot Distillery
+        SkufRecipeTypes.POT_DISTILLERY_RECIPES.recipeBuilder("distill_puff_smoke_to_ugar_gas")
+                .inputFluids(SkufMaterials.puffSmoke.getFluid(1000))
+                .outputFluids(SkufMaterials.ugarGas.getFluid(500))
+                .duration(160)
+                .EUt(GTValues.V[GTValues.LV])
+                .save(provider);
     }
 
     private static void vanillaCrafting(Consumer<FinishedRecipe> provider) {
