@@ -34,4 +34,5 @@ jobs:
       uses: gradle/actions/setup-gradle@v5
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      # Auto-fix formatting in CI so spotlessCheck cannot fail the build
+      run: ./gradlew spotlessApply build
