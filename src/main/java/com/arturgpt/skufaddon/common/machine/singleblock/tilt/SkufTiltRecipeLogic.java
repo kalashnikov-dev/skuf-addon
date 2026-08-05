@@ -4,7 +4,6 @@ import com.arturgpt.skufaddon.api.machine.ISaunaProvider;
 import com.arturgpt.skufaddon.api.machine.ISaunaReceiver;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.WorkableTieredMachine;
@@ -14,9 +13,7 @@ import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
-import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
 
-import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.syncdata.ISubscription;
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
@@ -29,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class SkufTiltRecipeLogic extends RecipeLogic {
 
@@ -233,44 +229,13 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         return super.handleTickRecipe(scaled != null ? scaled : recipe);
     }
 
-    @Override
-    public IGuiTexture getFancyTooltipIcon() {
-        return GuiTextures.INFO_ICON;
-    }
-
-    @Override
-    public boolean showFancyTooltip() {
-        return true;
-    }
-
-    @Override
-    public List<Component> getFancyTooltip() {
+    /**
+     * Status lines for machine GUI / Jade. Do not put these through
+     * {@link #getFancyTooltip()} — GTCEu Jade treats a non-empty RecipeLogic fancy
+     * tooltip on an idle machine as {@code gtceu.recipe_logic.setup_fail}.
+     */
+    public List<Component> getTiltStatusTooltip() {
         List<Component> tooltip = new ArrayList<>();
-        List<Component> original = super.getFancyTooltip();
-        if (original != null) {
-            tooltip.addAll(original);
-        }
-
-        GTRecipe displayRecipe = getLastRecipe();
-        if (displayRecipe != null) {
-            EnergyStack energy = RecipeHelper.getRealEUt(displayRecipe);
-            long effectiveEUt = energy.getTotalEU();
-            String amperage = formatAmperage(energy.amperage());
-            if (tiltLevel > 0) {
-                tooltip.add(Component.translatable(
-                        "skufaddon.tooltip.eut_with_tilt",
-                        amperage,
-                        effectiveEUt,
-                        String.format(Locale.ROOT, "%.2f", getTiltMultiplier()))
-                        .withStyle(ChatFormatting.AQUA));
-            } else {
-                tooltip.add(Component.translatable(
-                        "skufaddon.tooltip.eut",
-                        amperage,
-                        effectiveEUt)
-                        .withStyle(ChatFormatting.GRAY));
-            }
-        }
 
         MetaMachine meta = getMachine();
         if (meta instanceof ITieredMachine tiered) {
@@ -284,9 +249,5 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
 
         tooltip.add(SkufTiltUtils.getModeComponent(tiltLevel, ticksAtMaxTilt));
         return tooltip;
-    }
-
-    private static String formatAmperage(long amperage) {
-        return String.format(Locale.ROOT, "%.2f", (double) amperage);
     }
 }

@@ -4,20 +4,26 @@ import com.arturgpt.skufaddon.api.machine.ISaunaProvider;
 import com.arturgpt.skufaddon.api.machine.ISaunaReceiver;
 import com.arturgpt.skufaddon.client.render.SkufOverheatRenderer;
 
+import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 
 import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class SkufTiltMachine extends SimpleTieredMachine implements ISaunaReceiver {
 
@@ -52,6 +58,24 @@ public class SkufTiltMachine extends SimpleTieredMachine implements ISaunaReceiv
     @Override
     protected RecipeLogic createRecipeLogic(Object... args) {
         return new SkufTiltRecipeLogic(this);
+    }
+
+    @Override
+    public IGuiTexture getFancyTooltipIcon() {
+        return GuiTextures.INFO_ICON;
+    }
+
+    @Override
+    public boolean showFancyTooltip() {
+        return true;
+    }
+
+    @Override
+    public void onAddFancyInformationTooltip(List<Component> tooltips) {
+        super.onAddFancyInformationTooltip(tooltips);
+        if (getRecipeLogic() instanceof SkufTiltRecipeLogic tiltLogic) {
+            tooltips.addAll(tiltLogic.getTiltStatusTooltip());
+        }
     }
 
     @Override
