@@ -117,9 +117,7 @@ public class SkufMultiblockMachines {
                 .workableCasingModel(
                         CHELYABINSK_PROVAL_CASING,
                         SkufAddon.id("block/multiblock/chelyabinsk_proval"))
-                .tooltips(
-                        Component.translatable("skufaddon.multiblock.chelyabinsk_proval.tooltip.0"),
-                        Component.translatable("skufaddon.multiblock.chelyabinsk_proval.tooltip.1"))
+                .tooltips(Component.translatable("skufaddon.multiblock.chelyabinsk_proval.tooltip.0"))
                 .register();
     }
 

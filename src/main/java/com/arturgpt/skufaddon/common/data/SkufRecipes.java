@@ -633,7 +633,7 @@ public class SkufRecipes {
                 .inputItems(dust, SkufMaterials.normieDust)
                 .inputFluids(SkufMaterials.denseJizhnyak.getFluid(1000))
                 .outputItems(dust, SkufMaterials.uralIsotope, 2)
-                .outputItems(dust, SkufMaterials.slagIgnore)
+                .chancedOutput(dust, SkufMaterials.slagIgnore, 7000, 0)
                 .duration(400)
                 .EUt(480)
                 .save(provider);

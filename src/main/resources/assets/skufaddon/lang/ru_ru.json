@@ -143,7 +143,6 @@
   "block.skufaddon.chelyabinsk_proval": "Челябинский Провал",
   "item.skufaddon.chelyabinsk_proval": "Челябинский Провал",
   "skufaddon.multiblock.chelyabinsk_proval.tooltip.0": "Счётчик трещит — работаем. Региональная мутантность в удобной воронке.",
-  "skufaddon.multiblock.chelyabinsk_proval.tooltip.1": "Пока работает — копится заряд; в простое остывает с той же скоростью. Зона: +7 блоков от краёв мультиблока (включая вверх/вниз).",
   "skufaddon.multiblock.chelyabinsk_proval.hazard_level": "§2Заряд радиации: %s",
   "skufaddon.multiblock.chelyabinsk_proval.hazard_radius": "§2Радиус зоны: +%s от краёв",
 

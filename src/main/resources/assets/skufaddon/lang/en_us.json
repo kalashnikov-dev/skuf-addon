@@ -143,7 +143,6 @@
   "block.skufaddon.chelyabinsk_proval": "Chelyabinsk Proval",
   "item.skufaddon.chelyabinsk_proval": "Chelyabinsk Proval",
   "skufaddon.multiblock.chelyabinsk_proval.tooltip.0": "Geiger ticks — keep working. Regional mutancy in a convenient crater.",
-  "skufaddon.multiblock.chelyabinsk_proval.tooltip.1": "Charges while crafting; cools at the same rate when idle. Zone: +7 blocks from every extreme face (incl. up/down).",
   "skufaddon.multiblock.chelyabinsk_proval.hazard_level": "§2Radiation charge: %s",
   "skufaddon.multiblock.chelyabinsk_proval.hazard_radius": "§2Zone padding: +%s from edges",
 
