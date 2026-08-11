@@ -140,10 +140,18 @@
   "item.skufaddon.razbor_geympleya": "Разбор Геймплея",
   "skufaddon.multiblock.razbor_geympleya.tooltip.0": "Для просмотра демок и телок на твиче. Мониторы уже разбиты заранее — экономия времени.",
 
+  "block.skufaddon.chelyabinsk_proval": "Челябинский Провал",
+  "item.skufaddon.chelyabinsk_proval": "Челябинский Провал",
+  "skufaddon.multiblock.chelyabinsk_proval.tooltip.0": "Счётчик трещит — работаем. Региональная мутантность в удобной воронке.",
+  "skufaddon.multiblock.chelyabinsk_proval.tooltip.1": "Пока работает — копится заряд; в простое остывает с той же скоростью. Зона: +7 блоков от краёв мультиблока (включая вверх/вниз).",
+  "skufaddon.multiblock.chelyabinsk_proval.hazard_level": "§2Заряд радиации: %s",
+  "skufaddon.multiblock.chelyabinsk_proval.hazard_radius": "§2Радиус зоны: +%s от краёв",
+
   "gtceu.normis_filtration": "Нормис-фильтрация",
   "gtceu.skufization": "Скуфизация",
   "gtceu.sauna_egora": "Сауна Егора",
   "gtceu.razbor_geympleya": "Разбор Геймплея",
+  "gtceu.chelyabinsk_proval": "Челябинский Провал",
   "gtceu.cnc_machine": "ЧПУ-обработка",
   "gtceu.pot_distillery": "Пот-перегонка",
   "gtceu.vibe_stabilizer": "Стабилизация Вайба",
@@ -232,6 +240,7 @@
   "gtceu.skufization.description": "Превращает почти-нормисные материалы в настоящий скуф.",
   "gtceu.sauna_egora.description": "Потребляет Воду при работе. Вырабатывает Тёплый Вайбовый Пар при нагреве (жар ≥ 95%). База на EV: 80 mB/с воды, 80 mB/с пара. +40 mB/с за каждый тир энергии выше EV. +60 mB/с за каждую Tilt-машину внутри полости.",
   "gtceu.razbor_geympleya.description": "экран для просмотра тянок на твиче",
+  "gtceu.chelyabinsk_proval.description": "Перерабатывает челябинский сланец и плотный жижняк в уральский изотоп. Счётчик трещит — это нормально.",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Уровень УТ",
 

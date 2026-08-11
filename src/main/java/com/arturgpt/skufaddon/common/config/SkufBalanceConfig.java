@@ -36,6 +36,11 @@ public final class SkufBalanceConfig {
     public static final ForgeConfigSpec.IntValue FACTORY_ORDER_CORE_EUT;
     public static final ForgeConfigSpec.IntValue PROVAL_CONCRETE_MIXER_EUT;
 
+    // --- CHELYABINSK PROVAL ---
+    public static final ForgeConfigSpec.DoubleValue PROVAL_HAZARD_STRENGTH_PER_PULSE;
+    public static final ForgeConfigSpec.IntValue PROVAL_HAZARD_PULSE_INTERVAL_TICKS;
+    public static final ForgeConfigSpec.IntValue PROVAL_HAZARD_LOCAL_RADIUS;
+
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
 
@@ -121,6 +126,21 @@ public final class SkufBalanceConfig {
         PROVAL_CONCRETE_MIXER_EUT = builder
                 .comment("EU/t for Proval Concrete recipe in Mixer (UV). Default: 524288")
                 .defineInRange("provalConcreteMixerEUt", 524288, 1, 33554432);
+        builder.pop();
+
+        // ---------------- CHELYABINSK PROVAL ----------------
+        builder.push("chelyabinsk_proval");
+        PROVAL_HAZARD_STRENGTH_PER_PULSE = builder
+                .comment("Radiation charge gained each pulse while Proval crafts; same amount lost each pulse while idle (cool-down). Default: 100 (2× former rate)")
+                .defineInRange("hazardStrengthPerPulse", 100.0, 0.0, 1000.0);
+
+        PROVAL_HAZARD_PULSE_INTERVAL_TICKS = builder
+                .comment("Ticks between heat/cool pulses. Default: 20 (1 sec)")
+                .defineInRange("hazardPulseIntervalTicks", 20, 1, 1200);
+
+        PROVAL_HAZARD_LOCAL_RADIUS = builder
+                .comment("Blocks of radiation beyond each extreme face of the formed multiblock (N/S/E/W/up/down). Default: 7")
+                .defineInRange("hazardLocalRadius", 7, 0, 64);
         builder.pop();
 
         SPEC = builder.build();

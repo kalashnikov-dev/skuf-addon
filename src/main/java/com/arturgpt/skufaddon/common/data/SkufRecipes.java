@@ -29,6 +29,7 @@ public class SkufRecipes {
         myposhkoChain(provider);
         saunaChain(provider);
         gameplayBreakdownChain(provider);
+        chelyabinskProvalChain(provider);
         endgameChain(provider);
         mvpOrphanFixes(provider);
         exampleRecipes(provider);
@@ -366,13 +367,14 @@ public class SkufRecipes {
                 .EUt(60)
                 .save(provider);
 
+        // Cheap MV teaser kept tiny — canonical ural_isotope is Chelyabinsk Proval (HV).
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("ural_isotope_extraction")
-                .inputFluids(SkufMaterials.jizhnyak.getFluid(1000))
+                .inputFluids(SkufMaterials.jizhnyak.getFluid(4000))
                 .circuitMeta(2)
                 .outputItems(dust, SkufMaterials.uralIsotope)
                 .outputFluids(SkufMaterials.sweat.getFluid(500))
-                .duration(500)
-                .EUt(60)
+                .duration(1200)
+                .EUt(120)
                 .save(provider);
 
         SkufRecipeTypes.CNC_RECIPES.recipeBuilder("cnc_bit_from_rod")
@@ -619,6 +621,31 @@ public class SkufRecipes {
                 .inputFluids(SkufMaterials.puffSmoke.getFluid(2000))
                 .circuitMeta(12)
                 .outputItems(SkufMultiblockMachines.RAZBOR_GEYMPLAYA.asStack())
+                .duration(600)
+                .EUt(GTValues.V[GTValues.HV])
+                .save(provider);
+    }
+
+    /** SKU-30: Chelyabinsk Proval — HV sinkhole: shale + dense jizhnyak → ural isotope. */
+    private static void chelyabinskProvalChain(Consumer<FinishedRecipe> provider) {
+        SkufRecipeTypes.CHELYABINSK_PROVAL_RECIPES.recipeBuilder("ural_isotope_from_proval")
+                .inputItems(dust, SkufMaterials.chelyabinskShale, 4)
+                .inputItems(dust, SkufMaterials.normieDust)
+                .inputFluids(SkufMaterials.denseJizhnyak.getFluid(1000))
+                .outputItems(dust, SkufMaterials.uralIsotope, 2)
+                .outputItems(dust, SkufMaterials.slagIgnore)
+                .duration(400)
+                .EUt(480)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLER_RECIPES.recipeBuilder("craft_chelyabinsk_proval")
+                .inputItems(SkufBlocks.CASING_PROVAL_CONCRETE, 8)
+                .inputItems(frameGt, SkufMaterials.pokhuit, 4)
+                .inputItems(SkufItems.DODIK_CIRCUIT_ADVANCED, 2)
+                .inputItems(dust, SkufMaterials.chelyabinskShale, 16)
+                .inputFluids(SkufMaterials.denseJizhnyak.getFluid(2000))
+                .circuitMeta(8)
+                .outputItems(SkufMultiblockMachines.CHELYABINSK_PROVAL.asStack())
                 .duration(600)
                 .EUt(GTValues.V[GTValues.HV])
                 .save(provider);

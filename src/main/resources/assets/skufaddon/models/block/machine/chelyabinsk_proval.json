@@ -2,25 +2,48 @@
   "parent": "minecraft:block/block",
   "loader": "gtceu:machine",
   "machine": "skufaddon:chelyabinsk_proval",
+  "texture_overrides": {
+    "all": "skufaddon:block/casing_proval_concrete"
+  },
   "variants": {
     "recipe_logic_status=idle": {
       "model": {
-        "parent": "skufaddon:block/casing_pohuit_reinforced"
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "skufaddon:block/casing_proval_concrete",
+          "overlay_front": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front",
+          "overlay_front_emissive": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_emissive"
+        }
       }
     },
     "recipe_logic_status=suspend": {
       "model": {
-        "parent": "skufaddon:block/casing_pohuit_reinforced"
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "skufaddon:block/casing_proval_concrete",
+          "overlay_front": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_paused",
+          "overlay_front_emissive": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_paused_emissive"
+        }
       }
     },
     "recipe_logic_status=waiting": {
       "model": {
-        "parent": "skufaddon:block/casing_pohuit_reinforced"
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "skufaddon:block/casing_proval_concrete",
+          "overlay_front": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_active",
+          "overlay_front_emissive": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_active_emissive"
+        }
       }
     },
     "recipe_logic_status=working": {
       "model": {
-        "parent": "skufaddon:block/casing_pohuit_reinforced"
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "skufaddon:block/casing_proval_concrete",
+          "overlay_front": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_active",
+          "overlay_front_emissive": "skufaddon:block/multiblock/chelyabinsk_proval/overlay_front_active_emissive"
+        }
       }
     }
   }

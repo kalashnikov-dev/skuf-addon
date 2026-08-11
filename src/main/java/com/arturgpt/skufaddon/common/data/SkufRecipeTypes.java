@@ -44,6 +44,15 @@ public class SkufRecipeTypes {
             .setEUIO(IO.IN)
             .setMaxTooltips(4);
 
+    /** HV sinkhole processor: Chelyabinsk shale + dense jizhnyak → ural isotope. */
+    public static final GTRecipeType CHELYABINSK_PROVAL_RECIPES = register("chelyabinsk_proval", MULTIBLOCK)
+            .setMaxIOSize(2, 2, 1, 0)
+            .setSlotOverlay(false, true, GuiTextures.FLUID_SLOT)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CHEMICAL)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(4);
+
     public static final GTRecipeType CNC_RECIPES = register("cnc_machine", ELECTRIC)
             .setMaxIOSize(3, 1, 1, 0)
             .setEUIO(IO.IN)
@@ -70,5 +79,6 @@ public class SkufRecipeTypes {
         var unusedMultiblock = SKUFIZATION_RECIPES;
         var unusedSauna = SAUNA_EGORA_RECIPES;
         var unusedRazbor = RAZBOR_GEYMPLAYA_RECIPES;
+        var unusedProval = CHELYABINSK_PROVAL_RECIPES;
     }
 }

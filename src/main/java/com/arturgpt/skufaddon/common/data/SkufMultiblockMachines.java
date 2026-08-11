@@ -2,6 +2,8 @@ package com.arturgpt.skufaddon.common.data;
 
 import com.arturgpt.skufaddon.SkufAddon;
 import com.arturgpt.skufaddon.common.machine.multiblock.gameplay.RazborGeympleyaPatterns;
+import com.arturgpt.skufaddon.common.machine.multiblock.proval.ChelyabinskProvalMachine;
+import com.arturgpt.skufaddon.common.machine.multiblock.proval.ChelyabinskProvalPatterns;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraMachine;
 import com.arturgpt.skufaddon.common.machine.multiblock.sauna.SaunaEgoraPatterns;
 import com.arturgpt.skufaddon.common.machine.multiblock.skufizator.SkufizatorPatterns;
@@ -37,14 +39,19 @@ public class SkufMultiblockMachines {
     private static final net.minecraft.resources.ResourceLocation RAZBOR_GEYMPLAYA_CASING = GTCEu
             .id("block/casings/solid/machine_casing_inert_ptfe");
 
+    private static final net.minecraft.resources.ResourceLocation CHELYABINSK_PROVAL_CASING = SkufAddon
+            .id("block/casing_proval_concrete");
+
     public static MultiblockMachineDefinition SKUFIZATOR;
     public static MultiblockMachineDefinition SAUNA_EGORA;
     public static MultiblockMachineDefinition RAZBOR_GEYMPLAYA;
+    public static MultiblockMachineDefinition CHELYABINSK_PROVAL;
 
     public static void init() {
         initSkufizator();
         initSaunaEgora();
         initRazborGeympleya();
+        initChelyabinskProval();
     }
 
     private static void initSkufizator() {
@@ -94,6 +101,25 @@ public class SkufMultiblockMachines {
                         RAZBOR_GEYMPLAYA_CASING,
                         SkufAddon.id("block/multiblock/razbor_geympleya"))
                 .tooltips(Component.translatable("skufaddon.multiblock.razbor_geympleya.tooltip.0"))
+                .register();
+    }
+
+    private static void initChelyabinskProval() {
+        CHELYABINSK_PROVAL = SkufAddon.REGISTRATE
+                .multiblock("chelyabinsk_proval", ChelyabinskProvalMachine::new)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .allowExtendedFacing(false)
+                .recipeType(SkufRecipeTypes.CHELYABINSK_PROVAL_RECIPES)
+                .recipeModifiers(OC_NON_PERFECT_SUBTICK, BATCH_MODE)
+                .appearanceBlock(SkufBlocks.CASING_PROVAL_CONCRETE)
+                .pattern(ChelyabinskProvalPatterns::create)
+                .shapeInfos(SkufMultiblockMachines::chelyabinskProvalShapeInfos)
+                .workableCasingModel(
+                        CHELYABINSK_PROVAL_CASING,
+                        SkufAddon.id("block/multiblock/chelyabinsk_proval"))
+                .tooltips(
+                        Component.translatable("skufaddon.multiblock.chelyabinsk_proval.tooltip.0"),
+                        Component.translatable("skufaddon.multiblock.chelyabinsk_proval.tooltip.1"))
                 .register();
     }
 
@@ -230,6 +256,50 @@ public class SkufMultiblockMachines {
                     chimney[i],
                     chimney[i],
                     chimney[i]);
+        }
+        return builder.build();
+    }
+
+    private static List<MultiblockShapeInfo> chelyabinskProvalShapeInfos(MultiblockMachineDefinition definition) {
+        return List.of(
+                chelyabinskProvalShapeInfo(definition, Direction.EAST),
+                chelyabinskProvalShapeInfo(definition, Direction.WEST, true),
+                chelyabinskProvalShapeInfo(definition, Direction.SOUTH),
+                chelyabinskProvalShapeInfo(definition, Direction.NORTH));
+    }
+
+    private static MultiblockShapeInfo chelyabinskProvalShapeInfo(MultiblockMachineDefinition definition,
+                                                                  Direction outwardFacing) {
+        return chelyabinskProvalShapeInfo(definition, outwardFacing, false);
+    }
+
+    private static MultiblockShapeInfo chelyabinskProvalShapeInfo(MultiblockMachineDefinition definition,
+                                                                  Direction outwardFacing,
+                                                                  boolean mirrorWidth) {
+        int tier = ChelyabinskProvalPatterns.HATCH_TIER;
+        var base = MultiblockShapeInfo.builder()
+                .where('S', definition, outwardFacing)
+                .where('C', SkufBlocks.CASING_PROVAL_CONCRETE.getDefaultState())
+                .where('G', GTBlocks.CASING_TEMPERED_GLASS.getDefaultState())
+                .where('#', Blocks.AIR.defaultBlockState())
+                .where('E', ENERGY_INPUT_HATCH[tier], outwardFacing)
+                .where('I', ITEM_IMPORT_BUS[tier], outwardFacing)
+                .where('F', FLUID_IMPORT_HATCH[tier], outwardFacing)
+                .where('O', ITEM_EXPORT_BUS[tier], outwardFacing)
+                .where('M', MAINTENANCE_HATCH, outwardFacing);
+
+        String[] floor = mirrorWidth ? mirrorRows(ChelyabinskProvalPatterns.floorLayer()) :
+                ChelyabinskProvalPatterns.floorLayer();
+        String[] lower = mirrorWidth ? mirrorRows(ChelyabinskProvalPatterns.lowerRingLayer()) :
+                ChelyabinskProvalPatterns.lowerRingLayer();
+        String[] mid = mirrorWidth ? mirrorRows(ChelyabinskProvalPatterns.midRingLayer()) :
+                ChelyabinskProvalPatterns.midRingLayer();
+        String[] rim = mirrorWidth ? mirrorRows(ChelyabinskProvalPatterns.rimShapeLayer()) :
+                ChelyabinskProvalPatterns.rimShapeLayer();
+
+        var builder = base;
+        for (int i = 0; i < ChelyabinskProvalPatterns.WIDTH; i++) {
+            builder = builder.aisle(floor[i], lower[i], mid[i], rim[i]);
         }
         return builder.build();
     }

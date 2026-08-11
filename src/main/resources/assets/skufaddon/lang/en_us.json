@@ -140,10 +140,18 @@
   "item.skufaddon.razbor_geympleya": "Gameplay Breakdown",
   "skufaddon.multiblock.razbor_geympleya.tooltip.0": "For watching demos and girls on Twitch. Monitors already broken in advance — saves time.",
 
+  "block.skufaddon.chelyabinsk_proval": "Chelyabinsk Proval",
+  "item.skufaddon.chelyabinsk_proval": "Chelyabinsk Proval",
+  "skufaddon.multiblock.chelyabinsk_proval.tooltip.0": "Geiger ticks — keep working. Regional mutancy in a convenient crater.",
+  "skufaddon.multiblock.chelyabinsk_proval.tooltip.1": "Charges while crafting; cools at the same rate when idle. Zone: +7 blocks from every extreme face (incl. up/down).",
+  "skufaddon.multiblock.chelyabinsk_proval.hazard_level": "§2Radiation charge: %s",
+  "skufaddon.multiblock.chelyabinsk_proval.hazard_radius": "§2Zone padding: +%s from edges",
+
   "gtceu.normis_filtration": "Normis Filtration",
   "gtceu.skufization": "Skufization",
   "gtceu.sauna_egora": "Sauna Egora",
   "gtceu.razbor_geympleya": "Gameplay Breakdown",
+  "gtceu.chelyabinsk_proval": "Chelyabinsk Proval",
   "gtceu.cnc_machine": "CNC Machining",
   "gtceu.pot_distillery": "Pot Distillation",
   "gtceu.vibe_stabilizer": "Vibe Stabilization",
@@ -232,6 +240,7 @@
   "gtceu.skufization.description": "Converts almost-normie materials into proper skuf.",
   "gtceu.sauna_egora.description": "Consumes Water while running. Produces Warm Vibe Steam while hot (heat ≥ 95%). Base output at EV: 80 mB/s water in, 80 mB/s steam out. +40 mB/s per energy tier above EV. +60 mB/s per Tilt machine inside the cavity.",
   "gtceu.razbor_geympleya.description": "a screen for watching e-girls on twitch",
+  "gtceu.chelyabinsk_proval.description": "Processes Chelyabinsk shale and dense jizhnyak into ural isotope. Geiger ticks are fine.",
 
   "config.jade.plugin_skufaddon.tilt_provider": "[Skuf Addon] Tilt Level",
 
