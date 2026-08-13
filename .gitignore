@@ -35,8 +35,10 @@ run-data/
 
 # local reference / notes
 .tmp-gtceu-src/
+.tmp-gt/
 mds/
 .temp/
+patches/
 
 # Python observer
 observer-service/.venv/
@@ -45,7 +47,26 @@ observer-service/data/
 observer-service/data-local/
 **/__pycache__/
 *.pyc
+.pytest_cache/
+.deepeval/
 
 # IDE / config
 .mcp.json
+
+# AI tooling — локальные индексы и настройки, у каждого свои
 .agents/
+.claude/
+.codegraph/
+.cursor/
+.openclaude/
+.serena/
+.ag-kit-backups/
+.no-mistakes.yaml
+
+# logs
+logs/
+*.log
+
+# minecraft server install artifacts (качаются лаунчером, ~50 MB)
+libraries/
+versions/
