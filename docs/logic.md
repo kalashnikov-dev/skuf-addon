@@ -118,7 +118,7 @@ skuf-addon/
 ├── gradle.properties
 ├── README.md                             # шаблон GT addon (не про Skuf)
 ├── LICENSE.MD                            # LGPLv3
-└── PROJECT_LOGIC.md                      # этот документ
+└── docs/logic.md                         # этот документ
 ```
 
 **Нет:** Kotlin, Fabric, datapack `data/skufaddon/` (луттейблы/теги JSON), активных миксинов.

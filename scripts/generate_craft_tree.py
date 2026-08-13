@@ -3,8 +3,8 @@
 """
 Generate complete ArthurTech / SkufAddon craft tree documentation (Steam -> UHV).
 Outputs:
-  - CRAFT_TREE.md (Full Mermaid flowchart + Tier-by-Tier Recipe Table)
-  - Updates section 20 in PROJECT_LOGIC.md
+  - docs/craft-tree.md (Full Mermaid flowchart + Tier-by-Tier Recipe Table)
+  - Updates section 20 in docs/logic.md
 """
 
 import os, sys, io
@@ -12,8 +12,8 @@ import os, sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-CRAFT_TREE_MD = os.path.join(ROOT_DIR, "CRAFT_TREE.md")
-PROJECT_LOGIC_MD = os.path.join(ROOT_DIR, "PROJECT_LOGIC.md")
+CRAFT_TREE_MD = os.path.join(ROOT_DIR, "docs", "craft-tree.md")
+PROJECT_LOGIC_MD = os.path.join(ROOT_DIR, "docs", "logic.md")
 
 MERMAID_GRAPH = """```mermaid
 flowchart TD
