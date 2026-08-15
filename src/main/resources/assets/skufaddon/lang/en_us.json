@@ -248,6 +248,7 @@
   "skufaddon.tilt.mode.ugor": "Mode: Hype (Tilt: %s)",
   "skufaddon.tilt.mode.pot": "Mode: Sweat (Tilt: %s)",
   "skufaddon.tilt.mode.no_sweat": "Mode: No Sweat (Tilt: %s)",
+  "skufaddon.tilt.hidden_debug": "[debug] Hidden UT: %s (%s)",
 
   "skufaddon.tooltip.eut_with_tilt": "EU/t (with Tilt): %sA %s EU/t (x%s)",
   "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",

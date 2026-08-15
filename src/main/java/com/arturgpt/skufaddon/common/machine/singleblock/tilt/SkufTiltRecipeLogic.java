@@ -2,6 +2,7 @@ package com.arturgpt.skufaddon.common.machine.singleblock.tilt;
 
 import com.arturgpt.skufaddon.api.machine.ISaunaProvider;
 import com.arturgpt.skufaddon.api.machine.ISaunaReceiver;
+import com.arturgpt.skufaddon.common.config.SkufBalanceConfig;
 
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
@@ -39,6 +40,31 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
     @Persisted
     @DescSynced
     private int ticksAtMaxTilt = 0;
+
+    @Persisted
+    @DescSynced
+    private int hiddenTilt = 0;
+
+    @Persisted
+    private int hiddenStallTicks = 0;
+
+    @Persisted
+    private int lastHiddenJamOrdinal = HiddenTiltJam.NONE.ordinal();
+
+    @Persisted
+    private boolean hiddenPausePenaltyApplied;
+
+    @Persisted
+    private boolean hiddenCableDischarged;
+
+    @Persisted
+    private boolean hiddenGearDischarged;
+
+    @Nullable
+    private ActionResult lastTickFail;
+
+    @Nullable
+    private Component lastWaitingReason;
 
     @Nullable
     private ISubscription energySubs;
@@ -131,7 +157,9 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
             return;
         }
         boolean needsTicks = SkufTiltUtils.needsTiltTicks(tiltLevel, isWorking(), isWorkingEnabled(), isWaiting()) ||
-                (tiltLevel > 0 && isInActiveSauna());
+                (tiltLevel > 0 && isInActiveSauna()) ||
+                isHiddenJamActive() ||
+                hiddenTilt > 0;
         if (needsTicks) {
             tiltSubscription = getMachine().subscribeServerTick(tiltSubscription, this::tiltServerTick);
         } else if (tiltSubscription != null) {
@@ -170,7 +198,141 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         if (tiltLevel != previousTiltLevel) {
             invalidateTiltRecipeCache();
         }
+        tickHiddenTilt();
         updateTiltTickSubscription();
+    }
+
+    @Override
+    public void setWaiting(@Nullable Component reason) {
+        super.setWaiting(reason);
+        lastWaitingReason = reason;
+    }
+
+    @Override
+    public ActionResult handleTickRecipe(GTRecipe recipe) {
+        GTRecipe scaled = getTiltScaledRecipe(recipe);
+        ActionResult result = super.handleTickRecipe(scaled != null ? scaled : recipe);
+        lastTickFail = result.isSuccess() ? null : result;
+        return result;
+    }
+
+    private void tickHiddenTilt() {
+        // While crafting, ignore stale failureReasons left over from the previous jam.
+        if (isWorking()) {
+            clearHiddenJamTracking();
+            decayHiddenTiltIfDue();
+            checkHiddenDischarge();
+            return;
+        }
+
+        HiddenTiltJam jam = currentHiddenJam();
+        if (jam != HiddenTiltJam.NONE || isHiddenJamActive()) {
+            HiddenTiltJam previous = HiddenTiltJam.values()[Math.min(lastHiddenJamOrdinal,
+                    HiddenTiltJam.values().length - 1)];
+            if (jam != HiddenTiltJam.NONE && jam != previous) {
+                addHiddenTilt(jam.burstAmount());
+                if (tiltLevel >= 61) {
+                    addHiddenTilt(SkufBalanceConfig.HIDDEN_TILT_DENIAL_WHILE_WAITING != null ?
+                            SkufBalanceConfig.HIDDEN_TILT_DENIAL_WHILE_WAITING.get() : 4);
+                }
+                lastHiddenJamOrdinal = jam.ordinal();
+            }
+
+            if (!isWorkingEnabled() && !hiddenPausePenaltyApplied) {
+                addHiddenTilt(SkufBalanceConfig.HIDDEN_TILT_PAUSED_WHILE_JAMMED != null ?
+                        SkufBalanceConfig.HIDDEN_TILT_PAUSED_WHILE_JAMMED.get() : 8);
+                hiddenPausePenaltyApplied = true;
+            }
+
+            hiddenStallTicks++;
+            int stallPerDrip = SkufBalanceConfig.HIDDEN_TILT_STALL_PER_SECOND != null ?
+                    SkufBalanceConfig.HIDDEN_TILT_STALL_PER_SECOND.get() : 1;
+            int stallInterval = SkufBalanceConfig.HIDDEN_TILT_STALL_INTERVAL_TICKS != null ?
+                    SkufBalanceConfig.HIDDEN_TILT_STALL_INTERVAL_TICKS.get() : 40;
+            if (stallPerDrip > 0 && hiddenStallTicks % Math.max(1, stallInterval) == 0) {
+                addHiddenTilt(stallPerDrip);
+            }
+        } else {
+            clearHiddenJamTracking();
+            decayHiddenTiltIfDue();
+        }
+
+        checkHiddenDischarge();
+    }
+
+    private void clearHiddenJamTracking() {
+        lastHiddenJamOrdinal = HiddenTiltJam.NONE.ordinal();
+        hiddenStallTicks = 0;
+        hiddenPausePenaltyApplied = false;
+        lastWaitingReason = null;
+        lastTickFail = null;
+    }
+
+    private void decayHiddenTiltIfDue() {
+        if (hiddenTilt <= 0) {
+            return;
+        }
+        int decayInterval = SkufBalanceConfig.HIDDEN_TILT_DECAY_INTERVAL_TICKS != null ?
+                SkufBalanceConfig.HIDDEN_TILT_DECAY_INTERVAL_TICKS.get() : 40;
+        if (getMachine().getOffsetTimer() % Math.max(1, decayInterval) == 0) {
+            hiddenTilt--;
+        }
+    }
+
+    private void checkHiddenDischarge() {
+        int cableAt = SkufBalanceConfig.HIDDEN_TILT_CABLE_BURN_THRESHOLD != null ?
+                SkufBalanceConfig.HIDDEN_TILT_CABLE_BURN_THRESHOLD.get() : 60;
+        int explodeAt = SkufBalanceConfig.HIDDEN_TILT_GEAR_EXPLODE_THRESHOLD != null ?
+                SkufBalanceConfig.HIDDEN_TILT_GEAR_EXPLODE_THRESHOLD.get() : 90;
+        if (hiddenTilt < cableAt) {
+            hiddenCableDischarged = false;
+        }
+        if (hiddenTilt < explodeAt) {
+            hiddenGearDischarged = false;
+        }
+        if (hiddenTilt >= cableAt && !hiddenCableDischarged) {
+            HiddenTiltDischarge.burnAttachedCables(getMachine());
+            hiddenCableDischarged = true;
+        }
+        if (hiddenTilt >= explodeAt && !hiddenGearDischarged) {
+            if (!hiddenCableDischarged) {
+                HiddenTiltDischarge.burnAttachedCables(getMachine());
+                hiddenCableDischarged = true;
+            }
+            HiddenTiltDischarge.explodeAttachedEnergyGear(getMachine());
+            hiddenGearDischarged = true;
+        }
+    }
+
+    /** Mid-recipe WAITING or IDLE failureReasons. Not while actively crafting. */
+    private boolean isHiddenJamActive() {
+        if (isWorking()) {
+            return false;
+        }
+        if (isWaiting()) {
+            return true;
+        }
+        var reasons = getFailureReasons();
+        return reasons != null && !reasons.isEmpty();
+    }
+
+    private HiddenTiltJam currentHiddenJam() {
+        if (isWorking()) {
+            return HiddenTiltJam.NONE;
+        }
+        if (isWaiting()) {
+            Component reason = lastWaitingReason != null ? lastWaitingReason : getWaitingReason();
+            return HiddenTiltJam.classify(lastTickFail, reason);
+        }
+        return HiddenTiltJam.classifyFailures(getFailureReasons());
+    }
+
+    private void addHiddenTilt(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+        int max = SkufBalanceConfig.HIDDEN_TILT_MAX != null ? SkufBalanceConfig.HIDDEN_TILT_MAX.get() : 100;
+        hiddenTilt = Math.min(max, hiddenTilt + amount);
     }
 
     private boolean isInActiveSauna() {
@@ -193,6 +355,10 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
 
     public int getTicksAtMaxTilt() {
         return ticksAtMaxTilt;
+    }
+
+    public int getHiddenTilt() {
+        return hiddenTilt;
     }
 
     private double getTiltMultiplier() {
@@ -223,16 +389,25 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         return getTiltScaledRecipe(super.getLastRecipe());
     }
 
+    /**
+     * GTCEu Jade prefixes IDLE {@code failureReasons} with red "Fail to setup recipe:".
+     * Ordinary IO jams between recipes are not setup failures — hide that fancy tooltip
+     * and surface the reason via {@link #getTiltStatusTooltip()} instead.
+     */
     @Override
-    public ActionResult handleTickRecipe(GTRecipe recipe) {
-        GTRecipe scaled = getTiltScaledRecipe(recipe);
-        return super.handleTickRecipe(scaled != null ? scaled : recipe);
+    public boolean showFancyTooltip() {
+        if (isWaiting()) {
+            return super.showFancyTooltip();
+        }
+        if (HiddenTiltJam.isIoSetupFailure(getFailureReasons())) {
+            return false;
+        }
+        return super.showFancyTooltip();
     }
 
     /**
-     * Status lines for machine GUI / Jade. Do not put these through
-     * {@link #getFancyTooltip()} — GTCEu Jade treats a non-empty RecipeLogic fancy
-     * tooltip on an idle machine as {@code gtceu.recipe_logic.setup_fail}.
+     * Status lines for machine GUI / Jade. Keep tilt/jam text off RecipeLogic
+     * {@link #getFancyTooltip()} so idle IO jams do not get a false setup-fail header.
      */
     public List<Component> getTiltStatusTooltip() {
         List<Component> tooltip = new ArrayList<>();
@@ -248,6 +423,23 @@ public class SkufTiltRecipeLogic extends RecipeLogic {
         }
 
         tooltip.add(SkufTiltUtils.getModeComponent(tiltLevel, ticksAtMaxTilt));
+
+        if (isWaiting()) {
+            Component reason = lastWaitingReason != null ? lastWaitingReason : getWaitingReason();
+            if (reason != null && !reason.getString().isEmpty()) {
+                tooltip.add(reason.copy().withStyle(ChatFormatting.YELLOW));
+            }
+        } else if (HiddenTiltJam.isIoSetupFailure(getFailureReasons())) {
+            for (Component reason : getFailureReasons()) {
+                if (reason != null && !reason.getString().isEmpty()) {
+                    tooltip.add(reason.copy().withStyle(ChatFormatting.YELLOW));
+                }
+            }
+        }
+
+        HiddenTiltJam jam = currentHiddenJam();
+        tooltip.add(Component.translatable("skufaddon.tilt.hidden_debug", hiddenTilt, jam.debugKey())
+                .withStyle(ChatFormatting.DARK_PURPLE));
         return tooltip;
     }
 }

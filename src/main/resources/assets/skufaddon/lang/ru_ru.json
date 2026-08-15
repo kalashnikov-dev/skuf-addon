@@ -248,6 +248,7 @@
   "skufaddon.tilt.mode.ugor": "Режим: Угар (УТ: %s)",
   "skufaddon.tilt.mode.pot": "Режим: Пот (УТ: %s)",
   "skufaddon.tilt.mode.no_sweat": "Режим: Не потеем (УТ: %s)",
+  "skufaddon.tilt.hidden_debug": "[debug] Скрытый УТ: %s (%s)",
 
   "skufaddon.tooltip.eut_with_tilt": "EU/t (с УТ): %sA %s EU/t (x%s)",
   "skufaddon.tooltip.eut": "EU/t: %sA %s EU/t",

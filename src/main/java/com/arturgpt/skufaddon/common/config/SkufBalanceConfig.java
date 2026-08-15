@@ -17,6 +17,20 @@ public final class SkufBalanceConfig {
     public static final ForgeConfigSpec.IntValue OVERHEAT_RAMP_TICKS;
     public static final ForgeConfigSpec.IntValue HIDDEN_MODE_DELAY_TICKS;
 
+    // --- HIDDEN TILT (debug / jam debt) ---
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_MAX;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_MISSING_INPUT;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_OUTPUT_FULL;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_NO_ENERGY;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_STALL_PER_SECOND;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_STALL_INTERVAL_TICKS;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_PAUSED_WHILE_JAMMED;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_DENIAL_WHILE_WAITING;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_DECAY_INTERVAL_TICKS;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_CABLE_BURN_THRESHOLD;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_CABLE_BURN_COUNT;
+    public static final ForgeConfigSpec.IntValue HIDDEN_TILT_GEAR_EXPLODE_THRESHOLD;
+
     // --- SAUNA EGORA ---
     public static final ForgeConfigSpec.IntValue SAUNA_BASE_WATER_CONSUME_MB;
     public static final ForgeConfigSpec.IntValue SAUNA_BASE_STEAM_PRODUCE_MB;
@@ -65,6 +79,45 @@ public final class SkufBalanceConfig {
         HIDDEN_MODE_DELAY_TICKS = builder
                 .comment("Ticks at max Tilt before machine mode changes to hidden 'Ваще похуй'. Default: 20")
                 .defineInRange("hiddenModeDelayTicks", 20, 1, 600);
+        builder.pop();
+
+        builder.push("hidden_tilt");
+        HIDDEN_TILT_MAX = builder
+                .comment("Cap for hidden UT (jam debt). Default: 100")
+                .defineInRange("maxHiddenTilt", 100, 1, 1000);
+        HIDDEN_TILT_MISSING_INPUT = builder
+                .comment("Hidden UT added when a recipe stops for missing input. Default: 5")
+                .defineInRange("missingInput", 5, 0, 100);
+        HIDDEN_TILT_OUTPUT_FULL = builder
+                .comment("Hidden UT added when output is full. Default: 15")
+                .defineInRange("outputFull", 15, 0, 100);
+        HIDDEN_TILT_NO_ENERGY = builder
+                .comment("Hidden UT added when the machine lacks EU. Default: 3")
+                .defineInRange("noEnergy", 3, 0, 100);
+        HIDDEN_TILT_STALL_PER_SECOND = builder
+                .comment("Hidden UT added each stall drip while jammed. Default: 1 every 2 sec (40 ticks)")
+                .defineInRange("stallPerSecond", 1, 0, 20);
+        HIDDEN_TILT_STALL_INTERVAL_TICKS = builder
+                .comment("Ticks between stall drips while jammed. Default: 40 (2 sec, half the old 1/sec rate)")
+                .defineInRange("stallIntervalTicks", 40, 1, 1200);
+        HIDDEN_TILT_PAUSED_WHILE_JAMMED = builder
+                .comment("Hidden UT if the machine is switched off while jammed (denial). Default: 8")
+                .defineInRange("pausedWhileJammed", 8, 0, 100);
+        HIDDEN_TILT_DENIAL_WHILE_WAITING = builder
+                .comment("Extra hidden UT if facade tilt is already in 'Не потеем' / peak while jammed. Default: 4")
+                .defineInRange("denialWhileWaiting", 4, 0, 100);
+        HIDDEN_TILT_DECAY_INTERVAL_TICKS = builder
+                .comment("Ticks between −1 hidden UT while the machine is not jammed. Default: 40 (same as facade tilt)")
+                .defineInRange("decayIntervalTicks", 40, 1, 1200);
+        HIDDEN_TILT_CABLE_BURN_THRESHOLD = builder
+                .comment("Hidden UT at which attached cables melt (GT cable heat). Default: 60")
+                .defineInRange("cableBurnThreshold", 60, 1, 1000);
+        HIDDEN_TILT_CABLE_BURN_COUNT = builder
+                .comment("Max cables melted at the burn threshold (nearest to the machine first). Default: 8")
+                .defineInRange("cableBurnCount", 8, 1, 256);
+        HIDDEN_TILT_GEAR_EXPLODE_THRESHOLD = builder
+                .comment("Hidden UT at which attached transformers/diodes/batteries explode. Default: 90")
+                .defineInRange("gearExplodeThreshold", 90, 1, 1000);
         builder.pop();
 
         // ---------------- SAUNA EGORA ----------------
