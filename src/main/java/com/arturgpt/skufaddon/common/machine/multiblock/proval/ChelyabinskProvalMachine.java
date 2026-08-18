@@ -42,8 +42,8 @@ public class ChelyabinskProvalMachine extends WorkableElectricMultiblockMachine 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             ChelyabinskProvalMachine.class, WorkableMultiblockMachine.MANAGED_FIELD_HOLDER);
 
-    private static final DustParticleOptions RAD_PARTICLE =
-            new DustParticleOptions(new Vector3f(0.35f, 1.0f, 0.15f), 1.6f);
+    private static final DustParticleOptions RAD_PARTICLE = new DustParticleOptions(new Vector3f(0.35f, 1.0f, 0.15f),
+            1.6f);
 
     private static final float DEFAULT_STRENGTH = 100.0f;
     private static final int DEFAULT_INTERVAL = 20;

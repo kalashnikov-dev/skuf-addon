@@ -107,7 +107,8 @@ public final class SkufBalanceConfig {
                 .comment("Extra hidden UT if facade tilt is already in 'Не потеем' / peak while jammed. Default: 4")
                 .defineInRange("denialWhileWaiting", 4, 0, 100);
         HIDDEN_TILT_DECAY_INTERVAL_TICKS = builder
-                .comment("Ticks between −1 hidden UT while the machine is not jammed. Default: 40 (same as facade tilt)")
+                .comment(
+                        "Ticks between −1 hidden UT while the machine is not jammed. Default: 40 (same as facade tilt)")
                 .defineInRange("decayIntervalTicks", 40, 1, 1200);
         HIDDEN_TILT_CABLE_BURN_THRESHOLD = builder
                 .comment("Hidden UT at which attached cables melt (GT cable heat). Default: 60")
@@ -184,7 +185,8 @@ public final class SkufBalanceConfig {
         // ---------------- CHELYABINSK PROVAL ----------------
         builder.push("chelyabinsk_proval");
         PROVAL_HAZARD_STRENGTH_PER_PULSE = builder
-                .comment("Radiation charge gained each pulse while Proval crafts; same amount lost each pulse while idle (cool-down). Default: 100 (2× former rate)")
+                .comment(
+                        "Radiation charge gained each pulse while Proval crafts; same amount lost each pulse while idle (cool-down). Default: 100 (2× former rate)")
                 .defineInRange("hazardStrengthPerPulse", 100.0, 0.0, 1000.0);
 
         PROVAL_HAZARD_PULSE_INTERVAL_TICKS = builder
@@ -192,7 +194,8 @@ public final class SkufBalanceConfig {
                 .defineInRange("hazardPulseIntervalTicks", 20, 1, 1200);
 
         PROVAL_HAZARD_LOCAL_RADIUS = builder
-                .comment("Blocks of radiation beyond each extreme face of the formed multiblock (N/S/E/W/up/down). Default: 7")
+                .comment(
+                        "Blocks of radiation beyond each extreme face of the formed multiblock (N/S/E/W/up/down). Default: 7")
                 .defineInRange("hazardLocalRadius", 7, 0, 64);
         builder.pop();
 

@@ -1,6 +1,7 @@
 package com.arturgpt.skufaddon.common.machine.singleblock.tilt;
 
 import com.arturgpt.skufaddon.common.config.SkufBalanceConfig;
+
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IExplosionMachine;
@@ -91,12 +92,9 @@ final class HiddenTiltDischarge {
     }
 
     private static boolean isEnergyInfrastructure(MetaMachine machine) {
-        return machine instanceof TransformerMachine
-                || machine instanceof BatteryBufferMachine
-                || machine instanceof ChargerMachine
-                || machine instanceof ConverterMachine
-                || machine instanceof DiodePartMachine
-                || machine instanceof ActiveTransformerMachine;
+        return machine instanceof TransformerMachine || machine instanceof BatteryBufferMachine ||
+                machine instanceof ChargerMachine || machine instanceof ConverterMachine ||
+                machine instanceof DiodePartMachine || machine instanceof ActiveTransformerMachine;
     }
 
     /** BFS from the machine: nearest cables first (order preserved). */
