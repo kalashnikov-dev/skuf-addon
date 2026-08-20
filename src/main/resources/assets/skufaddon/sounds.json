@@ -1,0 +1,146 @@
+{
+  "music_track_01": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_01",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_02": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_02",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_03": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_03",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_04": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_04",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_05": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_05",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_06": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_06",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_07": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_07",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_08": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_08",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_09": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_09",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_10": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_10",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_11": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_11",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_12": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_12",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_13": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_13",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_14": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_14",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_15": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_15",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_16": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_16",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_17": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_17",
+        "stream": true
+      }
+    ]
+  },
+  "music_track_18": {
+    "sounds": [
+      {
+        "name": "skufaddon:music/track_18",
+        "stream": true
+      }
+    ]
+  }
+}

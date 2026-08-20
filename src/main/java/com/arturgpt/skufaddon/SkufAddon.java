@@ -8,6 +8,7 @@ import com.arturgpt.skufaddon.common.data.SkufMaterials;
 import com.arturgpt.skufaddon.common.data.SkufMultiblockMachines;
 import com.arturgpt.skufaddon.common.data.SkufRecipeTypes;
 import com.arturgpt.skufaddon.common.data.SkufSingleblockMachines;
+import com.arturgpt.skufaddon.common.data.SkufSounds;
 import com.arturgpt.skufaddon.observer.ObserverConfig;
 import com.arturgpt.skufaddon.observer.ObserverEvents;
 
@@ -18,7 +19,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
-import com.gregtechceu.gtceu.api.sound.SoundEntry;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -59,10 +59,10 @@ public class SkufAddon {
 
         modEventBus.addGenericListener(GTRecipeType.class, this::registerRecipeTypes);
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
-        modEventBus.addGenericListener(SoundEntry.class, this::registerSounds);
 
         SkufItems.init();
         SkufBlocks.init();
+        SkufSounds.init(modEventBus);
         REGISTRATE.registerRegistrate();
     }
 
@@ -104,6 +104,4 @@ public class SkufAddon {
         SkufComponentMachines.init();
         SkufMultiblockMachines.init();
     }
-
-    private void registerSounds(GTCEuAPI.RegisterEvent<ResourceLocation, SoundEntry> event) {}
 }
